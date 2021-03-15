@@ -12,6 +12,13 @@
     "express": "^4.17.1",
     "mongoose": "^5.12.0"
   },
-  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qusehdgns/node_Learn_Python.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qusehdgns/node_Learn_Python/issues"
+  },
+  "homepage": "https://github.com/qusehdgns/node_Learn_Python#readme",
   "description": ""
 }
