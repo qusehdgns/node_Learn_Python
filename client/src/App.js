@@ -2,12 +2,11 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 // 페이지 임포트
-import LandingPage from './components/views/LandingPage/LandingPage';
+import LandingPage from './components/views/Mypage/Mypage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
 
