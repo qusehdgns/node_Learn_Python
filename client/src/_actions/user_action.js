@@ -4,13 +4,16 @@ import Axios from 'axios';
 import {
     LOGIN_USER,
     REGISTER_USER,
-    AUTH_USER
+    AUTH_USER,
+    LOGOUT_USER
 } from './types';
+// api 기본 게이트를 저장한 정보 호출
+import { USER_SERVER } from '../components/Config';
 
 // 로그인 버튼 클릭 시 수행되는 함수
 export function loginUser(dataTosubmit) {
     // 백엔드 서버에게 Post 형식으로 요청을 보낸 후 결과값 리턴
-    const req = Axios.post('/api/users/login', dataTosubmit)
+    const req = Axios.post(`${USER_SERVER}/login`, dataTosubmit)
         .then(res => res.data );
 
         // 결과 값과 액션 결과를 리턴
@@ -23,7 +26,7 @@ export function loginUser(dataTosubmit) {
 // 회원가입 버튼 클릭 시 수행되는 함수
 export function registerUser(dataTosubmit){
     // 백엔드 서버에게 Post 형식으로 요청을 보낸 후 결과값 리턴
-    const req = Axios.post('/api/users/register', dataTosubmit)
+    const req = Axios.post(`${USER_SERVER}/register`, dataTosubmit)
         .then(res => res.data );
 
         // 결과 값과 액션 결과를 리턴
@@ -36,7 +39,7 @@ export function registerUser(dataTosubmit){
 // 권한 확인 여부를 미들웨어에서 체크하는 함수
 export function auth(){
     // 백엔드 서버에게 Get 형식으로 요청을 보낸 후 결과값 리턴
-    const req = Axios.get('/api/users/auth')
+    const req = Axios.get(`${USER_SERVER}/auth`)
         .then(res => res.data );
 
         // 결과 값과 액션 결과를 리턴
@@ -44,4 +47,17 @@ export function auth(){
             type: AUTH_USER,
             payload: req
         }
+}
+
+// 로그아웃 버튼 클릭 시 수행되는 함수
+export function logoutUser(){
+    // 백엔드 서버에게 GET 방식의 요청을 받은 후 결과값 니턴
+    const req = Axios.get(`${USER_SERVER}/logout`)
+    .then(res => res.data);
+
+    // 결과 값과 액션 결과를 리턴
+    return {
+        type: LOGOUT_USER,
+        payload: req
+    }
 }

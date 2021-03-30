@@ -1,7 +1,7 @@
 // 기본 리엑트 및 이벤트 효과를 사용하기 위한 선언
 import React, { useEffect } from 'react';
 // redux 사용하기 위한 선언
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // 권한 확인 액션을 지정해 놓은 파일 호출
 import { auth } from '../_actions/user_action';
 
@@ -15,6 +15,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
     // 권환 확인 함수
     function AuthenticationCheck(props) {
+        // user 변수에 함께 들어온 user 정보 저장
+        let user = useSelector(state => state.user)
         // redux 사용을 위한 변수 선언
         const dispatch = useDispatch();
 
@@ -41,7 +43,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
                     // 로그인 되어있지만 권한이 없는 경우를 제외한 나머지
                     else {
                         // 로그인 안한 사용자만 가능한 페이지일 경우
-                        if(!option){
+                        if(option === false){
                             // 기본 페이지로 이동
                             props.history.push('/')
                         }
@@ -53,7 +55,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
         // 함께 들어온 컴포넌트를 수행
         return (
-            <SpecificComponent />
+            <SpecificComponent {...props} user={user}/>
         )
     }
 

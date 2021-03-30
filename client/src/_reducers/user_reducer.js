@@ -2,7 +2,8 @@
 import {
     LOGIN_USER,
     REGISTER_USER,
-    AUTH_USER
+    AUTH_USER,
+    LOGOUT_USER
 } from '../_actions/types';
 
 
@@ -24,6 +25,11 @@ export default function (state = {}, action) {
         case AUTH_USER:
             // 각각의 리턴 값 정보를 리엑트 임시 저장공간에 부여
             return {...state, userData: action.payload };
+
+        // 로그아웃 시 발생하는 타입
+        case LOGOUT_USER:
+            // 정보를 리엑트 임시 저장공간에 부여
+            return{...state}
         
         // 액션 타입없이 요청이 들어올 경우
         default:

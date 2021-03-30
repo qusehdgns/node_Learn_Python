@@ -6,3 +6,5 @@ export const LOGIN_USER = "login_user";
 export const REGISTER_USER = "register_user";
 // 권한을 나타내는 값
 export const AUTH_USER = "auth_user";
+// 로그아웃을 나타내는 값
+export const LOGOUT_USER = "logout_user";
