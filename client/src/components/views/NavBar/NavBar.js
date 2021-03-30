@@ -31,7 +31,7 @@ function NavBar(props) {
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
-        <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
+        <nav className="menu" style={{ position: 'fixed', zIndex: 5, height: '100%' }}>
             <div>
                 <button onClick={logoutHandler}>Logout</button>
             </div>
@@ -39,5 +39,5 @@ function NavBar(props) {
     )
 }
 
-// 라우터 돔에 로그인 페이지를 추가
+// 라우터 돔에 로그인
 export default withRouter(NavBar)

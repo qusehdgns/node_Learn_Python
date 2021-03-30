@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <div style={{ paddingTop: '30px' }}>
+      <div style={{ paddingLeft: '70px' }}>
         <Switch>
           
           <Route exact path="/" component={Auth(StudyPage, null)} />
