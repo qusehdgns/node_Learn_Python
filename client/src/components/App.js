@@ -11,6 +11,7 @@ import LoginPage from './views/LoginPage/LoginPage';
 import RegisterPage from './views/RegisterPage/RegisterPage';
 import QandAPage from './views/QandAPage/QandAPage';
 import MyPage from './views/Mypage/Mypage';
+import WikiPage from './views/WikiPage/WikiPage';
 
 import NavBar from './views/NavBar/NavBar';
 
@@ -25,6 +26,8 @@ function App() {
         <Switch>
           
           <Route exact path="/" component={Auth(StudyPage, null)} />
+
+          <Route exact path="/wiki" component={Auth(WikiPage, true)} />
 
           <Route exact path="/login" component={Auth(LoginPage, false)} />
 
