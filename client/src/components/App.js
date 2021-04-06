@@ -21,8 +21,10 @@ import Auth from '../hoc/auth';
 function App() {
   return (
     <Router>
-      <NavBar />
-      <div style={{ paddingLeft: '70px' }}>
+      <div>
+        <NavBar />
+      </div>
+      <div>
         <Switch>
           
           <Route exact path="/" component={Auth(StudyPage, null)} />

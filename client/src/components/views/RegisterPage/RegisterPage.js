@@ -82,10 +82,16 @@ function RegisterPage(props) {
             ,width: '100%', height: '100vh'
         }}>
             <form style={{display: 'flex', flexDirection: 'column'}}
-                onSubmit={onSubmitHandler}
-            >
+                onSubmit={onSubmitHandler}>
+
+                <div style={{textAlign:'center'}}>
+                    <h1>Learn Python</h1>
+                </div>
+
                 <label>Email</label>
                 <input type="email" value={Email} onChange={onEmailHandler} />
+
+                <button type='button'>Check my ID</button>
 
                 <label>Name</label>
                 <input type="text" value={Name} onChange={onNameHandler} />
@@ -97,7 +103,7 @@ function RegisterPage(props) {
                 <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
 
                 <br />
-                <button>
+                <button type="submit">
                     Register
                 </button>
             </form>

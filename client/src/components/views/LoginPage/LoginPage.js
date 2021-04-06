@@ -28,6 +28,10 @@ function LoginPage(props) {
         setPassword(event.currentTarget.value);
     }
 
+    const movetoRegister = (event) => {
+        props.history.push('/register');
+    }
+
     // 제출 버튼 클릭 시 실행되는 함수
     const onSubmitHandler = (event) => {
         // 페이지를 다시 호출하지 않고 지금 상태를 사용하기 위한 선언
@@ -61,16 +65,23 @@ function LoginPage(props) {
             ,width: '100%', height: '100vh'
         }}>
             <form style={{display: 'flex', flexDirection: 'column'}}
-                onSubmit={onSubmitHandler}
-            >
+                onSubmit={onSubmitHandler}> 
+                <div style={{textAlign:'center'}}>
+                    <h1>Learn Python</h1>
+                </div>
+                <br/>
                 <label>Email</label>
                 <input type="email" value={Email} onChange={onEmailHandler} />
                 <label>Password</label>
                 <input type="password" value={Password} onChange={onPasswordHandler} />
                 <br />
-                <button>
+                <button type='submit'>
                     Login
                 </button>
+                <button type='button' onClick={movetoRegister}>
+                    Register
+                </button>
+                <a>Find your ID or Reset Password</a>
             </form>
         </div>
     )
