@@ -24,6 +24,13 @@ const userSchema = mongoose.Schema({
         // 최대 길이 50
         maxlength: 50
     },
+    // 유저 연락처
+    phone: {
+        // 문자열 타입
+        type: String,
+        // 최대 길이 50
+        maxlength: 50
+    },
     // 유저 이메일 
     email: {
         // 문자열 타입

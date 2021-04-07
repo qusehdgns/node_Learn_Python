@@ -8,7 +8,7 @@ import { logoutUser } from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 
 // 네비게이션 바 정보
-function NavBar(props) {
+function SideBar(props) {
     // redux 사용을 위한 변수 선언
     const dispatch = useDispatch();
 
@@ -31,14 +31,14 @@ function NavBar(props) {
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
-        <nav className="Logo" style={{ position: 'fixed', top: 0, height: '15vh', width: '100vw' }}>
-            <div style={{ height: '100%', display: 'flex', alignItems:'center', justifyContent:'center'
-                        , borderBottom: '1px solid rgba(0, 0, 0, .25)' }}>
-                <h1 style={{ fontSize: '2.5vw' }}>Learn Python</h1>
+        <nav className="menu" style={{ position: 'fixed', bottom: 0, width: '80px', height: '85vh', padding: '1vh 0'
+                                    , borderRight: '1px solid rgba(0, 0, 0, .25)', display: 'flex', justifyContent: 'center' }}>
+            <div>
+                <button onClick={logoutHandler}>Logout</button>
             </div>
         </nav>
     )
 }
 
 // 라우터 돔에 로그인
-export default withRouter(NavBar)
+export default withRouter(SideBar)

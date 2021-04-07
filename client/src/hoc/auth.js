@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action';
 
 // 페이지 호출 시 미들웨어로 먼저 수행되는 함수
-export default function (SpecificComponent, option, adminRoute = null) {
+function check_user_auth(SpecificComponent, option, adminRoute = null) {
 
     // option : null, true, false
     // null : everyone
@@ -62,3 +62,5 @@ export default function (SpecificComponent, option, adminRoute = null) {
     // 권한 확인 리턴
     return AuthenticationCheck
 }
+
+export default check_user_auth;

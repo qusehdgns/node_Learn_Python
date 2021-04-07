@@ -15,6 +15,7 @@ function RegisterPage(props) {
     // 페이지 변화에 따른 상태 저장 필요 요소 선언
     const [Email, setEmail] = useState("");
     const [Name, setName] = useState("");
+    const [Phone, setPhone] = useState("");
     const [Password, setPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
 
@@ -28,6 +29,12 @@ function RegisterPage(props) {
     const onNameHandler = (event) => {
         // 이벤트로 들어온 값을 setName 함수를 사용하여 적용
         setName(event.currentTarget.value);
+    }
+
+    // 연락처 핸들러 수행시 실행되는 함수
+    const onPhoneHandler = (event) => {
+        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+        setPhone(event.currentTarget.value);
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
@@ -57,6 +64,7 @@ function RegisterPage(props) {
         let body = {
             email: Email,
             name: Name,
+            phone: Phone,
             password: Password
         };
 
@@ -95,6 +103,9 @@ function RegisterPage(props) {
 
                 <label>Name</label>
                 <input type="text" value={Name} onChange={onNameHandler} />
+
+                <label>Phone</label>
+                <input type="text" value={Phone} onChange={onPhoneHandler} />
 
                 <label>Password</label>
                 <input type="password" value={Password} onChange={onPasswordHandler} />

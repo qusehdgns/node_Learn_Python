@@ -8,7 +8,7 @@ import {
 
 
 // user_action에서 값이 리턴오게 되면 수행하는 함수
-export default function (state = {}, action) {
+function user_split_action(state = {}, action) {
     // 타입 값을 확인
     switch (action.type) {
         // 로그인 시 발생하는 타입
@@ -37,3 +37,5 @@ export default function (state = {}, action) {
             return state;
     }
 }
+
+export default user_split_action;
