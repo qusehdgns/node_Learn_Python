@@ -22,7 +22,7 @@ function Console(props) {
                 <h6></h6>
             </div>
             <div style={{ width: '50%', height: '100%', padding: '10px' }}>
-                <textarea style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }} value={textcode} onChange={onTextcodeHandler}>
+                <textarea id='console_input' style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }} value={textcode} onChange={onTextcodeHandler}>
                 </textarea>
             </div>
         </div>
