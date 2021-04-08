@@ -15,13 +15,19 @@ function LandingPage(props) {
     return (
         <div style={{
             display: 'flex', justifyContent: 'center', alignItems: 'center'
-            ,width: '100%', height: '100vh'
+            ,width: '100%', height: '100%', flexDirection: 'column'
         }}>
-            <h2>시작 페이지</h2>
+            <div style={{backgroundColor: 'yellow', width: '80%', height: '35%', margin: '2%'}}>
 
-            <button onClick={onClickHandler}>
-                Test
-            </button>
+            </div>
+            <div style={{ width:'100%', height: '35%', display: 'flex', flexDirection:'row', justifyContent:'center', alignItems: 'center' }}>
+                <div style={{ backgroundColor: 'yellow', width: '38%', height: '90%', margin : '0 2%'}}>
+
+                </div>
+                <div style={{ backgroundColor: 'yellow', width: '38%', height: '90%', margin : '0 2%'}}>
+
+                </div>
+            </div>
         </div>
     )
 }

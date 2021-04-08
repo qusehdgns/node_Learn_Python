@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // redux 사용하기 위한 선언
 import { useDispatch } from 'react-redux';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function ResetPWPage(props) {
@@ -63,7 +63,7 @@ function ResetPWPage(props) {
                     Checking my Email
                 </button>
                 <div style={{textAlign:'center'}}>
-                    <a href='/login'>Go to Login</a>
+                    <Link to='/login'>Go to Login</Link>
                 </div>
             </form>
         </div>

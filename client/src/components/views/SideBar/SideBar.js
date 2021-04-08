@@ -1,40 +1,62 @@
 // 리엑트 기본 라이브러리 호출
-import React from 'react'
-// redux 사용하기 위한 선언
-import { useDispatch } from 'react-redux';
-// 로그아웃 액션을 지정해 놓은 파일 호출
-import { logoutUser } from '../../../_actions/user_action';
+import React, { useState } from 'react'
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 
 // 네비게이션 바 정보
 function SideBar(props) {
-    // redux 사용을 위한 변수 선언
-    const dispatch = useDispatch();
 
-    // 로그아웃 버튼 클릭 시 실행되는 함수
-    const logoutHandler = () => {
-        // redux를 사용하여 저장 값과 함께 로그인 수행 함수 호출
-        dispatch(logoutUser()).then(res => {
-            // 로그아웃 성공 리턴 시
-            if (res.payload.success){
-                // 로그인 페이지로 이동
-                props.history.push("/login");
-            }
-            // 로그아웃 실패
-            else {
-                // 로그아웃 실패 메시지
-                alert("Log Out Failed");
-            }
-        })
+    const [toggle, settoggle] = useState(false);
+
+    function checkConsole() {
+        let console = document.getElementById('console');
+        if (toggle === true) {
+            settoggle(false);
+            console.style.display = 'none';
+        }
+    }
+
+    const movetoStudy = () => {
+        checkConsole();
+        // 학습 페이지로 이동
+        props.history.push("/");
+    }
+
+    const movetoQandA = () => {
+        checkConsole();
+        // 학습 페이지로 이동
+        props.history.push("/qanda");
+    }
+
+    const movetoMyPage = () => {
+        checkConsole();
+        // 학습 페이지로 이동
+        props.history.push("/mypage");
+    }
+
+    const switchCompiler = () => {
+        let console = document.getElementById('console');
+        if (toggle === true) {
+            settoggle(false);
+            console.style.display = 'none';
+        } else {
+            settoggle(true);
+            console.style.display = 'flex';
+            document.getElementById('console_input').focus();
+        }
     }
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
-        <nav className="menu" style={{ position: 'fixed', bottom: 0, width: '80px', height: '85vh', padding: '1vh 0'
-                                    , borderRight: '1px solid rgba(0, 0, 0, .25)', display: 'flex', justifyContent: 'center' }}>
-            <div>
-                <button onClick={logoutHandler}>Logout</button>
+        <nav className="menu" style={{
+            position: 'fixed', bottom: 0, width: '80px', height: '85vh'
+            , borderRight: '1px solid rgba(0, 0, 0, .25)', display: 'flex', justifyContent: 'center'
+        }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <button style={{ margin: '5px 0' }} onClick={movetoStudy}>Study</button>
+                <button style={{ margin: '5px 0' }} onClick={switchCompiler}>Compiler</button>
+                <button style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</button>
+                <button style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</button>
             </div>
         </nav>
     )

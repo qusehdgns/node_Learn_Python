@@ -16,7 +16,7 @@ function check_user_auth(SpecificComponent, option, adminRoute = null) {
     // 권환 확인 함수
     function AuthenticationCheck(props) {
         // user 변수에 함께 들어온 user 정보 저장
-        let user = useSelector(state => state.user)
+        let user = useSelector(state => state.user);
         // redux 사용을 위한 변수 선언
         const dispatch = useDispatch();
 

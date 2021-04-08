@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 // 로그인 액션을 지정해 놓은 파일 호출
 import { loginUser } from '../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 // 로그인 페이지 호출 시 실행되는 페이지 정보
 function LoginPage(props) {
@@ -82,7 +82,7 @@ function LoginPage(props) {
                     Register
                 </button>
                 <div style={{textAlign:'center'}}>
-                    <a href='/findid'>Find your ID or Reset Password</a>  
+                    <Link to='/findid'>Find your ID or Reset Password</Link>  
                 </div>
             </form>
         </div>

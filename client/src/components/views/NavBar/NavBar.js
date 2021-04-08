@@ -17,7 +17,7 @@ function NavBar(props) {
         // redux를 사용하여 저장 값과 함께 로그인 수행 함수 호출
         dispatch(logoutUser()).then(res => {
             // 로그아웃 성공 리턴 시
-            if (res.payload.success){
+            if (res.payload.success) {
                 // 로그인 페이지로 이동
                 props.history.push("/login");
             }
@@ -32,9 +32,14 @@ function NavBar(props) {
     // 사용자에게 보여줄 기본 웹 형식
     return (
         <nav className="Logo" style={{ position: 'fixed', top: 0, height: '15vh', width: '100vw' }}>
-            <div style={{ height: '100%', display: 'flex', alignItems:'center', justifyContent:'center'
-                        , borderBottom: '1px solid rgba(0, 0, 0, .25)' }}>
+            <div style={{
+                height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                , borderBottom: '1px solid rgba(0, 0, 0, .25)'
+            }}>
                 <h1 style={{ fontSize: '2.5vw' }}>Learn Python</h1>
+            </div>
+            <div style={{ position: 'absolute', display: 'fixed', margin: '10px', top: 0, right: 0}}>
+                    <button onClick={logoutHandler}>Logout</button>
             </div>
         </nav>
     )
