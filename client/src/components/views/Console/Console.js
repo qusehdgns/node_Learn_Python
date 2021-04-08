@@ -11,6 +11,7 @@ function Console(props) {
     const onTextcodeHandler = (event) => {
         settextcode(event.currentTarget.value);
     }
+
     return (
         <div id='console' style={{
             position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 80px)', height: '85vh', display: 'none', zIndex: 5, backgroundColor: 'white'
@@ -21,7 +22,7 @@ function Console(props) {
                 <h6></h6>
             </div>
             <div style={{ width: '50%', height: '100%', padding: '10px' }}>
-                <textarea id='console_input' style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }} value={textcode} onChange={onTextcodeHandler}>
+                <textarea style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }} value={textcode} onChange={onTextcodeHandler}>
                 </textarea>
             </div>
         </div>
