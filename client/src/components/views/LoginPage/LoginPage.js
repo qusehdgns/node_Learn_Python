@@ -28,7 +28,7 @@ function LoginPage(props) {
         setPassword(event.currentTarget.value);
     }
 
-    const movetoRegister = (event) => {
+    const movetoRegister = () => {
         props.history.push('/register');
     }
 

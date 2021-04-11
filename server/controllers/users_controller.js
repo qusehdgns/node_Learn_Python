@@ -88,6 +88,10 @@ exports.usercheckemail = (req, res) => {
 
     User.findOne({ email : req.query.email, phone : req.query.phone }, (err, user) => {
         if(!user) return res.json({ checkSuccess : false, message : "해당 정보의 사용자가 존재하지 않습니다."});
+        
+        // 인증번호 생성 및 email과 데이터베이스 저장
+
+        // 이메일 전송
 
         return res.json({ checkSuccess : true });
     })
