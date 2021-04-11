@@ -4,23 +4,29 @@
 // express 라이브러리의 라우터 기능 선언
 const router = require("express").Router();
 // 실행 함수가 있는 controller 선언
-const controller = require("../controllers/controller");
+const controller = require("../controllers/users_controller");
 // Middleware에서 사용한 auth 선언
 const { auth } = require("../middleware/auth");
 
 // Api
 
 // 회원가입
-router.post("/api/users/register", controller.usersregister);
+router.post("/register", controller.usersregister);
 
 // login
-router.post("/api/users/login", controller.userslogin);
+router.post("/login", controller.userslogin);
 
 // 유저 정보 호출
-router.get("/api/users/auth", auth, controller.usersauth);
+router.get("/auth", auth, controller.usersauth);
 
 // logout
-router.get("/api/users/logout", auth, controller.userslogout);
+router.get("/logout", auth, controller.userslogout);
+
+// Findid
+router.get("/findid", controller.usersfindid);
+
+// CheckEmail
+router.get("/checkemail", controller.usercheckemail);
 
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;

@@ -24,7 +24,7 @@ server.use(express.json());
 server.use(cookieParser());
 
 // url을 함수와 연결 파일 호출
-const routes = require("./routes/index");
+const routes = require("./routes/main_routes");
 
 // 서버에 routes 파일을 사용하겠다고 선언
 server.use(routes);

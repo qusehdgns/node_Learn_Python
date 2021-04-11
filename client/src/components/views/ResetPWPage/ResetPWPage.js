@@ -4,6 +4,10 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
+// api 기본 게이트를 저장한 정보 호출
+import { USER_SERVER } from '../../Config';
+// ajax와 유사한 통신 라이브러리 선언
+import Axios from 'axios';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function ResetPWPage(props) {
@@ -26,6 +30,23 @@ function ResetPWPage(props) {
         setPhone(event.currentTarget.value);
     }
 
+    const checkMyEmail = () => {
+
+        Axios.get(`${USER_SERVER}/checkemail`, {
+            params: {
+                email: Email,
+                phone: Phone
+            }
+        }).then(res => {
+            let data = res.data
+            if(data.checkSuccess){
+                alert();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
     // 제출 버튼 클릭 시 실행되는 함수
     const onSubmitHandler = (event) => {
         // 페이지를 다시 호출하지 않고 지금 상태를 사용하기 위한 선언
@@ -37,8 +58,6 @@ function ResetPWPage(props) {
             phone: Phone
         };
 
-        // redux를 사용하여 저장 값과 함께 로그인 수행 함수 호출
-        
     }
 
     return (
@@ -59,7 +78,7 @@ function ResetPWPage(props) {
                 <label>phone</label>
                 <input type="text" value={Phone} onChange={onPhoneHandler} />
                 <br />
-                <button type='button'>
+                <button type='button' onClick={checkMyEmail}>
                     Checking my Email
                 </button>
                 <div style={{textAlign:'center'}}>

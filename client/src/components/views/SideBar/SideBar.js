@@ -2,11 +2,15 @@
 import React, { useState } from 'react'
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
+// redux 사용하기 위한 선언
+import { useSelector } from 'react-redux';
 
 // 네비게이션 바 정보
 function SideBar(props) {
 
     const [toggle, settoggle] = useState(false);
+
+    const state = useSelector(state => state.user)
 
     function checkConsole() {
         let console = document.getElementById('console');
@@ -46,6 +50,16 @@ function SideBar(props) {
         }
     }
 
+    let QandAButton = null;
+    let MypageButton = null;
+
+    if (state.hasOwnProperty('userData')) {
+        if (state.userData.isAuth) {
+            QandAButton = <button style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</button>;
+            MypageButton = <button style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</button>;
+        }
+    }
+
     // 사용자에게 보여줄 기본 웹 형식
     return (
         <nav className="menu" style={{
@@ -55,8 +69,8 @@ function SideBar(props) {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <button style={{ margin: '5px 0' }} onClick={movetoStudy}>Study</button>
                 <button style={{ margin: '5px 0' }} onClick={switchCompiler}>Compiler</button>
-                <button style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</button>
-                <button style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</button>
+                {QandAButton}
+                {MypageButton}
             </div>
         </nav>
     )

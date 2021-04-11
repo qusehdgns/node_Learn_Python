@@ -1,7 +1,7 @@
 // 리엑트 기본 라이브러리 호출
 import React from 'react'
 // redux 사용하기 위한 선언
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // 로그아웃 액션을 지정해 놓은 파일 호출
 import { logoutUser } from '../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
@@ -17,7 +17,7 @@ function NavBar(props) {
         // redux를 사용하여 저장 값과 함께 로그인 수행 함수 호출
         dispatch(logoutUser()).then(res => {
             // 로그아웃 성공 리턴 시
-            if (res.payload.success) {
+            if (res.payload.logoutSuccess) {
                 // 로그인 페이지로 이동
                 props.history.push("/login");
             }
@@ -29,6 +29,23 @@ function NavBar(props) {
         })
     }
 
+    const loginHandler = () => {
+        // redux를 사용하여 저장 값과 함께 로그인 수행 함수 호출
+        props.history.push('/login');
+    }
+
+    const state = useSelector(state => state.user)
+
+    let button = null;
+
+    if (state.hasOwnProperty('userData')) {
+        if(state.userData.isAuth){
+            button = <button onClick={logoutHandler}>Logout</button>;
+        } else {
+            button = <button onClick={loginHandler}>Login</button>;
+        }
+    }
+
     // 사용자에게 보여줄 기본 웹 형식
     return (
         <nav className="Logo" style={{ position: 'fixed', top: 0, height: '15vh', width: '100vw' }}>
@@ -38,8 +55,8 @@ function NavBar(props) {
             }}>
                 <h1 style={{ fontSize: '2.5vw' }}>Learn Python</h1>
             </div>
-            <div style={{ position: 'absolute', display: 'fixed', margin: '10px', top: 0, right: 0}}>
-                    <button onClick={logoutHandler}>Logout</button>
+            <div style={{ position: 'absolute', display: 'fixed', margin: '10px', top: 0, right: 0 }}>
+                {button}
             </div>
         </nav>
     )

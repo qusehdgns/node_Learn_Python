@@ -53,9 +53,13 @@ function LoginPage(props) {
             // 로그인 실패
             else {
                 // 로그인 실패 메시지
-                alert('Error');
+                alert('Email, Password를 확인해주세요.');
             }
         });
+    }
+
+    const LogoHandler = () => {
+        props.history.push('/');
     }
 
     // 사용자에게 보여줄 기본 웹 형식
@@ -67,7 +71,7 @@ function LoginPage(props) {
             <form style={{display: 'flex', flexDirection: 'column'}}
                 onSubmit={onSubmitHandler}> 
                 <div style={{textAlign:'center'}}>
-                    <h1>Learn Python</h1>
+                    <h1 onClick={LogoHandler} style={{cursor: 'pointer'}}>Learn Python</h1>
                 </div>
                 <br/>
                 <label>Email</label>

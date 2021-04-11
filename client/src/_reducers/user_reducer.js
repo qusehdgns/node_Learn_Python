@@ -29,7 +29,7 @@ function user_split_action(state = {}, action) {
         // 로그아웃 시 발생하는 타입
         case LOGOUT_USER:
             // 정보를 리엑트 임시 저장공간에 부여
-            return{...state}
+            return {...state, login: action.payload };
         
         // 액션 타입없이 요청이 들어올 경우
         default:

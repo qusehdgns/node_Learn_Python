@@ -66,10 +66,29 @@ exports.userslogout = (req, res) => {
     // 데이터베이스 레코드 아이디를 사용하여 토큰을 비움
     User.findOneAndUpdate({ _id : req.user._id }, { token : ""}, (err, user) => {
         // 토큰 비우기 실패 또는 에러 발생시 실패와 에러 리턴
-        if (err) return res.json({ success : false, err });
+        if (err) return res.json({ logoutSuccess : false, err });
         // 로그아웃 성공 시 성공 리턴
-        return res.status(200).send({
-            success : true
-        });
+        return res.status(200).send({ logoutSuccess : true, userId : '' });
     });
+}
+
+
+exports.usersfindid = (req, res) => {
+
+    User.findOne({ name : req.query.name, phone : req.query.phone }, (err, user) => {
+        // 유저 검색 실패 또는 에러 발생 시 로그인 실패 리턴
+        if(!user) return res.json({ success : false, message : "해당 정보의 사용자가 존재하지 않습니다."});
+
+        return res.json({ success : true, email : user.email });
+    });
+}
+
+
+exports.usercheckemail = (req, res) => {
+
+    User.findOne({ email : req.query.email, phone : req.query.phone }, (err, user) => {
+        if(!user) return res.json({ checkSuccess : false, message : "해당 정보의 사용자가 존재하지 않습니다."});
+
+        return res.json({ checkSuccess : true });
+    })
 }
