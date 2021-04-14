@@ -58,6 +58,12 @@ const userSchema = mongoose.Schema({
         // 기본 값 0
         default: 0
     },
+    // 점수
+    score : {
+        type: Number,
+
+        default : 0
+    },
     // 유효성 관리
     token: {
         type: String

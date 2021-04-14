@@ -52,10 +52,6 @@ exports.usersauth = (req, res) => {
         isAuth : true,
         // 유저 이메일
         email : req.user.email,
-        // 유저 이름
-        name : req.user.name,
-        // 유저 연락처
-        name : req.user.phone,
         // 유저 역할
         role : req.user.role
     });

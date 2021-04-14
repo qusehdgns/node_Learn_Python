@@ -32,5 +32,5 @@ server.use(routes);
 // 서버 구동
 http.listen(port, () => {
     // 콘솔에 서버가 열리면 포트와 함께 출력
-    console.log(`localhost:${port} 실행...`)
+    console.log(`localhost:${port} 실행...`);
 });
