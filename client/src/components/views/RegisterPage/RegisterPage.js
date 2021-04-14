@@ -15,11 +15,7 @@ function RegisterPage(props) {
     const dispatch = useDispatch();
 
     // 페이지 변화에 따른 상태 저장 필요 요소 선언
-<<<<<<< Updated upstream
     const [Message, setMessage] = useState("");
-=======
-    const [MESSAGE, setMsg] = useState("");
->>>>>>> Stashed changes
     const [Email, setEmail] = useState("");
     const [Name, setName] = useState("");
     const [Phone, setPhone] = useState("");
@@ -40,18 +36,6 @@ function RegisterPage(props) {
 
     // 연락처 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-<<<<<<< Updated upstream
-        var event_val = event.currentTarget.value.split("-").join("");
-        if (event_val >= 4){
-            event_val = event_val.substr(0, 3) + "-" + event_val.substr(3, event_val.length-3);
-        }
-        if (event_val >= 9){
-            event_val = event_val.substr(0, 8) + "-" + event_val.substr(8, event_val.length-8);
-        }
-
-        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
-        setPhone(event_val);
-=======
         // 문자열에서 '-'제거
         var event_string = event.currentTarget.value.split("-").join("")
         
@@ -65,7 +49,6 @@ function RegisterPage(props) {
         }
         // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
         setPhone(event_string);
->>>>>>> Stashed changes
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
@@ -78,17 +61,6 @@ function RegisterPage(props) {
     const onConfirmPasswordHandler = (event) => {
         // 이벤트로 들어온 값을 setConfirmPassword 함수를 사용하여 적용
         setConfirmPassword(event.currentTarget.value);
-<<<<<<< Updated upstream
-        // 비밀번호와 비밀번호 재입력이 같지 않을 경우
-        if (Password !== event.currentTarget.value){
-            // 비밀번호 입력이 같지 않다는 메시지 출력
-            setMessage("Not same password");
-        }
-        // 비밀번호가 같을 경우
-        else {
-            // 출력중인 메시지 제거
-            setMessage("");
-=======
         if (Password != event.currentTarget.value){
             // 비밀번호 입력이 같지 않다는 메시지 출력
             setMsg("Not same password");
@@ -96,7 +68,6 @@ function RegisterPage(props) {
         else {
             // 비밀번호 입력이 같을시 메시지 제거
             setMsg("");
->>>>>>> Stashed changes
         }
     }
 
@@ -105,25 +76,15 @@ function RegisterPage(props) {
         // 페이지를 다시 호출하지 않고 지금 상태를 사용하기 위한 선언
         event.preventDefault();
 
-<<<<<<< Updated upstream
 
         // 바로바로 저장되어있는 값을 사용하여 body 변수에 저장
         let body = {
             message: Message,
-=======
-        // 바로바로 저장되어있는 값을 사용하여 body 변수에 저장
-        let body = {
-            msg: MESSAGE,
->>>>>>> Stashed changes
             email: Email,
             name: Name,
             phone: Phone,
             password: Password,
-<<<<<<< Updated upstream
             confirmpassword: ConfirmPassword
-=======
-            confirmpassword: ConfirmPassword,
->>>>>>> Stashed changes
         };
 
         // redux를 사용하여 저장 값과 함께 회원가입 수행 함수 호출
@@ -153,12 +114,8 @@ function RegisterPage(props) {
                 <div style={{textAlign:'center'}}>
                     <h1>Learn Python</h1>
                 </div>
-<<<<<<< Updated upstream
                 <p style={{color:'red'}} align='center'>{Message}</p>
 
-=======
-                <p style={{color:'red'}} align='center'>{MESSAGE}</p>
->>>>>>> Stashed changes
                 <label>Email</label>
                 <input type="email" value={Email} onChange={onEmailHandler} />
 
