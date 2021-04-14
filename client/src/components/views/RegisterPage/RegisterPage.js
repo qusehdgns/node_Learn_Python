@@ -45,7 +45,7 @@ function RegisterPage(props) {
         }
         // 문자열 수가 9이상이면 '-' 하나 더 추가
         if (event_string.length >= 9){
-            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-3)
+            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
         }
         // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
         setPhone(event_string);
@@ -63,11 +63,11 @@ function RegisterPage(props) {
         setConfirmPassword(event.currentTarget.value);
         if (Password != event.currentTarget.value){
             // 비밀번호 입력이 같지 않다는 메시지 출력
-            setMsg("Not same password");
+            setMessage("Not same password");
         }
         else {
             // 비밀번호 입력이 같을시 메시지 제거
-            setMsg("");
+            setMessage("");
         }
     }
 
