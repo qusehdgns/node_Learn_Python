@@ -7,7 +7,13 @@ import { registerUser } from '../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 
-
+/*
+작업예정
+- 박스 테두리 색 실시간 변경
+- 비밀번호 규칙(숫자5이상, 영어5이상, 10자이상 15자미만)
+- ID 중복검사
+- 메시지 출력위치 조정?(누적이 안됨)
+*/
 
 // 회원가입 페이지 호출 시 실행되는 페이지 정보
 function RegisterPage(props) {
@@ -37,8 +43,22 @@ function RegisterPage(props) {
     // 연락처 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
         // 문자열에서 '-'제거
-        var event_string = event.currentTarget.value.split("-").join("")
+        let event_string = event.currentTarget.value.split("-").join("")
+
+        alert(event_string);
+        // 숫자가 아니거나 11자 이상 입력시 메시지 출력
+        if (/^[0-9]/.test(event_string[event_string.length-1]) && event_string.length<12){
+            setMessage("");
+        }
+        else {
+            setMessage("전화번호 규칙과 다릅니다");
+        }
         
+        // 숫자가 아니면 문자 제거
+        if (!/^[0-9]/.test(event_string[event_string.length-1])){
+            event_string = event_string.substr(0, event_string.length-1);
+        }
+
         // 문자열 수가 4이상이면 '-' 하나 추가
         if (event_string.length >= 4){
             event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
@@ -49,12 +69,21 @@ function RegisterPage(props) {
         }
         // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
         setPhone(event_string);
+
+        
+        
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onPasswordHandler = (event) => {
         // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
         setPassword(event.currentTarget.value);
+        if (event.currentTarget.value.length < 15){
+            setMessage("비밀번호는 숫자,영문을 5개 이상 포함, 총 15자 미만이어야 합니다");
+        }
+        else {
+            setMessage("");
+        }
     }
 
     // 비밀번호 재입력 핸들러 수행시 실행되는 함수
@@ -63,7 +92,7 @@ function RegisterPage(props) {
         setConfirmPassword(event.currentTarget.value);
         if (Password != event.currentTarget.value){
             // 비밀번호 입력이 같지 않다는 메시지 출력
-            setMessage("Not same password");
+            setMessage("비밀번호가 다릅니다");
         }
         else {
             // 비밀번호 입력이 같을시 메시지 제거
