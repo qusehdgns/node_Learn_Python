@@ -4,10 +4,8 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
-// api 기본 게이트를 저장한 정보 호출
-import { USER_SERVER } from '../../Config';
-// ajax와 유사한 통신 라이브러리 선언
-import Axios from 'axios';
+// 로그인 액션을 지정해 놓은 파일 호출
+import { checkEmail } from '../../../_actions/user_action';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function ResetPWPage(props) {
@@ -32,17 +30,17 @@ function ResetPWPage(props) {
 
     const checkMyEmail = () => {
 
-        Axios.get(`${USER_SERVER}/checkemail`, {
-            params: {
-                email: Email,
-                phone: Phone
-            }
-        }).then(res => {
-            let data = res.data
-            if(data.checkSuccess){
+        let data = {
+            email: Email,
+            phone: Phone
+        }
+
+        dispatch(checkEmail(data)).then(res => {
+            console.log(res)
+            if(res.payload.checkSuccess){
                 alert();
             } else {
-                alert(data.message);
+                alert(res.payload.message);
             }
         });
     }

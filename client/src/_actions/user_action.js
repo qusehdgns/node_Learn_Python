@@ -5,7 +5,8 @@ import {
     LOGIN_USER,
     REGISTER_USER,
     AUTH_USER,
-    LOGOUT_USER
+    LOGOUT_USER,
+    CHECK_USER
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { USER_SERVER } from '../components/Config';
@@ -58,6 +59,17 @@ export function logoutUser(){
     // 결과 값과 액션 결과를 리턴
     return {
         type: LOGOUT_USER,
+        payload: req
+    }
+}
+
+// 비밀번호 재설정 - email 확인
+export function checkEmail(dataToSubmit){
+    const req = Axios.get(`${USER_SERVER}/checkemail?email=${dataToSubmit.email}&phone=${dataToSubmit.phone}`)
+    .then(res => res.data);
+
+    return {
+        type: CHECK_USER,
         payload: req
     }
 }
