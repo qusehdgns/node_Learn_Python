@@ -22,8 +22,19 @@ function FindIDPage(props) {
 
     // 이메일 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-        // 이벤트로 들어온 값을 setEmail 함수를 사용하여 적용
-        setPhone(event.currentTarget.value);
+        // 문자열에서 '-'제거
+        var event_string = event.currentTarget.value.split("-").join("")
+        
+        // 문자열 수가 4이상이면 '-' 하나 추가
+        if (event_string.length >= 4){
+            event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
+        }
+        // 문자열 수가 9이상이면 '-' 하나 더 추가
+        if (event_string.length >= 9){
+            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
+        }
+        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+        setPhone(event_string);
     }
 
     // 제출 버튼 클릭 시 실행되는 함수
