@@ -4,7 +4,8 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
-    CHECK_USER
+    CHECK_USER,
+    RESET_PW
 } from '../_actions/types';
 
 
@@ -35,6 +36,10 @@ function user_split_action(state = {}, action) {
         case CHECK_USER:
             // 정보를 리엑트 임시 저장공간에 부여
             return {...state, check: action.payload };
+
+        case RESET_PW:
+            // 정보를 리엑트 임시 저장공간에 부여
+            return {...state, reset: action.payload };
         
         // 액션 타입없이 요청이 들어올 경우
         default:

@@ -82,6 +82,7 @@ function LoginPage(props) {
                 <button type='submit'>
                     Login
                 </button>
+                <br/>
                 <button type='button' onClick={movetoRegister}>
                     Register
                 </button>
