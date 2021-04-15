@@ -8,3 +8,7 @@ export const REGISTER_USER = "register_user";
 export const AUTH_USER = "auth_user";
 // 로그아웃을 나타내는 값
 export const LOGOUT_USER = "logout_user";
+
+export const CHECK_USER = "check_user";
+
+export const RESET_PW = "reset_pw";

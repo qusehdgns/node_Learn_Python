@@ -28,5 +28,8 @@ router.get("/findid", controller.usersfindid);
 // CheckEmail
 router.get("/checkemail", controller.usercheckemail);
 
+// ResetPassword
+router.put("/resetpassword", controller.userresetpassword)
+
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;
