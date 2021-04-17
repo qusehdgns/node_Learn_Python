@@ -64,10 +64,12 @@ export function logoutUser() {
     }
 }
 
-// 비밀번호 재설정 - email 확인
+// email 확인
 export function checkEmail(dataToSubmit) {
-    const req = Axios.get(`${USER_SERVER}/checkemail?email=${dataToSubmit.email}&phone=${dataToSubmit.phone}`)
-        .then(res => res.data);
+
+    const req = Axios.get(`${USER_SERVER}/checkemail`, {
+        params: dataToSubmit
+    }).then(res => res.data);
 
     return {
         type: CHECK_USER,
