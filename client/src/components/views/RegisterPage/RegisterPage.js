@@ -3,16 +3,12 @@ import React, { useState } from 'react';
 // redux 사용하기 위한 선언
 import { useDispatch } from 'react-redux';
 // 회원가입 액션을 지정해 놓은 파일 호출
-import { registerUser } from '../../../_actions/user_action';
+import { checkEmail, registerUser } from '../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 
 /*
-작업예정
-- 박스 테두리 색 실시간 변경
 - 비밀번호 규칙(숫자5이상, 영어5이상, 10자이상 15자미만)
-- ID 중복검사
-- 메시지 출력위치 조정?(누적이 안됨)
 */
 
 // 회원가입 페이지 호출 시 실행되는 페이지 정보
@@ -28,61 +24,99 @@ function RegisterPage(props) {
     const [Password, setPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
 
+    // html id 관리
+    const id_lst = ["email", "name", "phone", "pwd", "confirm_pwd", "register_btn"];
+
+    // 앞의 조건이 만족되지 않으면 뒤에서 입력이 되지 않도록 하는 함수
+    const visible = (id, pass) => {
+        // pass에 true가 들어오면 다음 진행이 가능하도록 disable을 변경
+        var idx = pass ? id_lst.indexOf(id)+1 : id_lst.indexOf(id);
+        for (var i=0; i<id_lst.length; i++) {
+            if (i<=idx) { // disabled 해제
+                document.getElementById(id_lst[i]).disabled = false;
+            }
+            else { // disabled 설정
+                document.getElementById(id_lst[i]).disabled = true;
+            }
+        }
+    }
+
     // 이메일 핸들러 수행시 실행되는 함수
     const onEmailHandler = (event) => {
         // 이벤트로 들어온 값을 setEmail 함수를 사용하여 적용
         setEmail(event.currentTarget.value);
     }
 
+    const checkMyEmail = () => {
+        // ID(email) 중복검사
+        let data = {
+            email: Email
+        }
+
+        dispatch(checkEmail(data)).then(res => {
+            console.log(res)
+            if (res.payload.checkSuccess) {
+                setMessage("이미 존재하는 ID(Email) 입니다");
+                visible("email", false)
+                alert("사용불가");
+            } else {
+                setMessage("");
+                visible("email", true)
+                alert("사용가능");
+            }
+        });
+    }
+
     // 이름 핸들러 수행시 실행되는 함수
     const onNameHandler = (event) => {
         // 이벤트로 들어온 값을 setName 함수를 사용하여 적용
+        if (event.currentTarget.value.length != 0){
+            visible("name", true);
+        }
+        else {
+            visible("name", false);
+        }
         setName(event.currentTarget.value);
     }
 
     // 연락처 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-        // 문자열에서 '-'제거
-        let event_string = event.currentTarget.value.split("-").join("")
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(event.currentTarget.value)) {
 
-        alert(event_string);
-        // 숫자가 아니거나 11자 이상 입력시 메시지 출력
-        if (/^[0-9]/.test(event_string[event_string.length-1]) && event_string.length<12){
-            setMessage("");
-        }
-        else {
-            setMessage("전화번호 규칙과 다릅니다");
-        }
-        
-        // 숫자가 아니면 문자 제거
-        if (!/^[0-9]/.test(event_string[event_string.length-1])){
-            event_string = event_string.substr(0, event_string.length-1);
-        }
+            // 문자열에서 '-'제거
+            var event_string = event.currentTarget.value.split("-").join("")
 
-        // 문자열 수가 4이상이면 '-' 하나 추가
-        if (event_string.length >= 4){
-            event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
-        }
-        // 문자열 수가 9이상이면 '-' 하나 더 추가
-        if (event_string.length >= 9){
-            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
-        }
-        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
-        setPhone(event_string);
+            // 문자열 수가 4이상이면 '-' 하나 추가
+            if (event_string.length >= 4) {
+                event_string = event_string.substr(0, 3) + '-' + event_string.substr(3, event_string.length - 3)
+            }
+            // 문자열 수가 9이상이면 '-' 하나 더 추가
+            if (event_string.length >= 9) {
+                event_string = event_string.substr(0, 8) + '-' + event_string.substr(8, event_string.length - 8)
+            }
+            // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+            setPhone(event_string);
 
-        
-        
+            if (event_string.length === 13){
+                visible("pwd", true)
+            }
+        }
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onPasswordHandler = (event) => {
         // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
-        setPassword(event.currentTarget.value);
-        if (event.currentTarget.value.length < 15){
-            setMessage("비밀번호는 숫자,영문을 5개 이상 포함, 총 15자 미만이어야 합니다");
+        let event_string = event.currentTarget.value
+        setPassword(event_string);
+        // a-z, A-Z, 0-9로 이루어진 문자열을 5이상 15이하로 제한(왜인지 제대로 동작하지 않음)
+        if ((/[a-zA-z0-9]{5,15}/g.test(event_string))) {
+            setMessage("");
+            visible("pwd", true);
         }
         else {
-            setMessage("");
+            setMessage("비밀번호는 숫자,영문을 5개 이상 포함, 총 15자 이하이어야 합니다");
+            visible("pwd", false);
         }
     }
 
@@ -93,10 +127,12 @@ function RegisterPage(props) {
         if (Password != event.currentTarget.value){
             // 비밀번호 입력이 같지 않다는 메시지 출력
             setMessage("비밀번호가 다릅니다");
+            visible("confirm_pwd", false);
         }
         else {
             // 비밀번호 입력이 같을시 메시지 제거
             setMessage("");
+            visible("confirm_pwd", true);
         }
     }
 
@@ -146,24 +182,24 @@ function RegisterPage(props) {
                 <p style={{color:'red'}} align='center'>{Message}</p>
 
                 <label>Email</label>
-                <input type="email" value={Email} onChange={onEmailHandler} />
+                <input id="email" type="email" value={Email} onChange={onEmailHandler} />
 
-                <button type='button'>Check my ID</button>
+                <button type='button' onClick={checkMyEmail}>Check my ID</button>
 
                 <label>Name</label>
-                <input type="text" value={Name} onChange={onNameHandler} />
+                <input disabled id="name" type="text" value={Name} onChange={onNameHandler} />
 
                 <label>Phone</label>
-                <input type="text" value={Phone} onChange={onPhoneHandler} />
+                <input disabled id="phone" type="tel" maxLength="13" value={Phone} onChange={onPhoneHandler} />
 
                 <label>Password</label>
-                <input type="password" value={Password} onChange={onPasswordHandler} />
+                <input disabled id="pwd" type="password" value={Password} onChange={onPasswordHandler} />
 
                 <label>Confrim Password</label>
-                <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                <input disabled id="confirm_pwd" type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
 
                 <br />
-                <button type="submit">
+                <button disabled id="register_btn" type="submit">
                     Register
                 </button>
             </form>

@@ -29,19 +29,23 @@ function ResetPWPage(props) {
 
     // 연락처 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-        // 문자열에서 '-'제거
-        var event_string = event.currentTarget.value.split("-").join("")
-        
-        // 문자열 수가 4이상이면 '-' 하나 추가
-        if (event_string.length >= 4){
-            event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(event.currentTarget.value)) {
+
+            // 문자열에서 '-'제거
+            var event_string = event.currentTarget.value.split("-").join("")
+
+            // 문자열 수가 4이상이면 '-' 하나 추가
+            if (event_string.length >= 4) {
+                event_string = event_string.substr(0, 3) + '-' + event_string.substr(3, event_string.length - 3)
+            }
+            // 문자열 수가 9이상이면 '-' 하나 더 추가
+            if (event_string.length >= 9) {
+                event_string = event_string.substr(0, 8) + '-' + event_string.substr(8, event_string.length - 8)
+            }
+            // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+            setPhone(event_string);
         }
-        // 문자열 수가 9이상이면 '-' 하나 더 추가
-        if (event_string.length >= 9){
-            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
-        }
-        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
-        setPhone(event_string);
     }
 
     const checkMyEmail = () => {
@@ -96,12 +100,56 @@ function ResetPWPage(props) {
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onPasswordHandler = (event) => {
+        const regex = /^[A-Za-z0-9]{5,15}$/;
+
+        let value = event.currentTarget.value;
+
+        let passwordnotice = document.getElementById('passwordnotice');
+
+        if(value === ""){
+            passwordnotice.innerHTML = '';
+        } else if(!regex.test(value)){
+            passwordnotice.style.color = 'red';
+            passwordnotice.innerHTML = '비밀번호 규칙에 맞추어주세요';
+        } else {
+            passwordnotice.style.color = 'green';
+            passwordnotice.innerHTML = '사용가능한 비밀번호입니다.';
+        }
+
+
+        let confirmpasswordnotice = document.getElementById('confirmpasswordnotice');
+
+        if(ConfirmPassword !== ""){
+            if(value === ConfirmPassword){
+                confirmpasswordnotice.style.color = 'green';
+                confirmpasswordnotice.innerHTML = '입력한 비밀번호가 같습니다';
+            } else {
+                confirmpasswordnotice.style.color = 'red';
+                confirmpasswordnotice.innerHTML = '입력한 비밀번호와 다릅니다';
+            }
+        }
+
         // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
         setPassword(event.currentTarget.value);
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onConfirmPasswordHandler = (event) => {
+
+        let value = event.currentTarget.value;
+
+        let confirmpasswordnotice = document.getElementById('confirmpasswordnotice');
+
+        if(value === ""){
+            confirmpasswordnotice.innerHTML = '';
+        } else if(value !== Password){
+            confirmpasswordnotice.style.color = 'red';
+            confirmpasswordnotice.innerHTML = '입력한 비밀번호와 다릅니다';
+        } else {
+            confirmpasswordnotice.style.color = 'green';
+            confirmpasswordnotice.innerHTML = '입력한 비밀번호가 같습니다';
+        }
+        
         // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
         setConfirmPassword(event.currentTarget.value);
     }
@@ -122,11 +170,15 @@ function ResetPWPage(props) {
             };
 
             dispatch(resetPassword(body)).then(res => {
-                if(res.payload.resetsuccess){
+                if (res.payload.resetsuccess) {
                     alert("비밀번호 재설정 성공했습니다.");
                     props.history.push('/login');
                 } else {
-                    alert("비밀번호 재설정에 실패했습니다.");
+                    if (res.payload.hasOwnProperty('message')) {
+                        alert(res.payload.message)
+                    } else {
+                        alert("비밀번호 재설정에 실패했습니다.");
+                    }
                 }
             })
         }
@@ -148,8 +200,8 @@ function ResetPWPage(props) {
                 <label>email</label>
                 <input type="email" id='email' value={Email} onChange={onEmailHandler} />
                 <label>phone</label>
-                <input type="text" id='phone' value={Phone} onChange={onPhoneHandler} />
-                <br/>
+                <input type="tel" id='phone' maxLength='13' value={Phone} onChange={onPhoneHandler} />
+                <br />
                 <div id="checkEmail" style={{ display: 'flex', flexDirection: 'column' }}>
                     <button type='button' onClick={checkMyEmail}>
                         Checking my Email
@@ -166,11 +218,12 @@ function ResetPWPage(props) {
                 <div id="resetPasswor" style={{ display: 'none', flexDirection: 'column' }}>
                     <label>Password</label>
                     <input type="password" value={Password} onChange={onPasswordHandler} />
-
+                    <span id="passwordnotice" style={{display: 'block', textAlign: 'center'}}></span>
                     <label>Confrim Password</label>
                     <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                    <span id="confirmpasswordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
-                    <br/>
+                    <br />
 
                     <button type="submit">
                         Reset Password

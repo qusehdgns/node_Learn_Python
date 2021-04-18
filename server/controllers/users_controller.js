@@ -84,42 +84,53 @@ exports.usersfindid = (req, res) => {
 // 이메일 확인
 exports.usercheckemail = (req, res) => {
 
-    User.findOne({ email: req.query.email, phone: req.query.phone }, async (err, user) => {
+    User.findOne(req.query, async (err, user) => {
         if (!user) return res.json({ checkSuccess: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
 
-        const number = Math.floor(Math.random() * 888889) + 111111;
+        // req에 phone 객체가 포함되어 있는지 필터링(비밀번호 재설정)
+        if (req.query.hasOwnProperty('phone')) {
+            const number = Math.floor(Math.random() * 888889) + 111111;
 
-        const mailOptions = {
-            from: Senderemail,
-            to: user.email,
-            subject: "[Learn Python]인증 관련 이메일 입니다",
-            text: "오른쪽 숫자 6자리를 입력해주세요 : " + number
-        };
+            const mailOptions = {
+                from: Senderemail,
+                to: user.email,
+                subject: "[Learn Python]인증 관련 이메일 입니다",
+                text: "오른쪽 숫자 6자리를 입력해주세요 : " + number
+            };
 
-        await smtpTransport.sendMail(mailOptions, (error, responses) => {
-            if (error) {
-                res.json({ checkSuccess: true, certification: error });
-            } else {
-                res.json({ checkSuccess: true, certification: number });
-            }
-            smtpTransport.close();
-        });
+            await smtpTransport.sendMail(mailOptions, (error, responses) => {
+                if (error) {
+                    res.json({ checkSuccess: true, certification: error });
+                } else {
+                    res.json({ checkSuccess: true, certification: number });
+                }
+                smtpTransport.close();
+            });
+        } else {// req에 email만 있으면 회원가입 ID 중복에 사용
+            return res.json({ checkSuccess: true });
+        }
     });
 }
 
 // 비밀번호 재설정
 exports.userresetpassword = (req, res) => {
     User.findOne({ email: req.body.email, phone: req.body.phone }, (err, user_data) => {
-        user_data.password = req.body.password;
 
-        let user = new User(user_data);
+        user_data.comparePassword(req.body.password, (err, isMatch) => {
+            // 에러 및 비밀번호가 다르다면 로그인 실패 리턴
+            if (isMatch) return res.json({ resetsuccess: false, message: "직전에 사용한 비밀번호는 사용할 수 없습니다." });
 
-        // save(몽고 디비 함수)를 사용하여 유저 저장
-        user.save((err, userInfo) => {
-            // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
-            if (err) return res.json({ resetsuccess: false, err });
-            // 유저 저장 성공 시 성공 리턴
-            return res.status(200).json({ resetsuccess: true });
+            user_data.password = req.body.password;
+
+            let user = new User(user_data);
+
+            // save(몽고 디비 함수)를 사용하여 유저 저장
+            user.save((err, userInfo) => {
+                // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
+                if (err) return res.json({ resetsuccess: false, err });
+                // 유저 저장 성공 시 성공 리턴
+                return res.status(200).json({ resetsuccess: true });
+            });
         });
     });
 }
