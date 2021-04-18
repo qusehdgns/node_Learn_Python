@@ -88,11 +88,7 @@ exports.usercheckemail = (req, res) => {
         if (!user) return res.json({ checkSuccess: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
 
         // req에 phone 객체가 포함되어 있는지 필터링(비밀번호 재설정)
-<<<<<<< HEAD
-        if(req.query.hasOwnProperty('phone')){
-=======
         if (req.query.hasOwnProperty('phone')) {
->>>>>>> making
             const number = Math.floor(Math.random() * 888889) + 111111;
 
             const mailOptions = {
@@ -111,11 +107,7 @@ exports.usercheckemail = (req, res) => {
                 smtpTransport.close();
             });
         } else {// req에 email만 있으면 회원가입 ID 중복에 사용
-<<<<<<< HEAD
             return  res.json({ checkSuccess: true });
-=======
-            return res.json({ checkSuccess: true });
->>>>>>> making
         }
     });
 }
