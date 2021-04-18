@@ -88,7 +88,11 @@ exports.usercheckemail = (req, res) => {
         if (!user) return res.json({ checkSuccess: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
 
         // req에 phone 객체가 포함되어 있는지 필터링(비밀번호 재설정)
+<<<<<<< HEAD
         if(req.query.hasOwnProperty('phone')){
+=======
+        if (req.query.hasOwnProperty('phone')) {
+>>>>>>> making
             const number = Math.floor(Math.random() * 888889) + 111111;
 
             const mailOptions = {
@@ -107,7 +111,11 @@ exports.usercheckemail = (req, res) => {
                 smtpTransport.close();
             });
         } else {// req에 email만 있으면 회원가입 ID 중복에 사용
+<<<<<<< HEAD
             return  res.json({ checkSuccess: true });
+=======
+            return res.json({ checkSuccess: true });
+>>>>>>> making
         }
     });
 }
@@ -115,16 +123,22 @@ exports.usercheckemail = (req, res) => {
 // 비밀번호 재설정
 exports.userresetpassword = (req, res) => {
     User.findOne({ email: req.body.email, phone: req.body.phone }, (err, user_data) => {
-        user_data.password = req.body.password;
 
-        let user = new User(user_data);
+        user_data.comparePassword(req.body.password, (err, isMatch) => {
+            // 에러 및 비밀번호가 다르다면 로그인 실패 리턴
+            if (isMatch) return res.json({ resetsuccess: false, message: "직전에 사용한 비밀번호는 사용할 수 없습니다." });
 
-        // save(몽고 디비 함수)를 사용하여 유저 저장
-        user.save((err, userInfo) => {
-            // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
-            if (err) return res.json({ resetsuccess: false, err });
-            // 유저 저장 성공 시 성공 리턴
-            return res.status(200).json({ resetsuccess: true });
+            user_data.password = req.body.password;
+
+            let user = new User(user_data);
+
+            // save(몽고 디비 함수)를 사용하여 유저 저장
+            user.save((err, userInfo) => {
+                // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
+                if (err) return res.json({ resetsuccess: false, err });
+                // 유저 저장 성공 시 성공 리턴
+                return res.status(200).json({ resetsuccess: true });
+            });
         });
     });
 }

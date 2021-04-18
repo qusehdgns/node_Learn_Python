@@ -81,37 +81,27 @@ function RegisterPage(props) {
 
     // 연락처 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-        // 문자열에서 '-'제거
-        let event_string = event.currentTarget.value.split("-").join("")
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(event.currentTarget.value)) {
 
-        // 숫자가 아니거나 11자 이상 입력시 메시지 출력
-        if (/^[0-9]/.test(event_string[event_string.length-1]) && event_string.length<12){
-            setMessage("");
-            visible("phone", true);
-        }
-        else {
-            setMessage("전화번호 규칙과 다릅니다");
-            visible("phone", false);
-        }
+            // 문자열에서 '-'제거
+            var event_string = event.currentTarget.value.split("-").join("")
 
-        // 숫자가 아니면 문자 제거
-        if (!/^[0-9]/.test(event_string[event_string.length-1])){
-            event_string = event_string.substr(0, event_string.length-1);
-        }
+            // 문자열 수가 4이상이면 '-' 하나 추가
+            if (event_string.length >= 4) {
+                event_string = event_string.substr(0, 3) + '-' + event_string.substr(3, event_string.length - 3)
+            }
+            // 문자열 수가 9이상이면 '-' 하나 더 추가
+            if (event_string.length >= 9) {
+                event_string = event_string.substr(0, 8) + '-' + event_string.substr(8, event_string.length - 8)
+            }
+            // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+            setPhone(event_string);
 
-        // 문자열 수가 4이상이면 '-' 하나 추가
-        if (event_string.length >= 4){
-            event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
+            if (event_string.length === 13){
+                visible("pwd", true)
+            }
         }
-        // 문자열 수가 9이상이면 '-' 하나 더 추가
-        if (event_string.length >= 9){
-            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
-        }
-        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
-        setPhone(event_string);
-
-        
-        
     }
 
     // 비밀번호 핸들러 수행시 실행되는 함수
@@ -119,8 +109,8 @@ function RegisterPage(props) {
         // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
         let event_string = event.currentTarget.value
         setPassword(event_string);
-        // a-z, A-Z, 0-9로 이루어진 문자열을 10이상 15이하로 제한(왜인지 제대로 동작하지 않음)
-        if ((/[a-zA-z0-9]{10,15}/g.test(event_string))) {
+        // a-z, A-Z, 0-9로 이루어진 문자열을 5이상 15이하로 제한(왜인지 제대로 동작하지 않음)
+        if ((/[a-zA-z0-9]{5,15}/g.test(event_string))) {
             setMessage("");
             visible("pwd", true);
         }
@@ -200,7 +190,7 @@ function RegisterPage(props) {
                 <input disabled id="name" type="text" value={Name} onChange={onNameHandler} />
 
                 <label>Phone</label>
-                <input disabled id="phone" type="text" value={Phone} onChange={onPhoneHandler} />
+                <input disabled id="phone" type="tel" maxLength="13" value={Phone} onChange={onPhoneHandler} />
 
                 <label>Password</label>
                 <input disabled id="pwd" type="password" value={Password} onChange={onPasswordHandler} />
