@@ -215,7 +215,7 @@ function ResetPWPage(props) {
                         Check Number
                     </button>
                 </div>
-                <div id="resetPasswor" style={{ display: 'none', flexDirection: 'column' }}>
+                <div id="resetPassword" style={{ display: 'none', flexDirection: 'column' }}>
                     <label>Password</label>
                     <input type="password" value={Password} onChange={onPasswordHandler} />
                     <span id="passwordnotice" style={{display: 'block', textAlign: 'center'}}></span>

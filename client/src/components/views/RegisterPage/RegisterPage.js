@@ -106,34 +106,65 @@ function RegisterPage(props) {
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onPasswordHandler = (event) => {
-        // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
-        let event_string = event.currentTarget.value
-        setPassword(event_string);
-        // a-z, A-Z, 0-9로 이루어진 문자열을 5이상 15이하로 제한(왜인지 제대로 동작하지 않음)
-        if ((/[a-zA-z0-9]{5,15}/g.test(event_string))) {
-            setMessage("");
+
+        const regex = /^(?=.*[A-Za-z])(?=.*\d).{5,15}$/;
+
+        let value = event.currentTarget.value;
+
+        let passwordnotice = document.getElementById('passwordnotice');
+
+        if(value === ""){
+            passwordnotice.innerHTML = '';
+            visible("pwd", false);
+        } else if(!regex.test(value)){
+            passwordnotice.style.color = 'red';
+            passwordnotice.innerHTML = '비밀번호 규칙에 맞추어주세요';
+            visible("pwd", false);
+        } else {
+            passwordnotice.style.color = 'green';
+            passwordnotice.innerHTML = '사용가능한 비밀번호입니다.';
             visible("pwd", true);
         }
-        else {
-            setMessage("비밀번호는 숫자,영문을 5개 이상 포함, 총 15자 이하이어야 합니다");
-            visible("pwd", false);
+
+
+        let confirmpasswordnotice = document.getElementById('confirmpasswordnotice');
+
+        if(ConfirmPassword !== ""){
+            if(value === ConfirmPassword){
+                confirmpasswordnotice.style.color = 'green';
+                confirmpasswordnotice.innerHTML = '입력한 비밀번호가 같습니다';
+            } else {
+                confirmpasswordnotice.style.color = 'red';
+                confirmpasswordnotice.innerHTML = '입력한 비밀번호와 다릅니다';
+            }
         }
+
+        // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
+        setPassword(event.currentTarget.value);
     }
 
     // 비밀번호 재입력 핸들러 수행시 실행되는 함수
     const onConfirmPasswordHandler = (event) => {
-        // 이벤트로 들어온 값을 setConfirmPassword 함수를 사용하여 적용
-        setConfirmPassword(event.currentTarget.value);
-        if (Password != event.currentTarget.value){
-            // 비밀번호 입력이 같지 않다는 메시지 출력
-            setMessage("비밀번호가 다릅니다");
+
+        let value = event.currentTarget.value;
+
+        let confirmpasswordnotice = document.getElementById('confirmpasswordnotice');
+
+        if(value === ""){
+            confirmpasswordnotice.innerHTML = '';
             visible("confirm_pwd", false);
-        }
-        else {
-            // 비밀번호 입력이 같을시 메시지 제거
-            setMessage("");
+        } else if(value !== Password){
+            confirmpasswordnotice.style.color = 'red';
+            confirmpasswordnotice.innerHTML = '입력한 비밀번호와 다릅니다';
+            visible("confirm_pwd", false);
+        } else {
+            confirmpasswordnotice.style.color = 'green';
+            confirmpasswordnotice.innerHTML = '입력한 비밀번호가 같습니다';
             visible("confirm_pwd", true);
         }
+        
+        // 이벤트로 들어온 값을 setPassword 함수를 사용하여 적용
+        setConfirmPassword(event.currentTarget.value);
     }
 
     // 제출 버튼 클릭 시 실행되는 함수
@@ -194,9 +225,11 @@ function RegisterPage(props) {
 
                 <label>Password</label>
                 <input disabled id="pwd" type="password" value={Password} onChange={onPasswordHandler} />
+                <span id="passwordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
                 <label>Confrim Password</label>
                 <input disabled id="confirm_pwd" type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                <span id="confirmpasswordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
                 <br />
                 <button disabled id="register_btn" type="submit">
