@@ -14,7 +14,7 @@ function Console(props) {
 
     return (
         <div id='console' style={{
-            position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 80px)', height: '85vh', display: 'none', zIndex: 5, backgroundColor: 'white'
+            position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 90px)', height: '85vh', display: 'none', zIndex: 5, backgroundColor: 'white'
             , flexDirection: 'row'
         }}>
             <div style={{ width: '50%', height: '100%', backgroundColor: 'black', padding: '10px' }}>

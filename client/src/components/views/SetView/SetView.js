@@ -28,7 +28,7 @@ function SetView() {
         let set_style = {};
 
         if(!(FILTER_PAGES.includes(window.location.pathname))) {
-            set_style = { position: 'fixed', width: 'calc(100vw - 80px)', height: '85vh', right: 0, bottom: 0, zIndex: 0 };
+            set_style = { position: 'fixed', width: 'calc(100vw - 90px)', height: '85vh', right: 0, bottom: 0, zIndex: 0 };
         }
 
         return set_style;

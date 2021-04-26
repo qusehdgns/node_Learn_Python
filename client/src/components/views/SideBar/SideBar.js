@@ -5,6 +5,9 @@ import { withRouter } from 'react-router-dom';
 // redux 사용하기 위한 선언
 import { useSelector } from 'react-redux';
 
+//bootstrap
+import { Button } from 'react-bootstrap'
+
 // 네비게이션 바 정보
 function SideBar(props) {
 
@@ -55,20 +58,20 @@ function SideBar(props) {
 
     if (state.hasOwnProperty('userData')) {
         if (state.userData.isAuth) {
-            QandAButton = <button style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</button>;
-            MypageButton = <button style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</button>;
+            QandAButton = <Button variant="outline-success" size="sm" style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</Button>;
+            MypageButton = <Button variant="outline-info" size="sm" style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</Button>;
         }
     }
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
         <nav className="menu" style={{
-            position: 'fixed', bottom: 0, width: '80px', height: '85vh'
+            position: 'fixed', bottom: 0, width: '90px', height: '85vh'
             , borderRight: '1px solid rgba(0, 0, 0, .25)', display: 'flex', justifyContent: 'center'
         }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <button style={{ margin: '5px 0' }} onClick={movetoStudy}>Study</button>
-                <button style={{ margin: '5px 0' }} onClick={switchCompiler}>Compiler</button>
+                <Button variant='outline-primary' size='sm' style={{ margin: '5px 0' }} onClick={movetoStudy}>Study</Button>
+                <Button variant='outline-secondary' size='sm' style={{ margin: '5px 0' }} onClick={switchCompiler}>Compiler</Button>
                 {QandAButton}
                 {MypageButton}
             </div>

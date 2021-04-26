@@ -7,6 +7,9 @@ import { logoutUser } from '../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 
+// bootstrap
+import { Button } from 'react-bootstrap'
+
 // 네비게이션 바 정보
 function NavBar(props) {
     // redux 사용을 위한 변수 선언
@@ -40,9 +43,9 @@ function NavBar(props) {
 
     if (state.hasOwnProperty('userData')) {
         if(state.userData.isAuth){
-            button = <button onClick={logoutHandler}>Logout</button>;
+            button = <Button variant="outline-dark" size='sm' onClick={logoutHandler}>Logout</Button>;
         } else {
-            button = <button onClick={loginHandler}>Login</button>;
+            button = <Button variant="outline-primary" size='sm' onClick={loginHandler}>Login</Button>;
         }
     }
 
