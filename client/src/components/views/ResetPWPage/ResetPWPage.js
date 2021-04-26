@@ -100,7 +100,7 @@ function ResetPWPage(props) {
 
     // 비밀번호 핸들러 수행시 실행되는 함수
     const onPasswordHandler = (event) => {
-        const regex = /^[A-Za-z0-9]{5,15}$/;
+        const regex = /^(?=.*[A-Za-z])(?=.*\d).{5,15}$/;
 
         let value = event.currentTarget.value;
 
