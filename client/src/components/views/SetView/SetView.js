@@ -19,6 +19,10 @@ import QandAPage from '../QandAPage/QandAPage';
 import MyPage from '../Mypage/Mypage';
 import WikiPage from '../WikiPage/WikiPage';
 
+//test
+import QTestPage from '../QTestPage/QTestPage';
+import QTestWritePage from '../QTestWritePage/QTestWritePage';
+
 import Auth from '../../../hoc/auth';
 
 // 리엑트 NavBar 페이지 값 호출 함수
@@ -55,6 +59,10 @@ function SetView() {
                 <Route exact path="/mypage" component={Auth(MyPage, true)} />
 
                 <Route exact path="/wiki" component={Auth(WikiPage, true)} />
+
+
+                <Route exact path="/qtestpage" component={Auth(QTestPage, true)} />
+                <Route exact path="/qtestwritepage" component={Auth(QTestWritePage, true)} />
 
             </Switch>
         </div>

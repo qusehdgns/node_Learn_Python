@@ -12,3 +12,5 @@ export const LOGOUT_USER = "logout_user";
 export const CHECK_USER = "check_user";
 
 export const RESET_PW = "reset_pw";
+
+export const WriteQandA = "writeQandA";
