@@ -30,7 +30,7 @@ const qandaSchema = mongoose.Schema({
 
         maxlength: 100
     },
-    value: {
+    contents: {
         type: String
     }
 });

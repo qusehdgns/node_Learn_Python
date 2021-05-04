@@ -5,11 +5,15 @@
 const router = require("express").Router();
 
 const usersrouter = require('./user_routes');
+const qandarouter = require('./qanda_routes');
 
 // Api
 
-// 회원가입
+// 유저
 router.use("/api/users", usersrouter);
+
+// QandA
+router.use("/api/qa", qandarouter);
 
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;

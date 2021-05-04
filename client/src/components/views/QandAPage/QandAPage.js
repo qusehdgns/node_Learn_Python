@@ -1,12 +1,33 @@
 // 리엑트 사용 선언
 import React, { useState } from 'react'
+// redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
+import { withRouter } from 'react-router-dom';
+// redux 사용하기 위한 선언
+import { useSelector } from 'react-redux';
+
+//bootstrap
+import { Button } from 'react-bootstrap'
 
 // 리엑트 NavBar 페이지 값 호출 함수
-function QandAPage() {
+function QandAPage(props) {
     const [search, setsearch] = useState("")
+
+    const state = useSelector(state => state.user)
 
     const onSearchHandler = (event) => {
         setsearch(event.currentTarget.value)
+    }
+
+    const movetoQandAWrite = () => {
+        props.history.push("/qandawrite");
+    }
+
+    let QandAWrite = null;
+
+    if (state.hasOwnProperty('userData')) {
+        if (state.userData.isAuth) {
+            QandAWrite = <Button variant='outline-success' className='m-2' onClick={movetoQandAWrite}>Write</Button>;
+        }
     }
 
     return (
@@ -33,8 +54,11 @@ function QandAPage() {
                     <h1>Questions List</h1>
                 </div>
             </div>
+            <div>
+                {QandAWrite}
+            </div>
         </div>
     )
 }
 
-export default QandAPage
+export default withRouter(QandAPage)

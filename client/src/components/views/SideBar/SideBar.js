@@ -13,7 +13,7 @@ function SideBar(props) {
 
     const [toggle, settoggle] = useState(false);
 
-    const state = useSelector(state => state.user)
+    const state = useSelector(state => state.user);
 
     function checkConsole() {
         let console = document.getElementById('console');
@@ -41,11 +41,6 @@ function SideBar(props) {
         props.history.push("/mypage");
     }
 
-    // test
-    const movetoQTestPage = () => {
-        checkConsole();
-        props.history.push("/qtestpage");
-    }
 
     const switchCompiler = () => {
         let console = document.getElementById('console');
@@ -59,17 +54,11 @@ function SideBar(props) {
         }
     }
 
-    let QandAButton = null;
     let MypageButton = null;
-
-    let QTestpageButton = null;
 
     if (state.hasOwnProperty('userData')) {
         if (state.userData.isAuth) {
-            QandAButton = <Button variant="outline-success" size="sm" style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</Button>;
             MypageButton = <Button variant="outline-info" size="sm" style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</Button>;
-
-            QTestpageButton = <Button variant="outline-info" size="sm" style={{ margin: '5px 0' }} onClick={movetoQTestPage}>QTest</Button>;
         }
     }
 
@@ -82,13 +71,8 @@ function SideBar(props) {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Button variant='outline-primary' size='sm' style={{ margin: '5px 0' }} onClick={movetoStudy}>Study</Button>
                 <Button variant='outline-secondary' size='sm' style={{ margin: '5px 0' }} onClick={switchCompiler}>Compiler</Button>
-                {QandAButton}
-
-                {QTestpageButton}
-
-                {MypageButton}
-
-                
+                <Button variant="outline-success" size="sm" style={{ margin: '5px 0' }} onClick={movetoQandA}>QandA</Button>
+                {MypageButton}                
             </div>
         </nav>
     )

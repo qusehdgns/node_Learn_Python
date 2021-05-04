@@ -13,4 +13,6 @@ export const CHECK_USER = "check_user";
 
 export const RESET_PW = "reset_pw";
 
-export const WriteQandA = "writeQandA";
+
+// QandA 상태 값
+export const CREATE_QA = "create_qa";
