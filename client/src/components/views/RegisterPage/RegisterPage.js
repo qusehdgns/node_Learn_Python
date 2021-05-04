@@ -113,6 +113,8 @@ function RegisterPage(props) {
 
         let passwordnotice = document.getElementById('passwordnotice');
 
+        let check = false;
+
         if(value === ""){
             passwordnotice.innerHTML = '';
             visible("pwd", false);
@@ -123,6 +125,7 @@ function RegisterPage(props) {
         } else {
             passwordnotice.style.color = 'green';
             passwordnotice.innerHTML = '사용가능한 비밀번호입니다.';
+            check = true;
             visible("pwd", true);
         }
 
@@ -133,9 +136,13 @@ function RegisterPage(props) {
             if(value === ConfirmPassword){
                 confirmpasswordnotice.style.color = 'green';
                 confirmpasswordnotice.innerHTML = '입력한 비밀번호가 같습니다';
+                if(check){
+                    visible("confirm_pwd", true);
+                }
             } else {
                 confirmpasswordnotice.style.color = 'red';
                 confirmpasswordnotice.innerHTML = '입력한 비밀번호와 다릅니다';
+                visible("confirm_pwd", false);
             }
         }
 
