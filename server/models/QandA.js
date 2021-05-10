@@ -35,6 +35,12 @@ const qandaSchema = mongoose.Schema({
     }
 });
 
+qandaSchema.statics.updateByQAid = function(QA_id, payload){
+    payload.date = now;
+
+    return this.findByIdAndUpdate(QA_id, payload, { new : true });
+}
+
 // User 변수에 user 스키마 저장
 const QandA = mongoose.model('QandA', qandaSchema);
 

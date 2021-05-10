@@ -12,4 +12,12 @@ const { auth } = require("../middleware/auth");
 
 router.post('/', auth, controller.createQA);
 
+router.get('/', controller.readAllQA);
+
+router.get('/:search', controller.readSearchQA);
+
+router.put('/:_id', auth, controller.updateQA);
+
+router.delete('/:_id', auth, controller.deleteQA);
+
 module.exports = router;

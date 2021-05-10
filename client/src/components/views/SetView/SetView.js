@@ -18,7 +18,6 @@ import ResetPWPage from '../ResetPWPage/ResetPWPage';
 import QandAPage from '../QandAPage/QandAPage';
 import MyPage from '../Mypage/Mypage';
 import WikiPage from '../WikiPage/WikiPage';
-import QTestWritePage from '../QandAWritePage/QandAWritePage';
 
 import Auth from '../../../hoc/auth';
 
@@ -52,8 +51,6 @@ function SetView() {
                 <Route exact path="/resetpw" component={Auth(ResetPWPage, null)} />
 
                 <Route exact path="/qanda" component={Auth(QandAPage, null)} />
-                
-                <Route exact path="/qandawrite" component={Auth(QTestWritePage, true)} />
 
                 <Route exact path="/mypage" component={Auth(MyPage, true)} />
 

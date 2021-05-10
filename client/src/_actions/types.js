@@ -16,3 +16,9 @@ export const RESET_PW = "reset_pw";
 
 // QandA 상태 값
 export const CREATE_QA = "create_qa";
+
+export const READ_QA = 'read_qa';
+
+export const UPDATE_QA = 'update_qa';
+
+export const DELETE_QA = 'delete_qa';
