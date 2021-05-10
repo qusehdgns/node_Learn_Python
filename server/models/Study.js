@@ -11,7 +11,10 @@ const studySchema = mongoose.Schema({
     index : {
         type: Number
     },
-    base_material : {
+    material : {
+        type: String
+    },
+    code : {
         type: String
     }
 });

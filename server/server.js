@@ -34,6 +34,3 @@ http.listen(port, () => {
     // 콘솔에 서버가 열리면 포트와 함께 출력
     console.log(`localhost:${port} 실행...`);
 });
-
-// collections 생성
-// const test = require("./test")

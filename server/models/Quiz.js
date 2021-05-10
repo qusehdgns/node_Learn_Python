@@ -13,6 +13,12 @@ const quizSchema = mongoose.Schema({
     },
     quiz : {
         type: String
+    },
+    input : {
+        type: String
+    },
+    output : {
+        type: String
     }
 });
 

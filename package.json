@@ -4,9 +4,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "node server/server.js",
     "backend": "nodemon server/server.js",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\"",
+    "db" : "node server/readFiles.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.0",
-    "nodemailer": "^6.5.0"
+    "nodemailer": "^6.5.0",
+    "xlsx": "^0.16.9"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,5 @@
     "url": "https://github.com/qusehdgns/node_Learn_Python/issues"
   },
   "homepage": "https://github.com/qusehdgns/node_Learn_Python#readme",
-  "devDependencies": {},
   "description": ""
 }
