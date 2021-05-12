@@ -2,9 +2,9 @@
 
 // mongoose 선언
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-var now = new Date();
+const mongooseDateFormat = require('mongoose-date-format');
 
 // 유저 정보가 담길 콜렉션 형식
 const qandareplySchema = mongoose.Schema({
@@ -24,10 +24,11 @@ const qandareplySchema = mongoose.Schema({
     date : {
         type: Date,
 
-        default: now
+        default: new Date()
     }
 });
 
+qandareplySchema.plugin(mongooseDateFormat);
 // User 변수에 user 스키마 저장
 const QandAReply = mongoose.model('QandAReply', qandareplySchema);
 

@@ -2,9 +2,9 @@
 
 // mongoose 선언
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-var now = new Date();
+const mongooseDateFormat = require('mongoose-date-format');
 
 // 유저 정보가 담길 콜렉션 형식
 const qandaSchema = mongoose.Schema({
@@ -13,17 +13,17 @@ const qandaSchema = mongoose.Schema({
         
         ref: 'User'
     },
-    quiz_id : {
+    study_id : {
         type: Schema.Types.ObjectId,
         
-        ref: 'Quiz',
+        ref: 'Study',
 
         default : null
     },
     date : {
         type: Date,
 
-        default: now
+        default: new Date()
     },
     title: {
         type: String,
@@ -36,11 +36,13 @@ const qandaSchema = mongoose.Schema({
 });
 
 qandaSchema.statics.updateByQAid = function(QA_id, payload){
-    payload.date = now;
+    payload.date = new Date();
 
     return this.findByIdAndUpdate(QA_id, payload, { new : true });
 }
 
+
+qandaSchema.plugin(mongooseDateFormat);
 // User 변수에 user 스키마 저장
 const QandA = mongoose.model('QandA', qandaSchema);
 

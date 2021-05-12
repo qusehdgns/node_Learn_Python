@@ -22,3 +22,17 @@ export const READ_QA = 'read_qa';
 export const UPDATE_QA = 'update_qa';
 
 export const DELETE_QA = 'delete_qa';
+
+
+// Reply 상태 값
+export const CREATE_REPLY = "create_reply";
+
+export const READ_REPLY = "read_reply";
+
+export const UPDATE_REPLY = "update_reply";
+
+export const DELETE_REPLY = "delete_reply";
+
+
+// Chapter and Index
+export const CHECK_CHAPTERANDINDEX = "check_chapterandindex";

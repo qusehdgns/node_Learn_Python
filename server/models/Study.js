@@ -11,6 +11,9 @@ const studySchema = mongoose.Schema({
     index : {
         type: Number
     },
+    title : {
+        type: String
+    },
     material : {
         type: String
     },
