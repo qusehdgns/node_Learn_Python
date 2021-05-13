@@ -8,13 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 //bootstrap
 import { Container, Button, Form } from 'react-bootstrap'
 
-import './QandAPage.css'
-
-import QandACPage from '../QandACPage/QandACPage'
-import QandARUDPage from '../QandARUDPage/QandARUDPage'
-
-import { readQandA, searchQA } from '../../../_actions/qanda_action';
-import { checkChapterandIndex } from '../../../_actions/chapterandindex_action';
+import QandAListPage from './QandAListPage/QandAListPage'
+import QandACPage from './QandACPage/QandACPage'
+import QandARUDPage from './QandARUDPage/QandARUDPage'
+import { checkChapterandIndex } from '../../../../_actions/chapterandindex_action';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function QandAPage(props) {
@@ -23,16 +20,19 @@ function QandAPage(props) {
 
     // 검색 input 값
     const [search, setsearch] = useState("");
-
     const [Chapter, setChapter] = useState(0);
     const [Index, setIndex] = useState(0);
-
-    const [qandaList, setqandaList] = useState(null);
     const [selectChapterList, setselectChapterList] = useState(null);
     const [selectIndexList, setselectIndexList] = useState(null);
 
+    const [selectQA, setselectQA] = useState(null);
+
+    const [QAListH, setQAListH] = useState("auto")
+    const [QAListmaxH, setQAListmaxH] = useState("65%")
+
     // 화면 분할 시 보일 화면 값
     const [showPage, setshowPage] = useState(null);
+    const [showListPage, setshowListPage] = useState(null);
 
     // 유동적 class 필요 항목 변수화
     const [showListClass, setshowListClass] = useState('px-0 py-3 col-12');
@@ -65,8 +65,10 @@ function QandAPage(props) {
     }
 
     const showQA = (data) => {
-        switchView();
-        setshowPage(<QandARUDPage data={data} />);
+        if (data != null) {
+            switchView();
+            setshowPage(<QandARUDPage data={data} />);
+        }
     }
 
     const selectChapter = (event) => {
@@ -102,47 +104,6 @@ function QandAPage(props) {
         setIndex(event.currentTarget.value);
     }
 
-    // 게시물 DB 통신 후 화면에 출력
-    async function findList() {
-        let html = null;
-
-        let body = {};
-
-        if (Chapter != 0) {
-            console.log(Chapter)
-            body.chapter = Chapter;
-        }
-
-        if (Index != 0) {
-            console.log(Index)
-            body.index = Index;
-        }
-
-        if (search.replace(/ /g, "") != "") {
-            console.log(search)
-            body.search = search
-        }
-
-        const res = await dispatch(readQandA(body)).then(res => res);
-
-        if (!res.payload.status) {
-            html = <h3>Can not find Searching List</h3>
-        } else {
-            let values = res.payload.value;
-
-            html = values.map((value, index) => {
-                let quiz_id = null;
-
-                if (value.quiz_id != null) {
-                    quiz_id = <br>{value.quiz_id}</br>;
-                }
-
-                return <div className='border rounded my-2' key={index} onClick={() => showQA(value)}>{value.title}<br />{value.user_id.email}<br />{quiz_id}{value.date}<br /></div>
-            });
-        }
-        setqandaList(html);
-    }
-
     async function countChapterandIndex() {
         dispatch(checkChapterandIndex()).then(res => {
             let html = res.payload.map((chapter, index) => <option key={index} value={chapter._id}>{chapter._id}</option>)
@@ -154,8 +115,8 @@ function QandAPage(props) {
     function switchView() {
         setshowListClass('py-3 col-3');
         setsearchInfoClass('d-none');
-        document.getElementById('qandalists').style.height = '95%';
-        document.getElementById('qandalists').style.maxHeight = '95%';
+        setQAListH('95%');
+        setQAListmaxH('95%');
         document.getElementById('showList').style.borderRight = '1px solid rgba(0, 0, 0, .25)';
         document.getElementById('indexButton').style.display = 'inline';
         setshowPageClass('px-0 col-9');
@@ -165,8 +126,8 @@ function QandAPage(props) {
     const switchReturn = () => {
         setshowListClass('px-0 py-3 col-12');
         setsearchInfoClass('my-3 mx-auto');
-        document.getElementById('qandalists').style.height = 'auto';
-        document.getElementById('qandalists').style.maxHeight = '70%';
+        setQAListH('auto');
+        setQAListmaxH('65%');
         document.getElementById('showList').style.borderRight = '0px';
         document.getElementById('indexButton').style.display = 'none';
         setshowPageClass('d-none');
@@ -179,8 +140,12 @@ function QandAPage(props) {
     }, [])
 
     useEffect(() => {
-        findList();
-    }, [search, Chapter, Index])
+        setshowListPage(<QandAListPage Chapter={Chapter} Index={Index} search={search} height={QAListH} maxHeight={QAListmaxH} setselectQA={setselectQA}/>);
+    }, [search, Chapter, Index, QAListH, QAListmaxH])
+
+    useEffect(() => {
+        showQA(selectQA);
+    }, [selectQA])
 
     return (
         <Container fluid className='m-0 p-0 row' style={{ height: '100%' }}>
@@ -216,9 +181,7 @@ function QandAPage(props) {
                         </div>
                     </div>
                 </div>
-                <div id='qandalists' className='text-center mx-auto' style={{ width: '80%', maxHeight: '70%', overflowY: 'auto' }}>
-                    {qandaList}
-                </div>
+                {showListPage}
                 <div className='mx-auto text-right' style={{ width: '80%' }}>
                     {QandAWrite}
                     <Button id='indexButton' variant='outline-warning' className='mx-0 my-2' style={{ display: 'none' }} onClick={switchReturn}>=</Button>

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
 // 로그인 액션을 지정해 놓은 파일 호출
-import { checkEmail, resetPassword } from '../../../_actions/user_action';
+import { checkEmail, resetPassword } from '../../../../_actions/user_action';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function ResetPWPage(props) {

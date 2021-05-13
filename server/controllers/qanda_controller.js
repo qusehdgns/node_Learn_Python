@@ -123,8 +123,8 @@ exports.updateQA = async (req, res) => {
 exports.deleteQA = (req, res) => {
 
     QandA.findByIdAndRemove(req.params._id)
-        .then(user => {
-            if (!user) {
+        .then(qanda => {
+            if (!qanda) {
                 res.status(404).json({ success: false, msg: 'No record for delete' });
             }
 

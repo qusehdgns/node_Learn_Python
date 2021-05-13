@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
 // 회원가입 액션을 지정해 놓은 파일 호출
-import { createQandA } from '../../../_actions/qanda_action';
+import { createQandA } from '../../../../../_actions/qanda_action';
 
 //bootstrap
 import { Container, Form, Button } from 'react-bootstrap'
@@ -64,10 +64,10 @@ function QTestWritePage(props) {
         // 페이지를 다시 호출하지 않고 지금 상태를 사용하기 위한 선언
         event.preventDefault();
 
-        if (Title === "") {
+        if (Title.replace(/\s/gi, "") === "") {
             alert("제목을 작성해주세요.");
             document.getElementById('title').focus();
-        } else if (Contents === "") {
+        } else if (Contents.replace(/\s/gi, "") === "") {
             alert("내용을 작성해주세요.");
             document.getElementById('contents').focus();
         } else {
@@ -111,7 +111,7 @@ function QTestWritePage(props) {
             <Form style={{ height: '100%' }} onSubmit={onSubmitHandler} className='row px-3'>
                 <Form.Group className='col-12 mb-0'>
                     <Form.Label>Title</Form.Label>
-                    <input id='title' className='form-control' type="text" placeholder="Title" value={Title} onChange={onTitleHandler} />
+                    <input id='title' className='form-control' type="text" placeholder="Title" value={Title} onChange={onTitleHandler} maxLength='80' />
                 </Form.Group>
 
                 <Form.Group controlId="SelectwriteChapter" className='col-6 mb-0'>

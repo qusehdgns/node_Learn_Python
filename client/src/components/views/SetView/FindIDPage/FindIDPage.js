@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
 // api 기본 게이트를 저장한 정보 호출
-import { USER_SERVER } from '../../Config';
+import { USER_SERVER } from '../../../Config';
 // ajax와 유사한 통신 라이브러리 선언
 import Axios from 'axios';
 
@@ -22,19 +22,23 @@ function FindIDPage(props) {
 
     // 이메일 핸들러 수행시 실행되는 함수
     const onPhoneHandler = (event) => {
-        // 문자열에서 '-'제거
-        var event_string = event.currentTarget.value.split("-").join("")
-        
-        // 문자열 수가 4이상이면 '-' 하나 추가
-        if (event_string.length >= 4){
-            event_string = event_string.substr(0,3)+'-'+event_string.substr(3,event_string.length-3)
+        const regex = /^[0-9\b -]{0,13}$/;
+        if (regex.test(event.currentTarget.value)) {
+
+            // 문자열에서 '-'제거
+            var event_string = event.currentTarget.value.split("-").join("")
+
+            // 문자열 수가 4이상이면 '-' 하나 추가
+            if (event_string.length >= 4) {
+                event_string = event_string.substr(0, 3) + '-' + event_string.substr(3, event_string.length - 3)
+            }
+            // 문자열 수가 9이상이면 '-' 하나 더 추가
+            if (event_string.length >= 9) {
+                event_string = event_string.substr(0, 8) + '-' + event_string.substr(8, event_string.length - 8)
+            }
+            // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
+            setPhone(event_string);
         }
-        // 문자열 수가 9이상이면 '-' 하나 더 추가
-        if (event_string.length >= 9){
-            event_string = event_string.substr(0,8)+'-'+event_string.substr(8,event_string.length-8)
-        }
-        // 이벤트로 들어온 값을 setPhone 함수를 사용하여 적용
-        setPhone(event_string);
     }
 
     // 제출 버튼 클릭 시 실행되는 함수
@@ -74,7 +78,7 @@ function FindIDPage(props) {
                 <label>name</label>
                 <input type="text" value={Name} onChange={onNameHandler} />
                 <label>phone</label>
-                <input type="text" value={Phone} onChange={onPhoneHandler} />
+                <input type="tel" maxLength='13' value={Phone} onChange={onPhoneHandler} />
                 <br />
                 <button type='submit'>
                     Find my Email

@@ -2,8 +2,8 @@
 import React from 'react'
 
 // 사이드 및 상단바 선언
-import NavBar from '../NavBar/NavBar';
-import SideBar from '../SideBar/SideBar';
+import NavBar from './NavBar/NavBar';
+import SideBar from './SideBar/SideBar';
 
 // 필터링 페이지 리스트
 import { FILTER_PAGES } from '../../Config'

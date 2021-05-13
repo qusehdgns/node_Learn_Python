@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // redux 사용하기 위한 선언
 import { useDispatch } from 'react-redux';
 // 로그인 액션을 지정해 놓은 파일 호출
-import { loginUser } from '../../../_actions/user_action';
+import { loginUser } from '../../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
 

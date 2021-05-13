@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
 // 회원가입 액션을 지정해 놓은 파일 호출
-import { updateQandA, deleteQandA } from '../../../_actions/qanda_action';
-
-import { readReply, createReply } from '../../../_actions/reply_action';
+import { updateQandA, deleteQandA } from '../../../../../_actions/qanda_action';
 
 //bootstrap
 import { Container, Form, Button } from 'react-bootstrap'
+
+import ReplyPage from './ReplyPage/ReplyPage';
 
 
 function QTestWritePage(props) {
@@ -26,12 +26,11 @@ function QTestWritePage(props) {
 
     const [showChapterList, setshowChapterList] = useState(null);
     const [showIndexList, setshowIndexList] = useState(null);
-    const [replyLists, setreplyLists] = useState(null);
-
-    const [Reply, setReply] = useState("");
 
     const [UpdateButton, setUpdateButton] = useState('d-none');
     const [DefaultButton, setDefaultButton] = useState('text-right col-12 mb-0 d-inline');
+
+    const [ReplyList, setReplyList] = useState(null);
 
     const onTitleHandler = (event) => {
         setTitle(event.currentTarget.value);
@@ -39,10 +38,6 @@ function QTestWritePage(props) {
 
     const onContentsHandler = (event) => {
         setContents(event.currentTarget.value);
-    }
-
-    const onReplyHandler = (event) => {
-        setReply(event.currentTarget.value);
     }
 
     function setIndexListing(value) {
@@ -75,13 +70,11 @@ function QTestWritePage(props) {
     }
 
     const onUpdateHandler = (event) => {
-        // 페이지를 다시 호출하지 않고 지금 상태를 사용하기 위한 선언
-        event.preventDefault();
 
-        if (Title === "") {
+        if (Title.replace(/\s/gi, "") === "") {
             alert("제목을 작성해주세요.");
             document.getElementById('title').focus();
-        } else if (Contents === "") {
+        } else if (Contents.replace(/\s/gi, "") === "") {
             alert("내용을 작성해주세요.");
             document.getElementById('contents').focus();
         } else {
@@ -107,31 +100,6 @@ function QTestWritePage(props) {
                     alert('Fail to Update QandA');
                 }
             });
-        }
-    }
-
-    const onReplySubmitHandler = (event) => {
-        event.preventDefault();
-
-        if (Reply == "") {
-            alert("댓글을 입력해주세요");
-            document.getElementById('replyInput').focus();
-        } else {
-            let body = {
-                qanda_id: props.data._id,
-                user_id: userstate.userData._id,
-                reply: Reply
-            };
-
-            dispatch(createReply(body)).then(res => {
-
-                if (res.payload.success) {
-                    findReplies(props.data._id);
-                    setReply("");
-                } else {
-                    alert("Error at comment");
-                }
-            })
         }
     }
 
@@ -175,7 +143,6 @@ function QTestWritePage(props) {
 
     let UDButton = null;
     let SCButton = null;
-    let replyDiv = null;
 
     // 로그인 상태 확인 후 Write 버튼 생성
     if (userstate.hasOwnProperty('userData')) {
@@ -197,35 +164,6 @@ function QTestWritePage(props) {
                     </Button>
             </div>;
         }
-        replyDiv = <div className='col-12'>
-            <Form className='border rounded mt-2 px-2 pb-2' style={{ height: '100px', fontWeight: '600' }} onSubmit={onReplySubmitHandler}>
-                <Form.Label className='my-1 p-0'>Comment for Quistion</Form.Label>
-                <div className='input-group' style={{ height: '65%' }}>
-                    <input id='replyInput' type='text' className='form-control' value={Reply} onChange={onReplyHandler} style={{ height: '100%' }} />
-                    <Button variant="success" type='submit'>Reply</Button>
-                </div>
-            </Form>
-        </div>;
-    }
-
-    async function findReplies(quiz_id) {
-        let html = null;
-        await dispatch(readReply(quiz_id)).then(res => {
-            if (!res.payload.status) {
-                html = <h3>Error at Reading Replies</h3>
-            } else {
-                let values = res.payload.value;
-
-                html = values.map((value, index) =>
-                    <div className='border rounded mt-2 p-2' key={index}>
-                        {value.user_id.email}<br />
-                        {value.reply}<br />
-                        {value.date}
-                    </div>)
-            }
-        });
-
-        setreplyLists(html);
     }
 
     function ChapterListing() {
@@ -251,9 +189,8 @@ function QTestWritePage(props) {
     useEffect(() => {
         cancelQA();
         setChapterandIndex(props.data.study_id);
-        findReplies(props.data._id);
-        setReply("");
-    }, [props.data])
+        setReplyList(<ReplyPage qanda_id={props.data._id} userstate={userstate} />);
+    }, [props])
 
     return (
         <Container fluid style={{ height: 'auto' }} className='p-3'>
@@ -286,12 +223,8 @@ function QTestWritePage(props) {
                 {SCButton}
             </Form>
 
-            <Container fluid className='row p-0 border-top mx-auto mb-3'>
-                <div className='col-12'>
-                    {replyLists}
-                </div>
-                {replyDiv}
-            </Container>
+            {ReplyList}
+            
         </Container>
     )
 }

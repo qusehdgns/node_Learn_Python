@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 
 // image
-import sampleImg from '../../../utils/image/sample_img.png'
+import sampleImg from '../../../../utils/image/sample_img.png'
 
 //bootstrap
 import { Container, Row, Col } from 'react-bootstrap'

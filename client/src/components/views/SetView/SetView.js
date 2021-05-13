@@ -10,14 +10,14 @@ import {
 import { FILTER_PAGES } from '../../Config';
 
 // 페이지 임포트
-import StudyPage from '../StudyPage/StudyPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import FindIDPage from '../FindIDPage/FindIDPage';
-import ResetPWPage from '../ResetPWPage/ResetPWPage';
-import QandAPage from '../QandAPage/QandAPage';
-import MyPage from '../Mypage/Mypage';
-import WikiPage from '../WikiPage/WikiPage';
+import StudyPage from './StudyPage/StudyPage';
+import LoginPage from './LoginPage/LoginPage';
+import RegisterPage from './RegisterPage/RegisterPage';
+import FindIDPage from './FindIDPage/FindIDPage';
+import ResetPWPage from './ResetPWPage/ResetPWPage';
+import QandAPage from './QandAPage/QandAPage';
+import MyPage from './Mypage/Mypage';
+import WikiPage from './WikiPage/WikiPage';
 
 import Auth from '../../../hoc/auth';
 

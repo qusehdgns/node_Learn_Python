@@ -13,4 +13,8 @@ router.post('/', auth, controller.createReply);
 
 router.get('/:quiz_id', controller.readReply);
 
+router.put('/:_id', auth, controller.updateReply);
+
+router.delete('/:_id', auth, controller.deleteReply);
+
 module.exports = router;
