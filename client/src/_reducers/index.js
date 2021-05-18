@@ -4,14 +4,14 @@ import { combineReducers } from 'redux';
 import user from './user_reducer';
 import qa from './qanda_reducer';
 import reply from './reqply_reducer';
-import chapterandindex from './chapterandindex_reducer';
+import study from './study_reducer';
 
 // rootReducer에 사용한 reducer 추가
 const rootReducer = combineReducers({
     user,
     qa,
     reply,
-    chapterandindex
+    study
 });
 
 // rootReducer를 기본값으로 사용한다 선언

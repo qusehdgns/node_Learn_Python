@@ -23,7 +23,7 @@ function QTestWritePage(props) {
     const [writeIndexList, setwriteIndexList] = useState(null);
 
     const userstate = useSelector(state => state.user);
-    const chapterandindex = useSelector(state => state.chapterandindex.result);
+    const chapterandindex = useSelector(state => state.study.result);
     
 
     const onTitleHandler = (event) => {

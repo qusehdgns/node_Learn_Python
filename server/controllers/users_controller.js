@@ -77,11 +77,13 @@ exports.userslogout = (req, res) => {
 
 exports.usersfindid = (req, res) => {
 
-    User.findOne({ name: req.query.name, phone: req.query.phone }, (err, user) => {
+    User.find({ name: req.query.name, phone: req.query.phone }, { _id: 0, email: 1 }, (err, user) => {
         // 유저 검색 실패 또는 에러 발생 시 로그인 실패 리턴
-        if (!user) return res.json({ success: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
+        if (!user.length) return res.json({ success: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
 
-        return res.json({ success: true, email: user.email });
+        let emails = user.map(userinfo => userinfo.email);
+
+        return res.json({ success: true, email: emails });
     });
 }
 

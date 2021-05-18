@@ -54,7 +54,8 @@ function FindIDPage(props) {
         }).then(res => {
             let data = res.data
             if(data.success){
-                alert(data.email);
+                let result = `${data.email}`.replace(/,/g, '\n');
+                alert(result);
             } else {
                 alert(data.message);
             }

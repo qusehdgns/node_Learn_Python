@@ -3,7 +3,7 @@ import {
     CHECK_CHAPTERANDINDEX
 } from '../_actions/types';
 
-function chapterandindex_split_action(state = {}, action) {
+function study_split_action(state = {}, action) {
     switch (action.type) {
         case CHECK_CHAPTERANDINDEX:
 
@@ -15,4 +15,4 @@ function chapterandindex_split_action(state = {}, action) {
     }
 }
 
-export default chapterandindex_split_action;
+export default study_split_action;

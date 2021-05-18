@@ -17,7 +17,7 @@ function QTestWritePage(props) {
     const dispatch = useDispatch();
 
     const userstate = useSelector(state => state.user);
-    const chapterandindex = useSelector(state => state.chapterandindex.result);
+    const chapterandindex = useSelector(state => state.study.result);
 
     const [Title, setTitle] = useState("");
     const [showChapter, setshowChapter] = useState(0);

@@ -19,6 +19,8 @@ import QandAPage from './QandAPage/QandAPage';
 import MyPage from './Mypage/Mypage';
 import WikiPage from './WikiPage/WikiPage';
 
+import test from '../Console/brythonPage/brythonPage'
+
 import Auth from '../../../hoc/auth';
 
 // 리엑트 NavBar 페이지 값 호출 함수
@@ -55,6 +57,8 @@ function SetView() {
                 <Route exact path="/mypage" component={Auth(MyPage, true)} />
 
                 <Route exact path="/wiki" component={Auth(WikiPage, true)} />
+
+                <Route exact path='/test' component={test} />
 
             </Switch>
         </div>
