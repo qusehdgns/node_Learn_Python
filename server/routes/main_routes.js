@@ -7,7 +7,8 @@ const router = require("express").Router();
 const usersrouter = require('./user_routes');
 const qandarouter = require('./qanda_routes');
 const replyrouter = require('./reply_routes');
-const chapterandindexrouter = require('./chapterandindex_routes');
+const listrouter = require('./list_routes');
+const studyrouter = require('./study_routes');
 
 // Api
 
@@ -20,8 +21,11 @@ router.use("/api/qa", qandarouter);
 // Reply
 router.use("/api/reply", replyrouter);
 
-// Chapter and Index
-router.use("/api/chapterandindex", chapterandindexrouter);
+// List
+router.use("/api/list", listrouter);
+
+// Study
+router.use("/api/study", studyrouter);
 
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;

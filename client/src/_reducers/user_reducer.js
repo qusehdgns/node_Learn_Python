@@ -5,7 +5,8 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     CHECK_USER,
-    RESET_PW
+    RESET_PW,
+    MOVE_STUDY
 } from '../_actions/types';
 
 
@@ -40,6 +41,10 @@ function user_split_action(state = {}, action) {
         case RESET_PW:
             // 정보를 리엑트 임시 저장공간에 부여
             return {...state, reset: action.payload };
+
+        case MOVE_STUDY:
+
+            return {...state, userData: action.payload };
         
         // 액션 타입없이 요청이 들어올 경우
         default:

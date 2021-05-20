@@ -7,7 +7,8 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     CHECK_USER,
-    RESET_PW
+    RESET_PW,
+    MOVE_STUDY
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { USER_SERVER } from '../components/Config';
@@ -84,6 +85,17 @@ export function resetPassword(dataTosubmit) {
 
     return {
         type: RESET_PW,
+        payload: req
+    }
+}
+
+// 학습 인덱스 이동
+export function moveStudy(dataTosubmit) {
+    const req = Axios.put(`${USER_SERVER}/movestudy`, dataTosubmit)
+        .then(res => res.data );
+
+    return {
+        type: MOVE_STUDY,
         payload: req
     }
 }

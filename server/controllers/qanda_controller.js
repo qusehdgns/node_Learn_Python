@@ -89,8 +89,8 @@ exports.readQA = async (req, res) => {
 
     qanda.populate('user_id', { _id: 0, email: 1 }).populate('study_id', { _id: 0, chapter: 1, index: 1 }).sort({ date: -1 })
         .then(result => {
-            if (!result) {
-                return res.status(404).json({ status: false });
+            if (result.length === 0) {
+                return res.json({ status: false });
             }
 
             res.status(200).json({ status: true, value: result });

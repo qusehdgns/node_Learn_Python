@@ -3,6 +3,7 @@
 
 // mongoose 선언
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
 // bcrypt 사용, 비밀번호 암호화
 const bcrypt = require('bcrypt');
@@ -67,6 +68,12 @@ const userSchema = mongoose.Schema({
     // 유효성 관리
     token: {
         type: String
+    },
+    // study location
+    study_location: {
+        type: Schema.Types.ObjectId,
+
+        ref: 'Study'
     }
 });
 

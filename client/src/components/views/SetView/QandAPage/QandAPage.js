@@ -11,7 +11,7 @@ import { Container, Button, Form } from 'react-bootstrap'
 import QandAListPage from './QandAListPage/QandAListPage'
 import QandACPage from './QandACPage/QandACPage'
 import QandARUDPage from './QandARUDPage/QandARUDPage'
-import { checkChapterandIndex } from '../../../../_actions/study_action';
+import { checkChapterandIndex } from '../../../../_actions/list_action';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function QandAPage(props) {
@@ -44,7 +44,7 @@ function QandAPage(props) {
 
     // store에서 User 정보 호출
     const userstate = useSelector(state => state.user);
-    const chapterandindex = useSelector(state => state.study.result);
+    const chapterandindex = useSelector(state => state.list.result);
 
     // 검색 input 값 변경
     const onSearchHandler = (event) => {

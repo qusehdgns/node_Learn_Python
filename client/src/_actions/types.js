@@ -13,6 +13,7 @@ export const CHECK_USER = "check_user";
 
 export const RESET_PW = "reset_pw";
 
+export const MOVE_STUDY = "move_study";
 
 // QandA 상태 값
 export const CREATE_QA = "create_qa";
@@ -34,5 +35,10 @@ export const UPDATE_REPLY = "update_reply";
 export const DELETE_REPLY = "delete_reply";
 
 
-// Chapter and Index
+// List
 export const CHECK_CHAPTERANDINDEX = "check_chapterandindex";
+
+export const READ_STUDYLIST = "read_studylist";
+
+// Study
+export const READ_STUDY = "read_study";

@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import user from './user_reducer';
 import qa from './qanda_reducer';
 import reply from './reqply_reducer';
+import list from './list_reducer';
 import study from './study_reducer';
 
 // rootReducer에 사용한 reducer 추가
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     user,
     qa,
     reply,
+    list,
     study
 });
 

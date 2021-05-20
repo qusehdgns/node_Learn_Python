@@ -1,11 +1,16 @@
 // 액션 결과를 나타내는 타입값 선언
 import {
-    READ_STUDY
+    CHECK_CHAPTERANDINDEX,
+    READ_STUDYLIST
 } from '../_actions/types';
 
-function study_split_action(state = {}, action) {
+function list_split_action(state = {}, action) {
     switch (action.type) {
-        case READ_STUDY:
+        case CHECK_CHAPTERANDINDEX:
+
+            return { ...state, result: action.payload };
+            
+        case READ_STUDYLIST:
 
             return { ...state, result: action.payload };
 
@@ -15,4 +20,4 @@ function study_split_action(state = {}, action) {
     }
 }
 
-export default study_split_action;
+export default list_split_action;

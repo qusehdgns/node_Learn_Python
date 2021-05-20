@@ -1,10 +1,13 @@
 // User 데이터 베이스 사용을 위한 User 모델 선언
 const { User } = require("../models/User");
 
+const { Study } = require('../models/Study');
+
 const { smtpTransport, Senderemail } = require('../config/email');
 
 // 유저 회원가입 함수
-exports.usersregister = (req, res) => {
+exports.usersregister = async (req, res) => {
+    req.body.study_location = await Study.findOne({ chapter: 1, index: 1 }, { _id: 1 }).then(result => result._id)
     // 입력되어 들어오는 정보를 user 변수에 저장
     let user = new User(req.body);
 
@@ -59,7 +62,9 @@ exports.usersauth = (req, res) => {
         // 유저 전화번호
         phone: req.user.phone,
         // 유저 역할
-        role: req.user.role
+        role: req.user.role,
+        // 유저 학습 위치
+        study_id: req.user.study_location
     });
 }
 
@@ -90,7 +95,7 @@ exports.usersfindid = (req, res) => {
 // 이메일 확인
 exports.usercheckemail = (req, res) => {
 
-    User.findOne(req.query, async (err, user) => {
+    User.findOne(req.query, (err, user) => {
         if (!user) return res.json({ checkSuccess: false, message: "해당 정보의 사용자가 존재하지 않습니다." });
 
         // req에 phone 객체가 포함되어 있는지 필터링(비밀번호 재설정)
@@ -104,7 +109,7 @@ exports.usercheckemail = (req, res) => {
                 text: "오른쪽 숫자 6자리를 입력해주세요 : " + number
             };
 
-            await smtpTransport.sendMail(mailOptions, (error, responses) => {
+            smtpTransport.sendMail(mailOptions, (error, responses) => {
                 if (error) {
                     res.json({ checkSuccess: true, certification: error });
                 } else {
@@ -113,7 +118,7 @@ exports.usercheckemail = (req, res) => {
                 smtpTransport.close();
             });
         } else {// req에 email만 있으면 회원가입 ID 중복에 사용
-            return  res.json({ checkSuccess: true });
+            return res.json({ checkSuccess: true });
         }
     });
 }
@@ -137,6 +142,35 @@ exports.userresetpassword = (req, res) => {
                 // 유저 저장 성공 시 성공 리턴
                 return res.status(200).json({ resetsuccess: true });
             });
+        });
+    });
+}
+
+
+exports.usermoveStudy = (req, res) => {
+
+    User.findOneAndUpdate({ _id: req.body._id }, { study_location: req.body.study_id }, {new: true}, (err, userInfo) => {
+        // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
+        if (err) return res.json({ err });
+
+        // 유저 저장 성공 시 성공 리턴
+        return res.status(200).json({
+            // 데이터 저장 시 생성되는 레코드 아이디
+            _id: userInfo._id,
+            // 역활 지정을 판단하여 관리자 권한 확인
+            isAdmin: userInfo.role === 0 ? false : true,
+            // 로그인 유무
+            isAuth: true,
+            // 유저 이메일
+            email: userInfo.email,
+            // 유저 이름
+            name: userInfo.name,
+            // 유저 전화번호
+            phone: userInfo.phone,
+            // 유저 역할
+            role: userInfo.role,
+            // 유저 학습 위치
+            study_id: userInfo.study_location
         });
     });
 }

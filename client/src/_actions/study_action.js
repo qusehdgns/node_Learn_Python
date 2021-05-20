@@ -2,18 +2,19 @@
 import Axios from 'axios';
 // 액션 결과를 나타내는 타입값 선언
 import {
-    CHECK_CHAPTERANDINDEX
+    READ_STUDY
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
-import { CHAPTERANDINDEX_SERVER } from '../components/Config';
+import { STUDY_SERVER } from '../components/Config';
 
-export function checkChapterandIndex() {
+export function readStudy(dataTosubmit) {
 
-    const req = Axios.get(`${CHAPTERANDINDEX_SERVER}`)
-        .then(res => res.data);
+    const req = Axios.get(`${STUDY_SERVER}`, {
+        params : dataTosubmit
+    }).then(res => res.data);
 
     return {
-        type: CHECK_CHAPTERANDINDEX,
+        type: READ_STUDY,
         payload: req
     }
 }
