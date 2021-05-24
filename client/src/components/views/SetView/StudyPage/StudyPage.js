@@ -21,9 +21,9 @@ function StudyPage(props) {
 
     const [SelectId, setSelectId] = useState('609b29ada6c08a3296ec0b83');
 
-    const [StudyList, setStudyList] = useState(<StudyListPage setSelectId={setSelectId} SelectId={SelectId} />);
-    const [StudyEdu, setStudyEdu] = useState(<StudyEduPage SelectId={SelectId} />);
-    const [Quiz, setQuiz] = useState(<QuizPage SelectId={SelectId} />);
+    const [StudyList, setStudyList] = useState(null);
+    const [StudyEdu, setStudyEdu] = useState(null);
+    const [Quiz, setQuiz] = useState(null);
 
     useEffect(() => {
         if (state.hasOwnProperty('userData')) {
@@ -35,7 +35,7 @@ function StudyPage(props) {
 
     useEffect(() => {
         setStudyList(<StudyListPage setSelectId={setSelectId} SelectId={SelectId} />);
-        setStudyEdu(<StudyEduPage SelectId={SelectId} />);
+        setStudyEdu(<StudyEduPage SelectId={SelectId} userstate={state} />);
         setQuiz(<QuizPage SelectId={SelectId} />);
     }, [SelectId])
 
@@ -48,10 +48,7 @@ function StudyPage(props) {
                 <Container fluid className='p-2'>
                     {StudyEdu}
                     {Quiz}
-                    <div style={{ width: '80%', height: '300px', margin: '2%', border: '1px solid rgba(0,0,0,.7)', justifyContent: 'center', display: 'flex', alignItems: 'center', margin: '15px auto', padding: '10px' }}>
-                        <textarea style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }}>
-                        </textarea>
-                    </div></Container>
+                </Container>
             </div>
         </div>
     )

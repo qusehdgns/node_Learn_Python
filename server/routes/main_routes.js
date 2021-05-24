@@ -9,6 +9,8 @@ const qandarouter = require('./qanda_routes');
 const replyrouter = require('./reply_routes');
 const listrouter = require('./list_routes');
 const studyrouter = require('./study_routes');
+const quizrouter = require('./quiz_routes');
+const wikirouter = require('./wiki_routes');
 
 // Api
 
@@ -26,6 +28,12 @@ router.use("/api/list", listrouter);
 
 // Study
 router.use("/api/study", studyrouter);
+
+// Quiz
+router.use("/api/quiz", quizrouter);
+
+// Wiki
+router.use("/api/wiki", wikirouter);
 
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;

@@ -42,3 +42,10 @@ export const READ_STUDYLIST = "read_studylist";
 
 // Study
 export const READ_STUDY = "read_study";
+
+// Quiz
+export const READ_QUIZ = "read_quiz";
+
+// Wiki
+export const CREATE_WIKI = "create_wiki";
+

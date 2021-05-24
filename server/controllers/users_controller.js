@@ -52,7 +52,7 @@ exports.usersauth = (req, res) => {
         // 데이터 저장 시 생성되는 레코드 아이디
         _id: req.user._id,
         // 역활 지정을 판단하여 관리자 권한 확인
-        isAdmin: req.user.role === 0 ? false : true,
+        isAdmin: req.user.role === 1 ? true : false,
         // 로그인 유무
         isAuth: true,
         // 유저 이메일
@@ -158,7 +158,7 @@ exports.usermoveStudy = (req, res) => {
             // 데이터 저장 시 생성되는 레코드 아이디
             _id: userInfo._id,
             // 역활 지정을 판단하여 관리자 권한 확인
-            isAdmin: userInfo.role === 0 ? false : true,
+            isAdmin: userInfo.role === 1 ? true : false,
             // 로그인 유무
             isAuth: true,
             // 유저 이메일

@@ -13,5 +13,11 @@ export const LIST_SERVER = '/api/list';
 // Study 라우터
 export const STUDY_SERVER = '/api/study';
 
+// Quiz 라우터
+export const QUIZ_SERVER = '/api/quiz';
+
+// Wiki 라우터
+export const WIKI_SERVER = '/api/wiki';
+
 // 필터링 페이지
 export const FILTER_PAGES = ['/login', '/register', '/findid', '/resetpw'];

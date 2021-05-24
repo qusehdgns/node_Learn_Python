@@ -6,6 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import { readStudy } from '../../../../../_actions/study_action';
 
+import WikiPage from './WikiPage/WikiPage';
+
+import { Row } from 'react-bootstrap';
+
 function StudyEduPage(props) {
     // Redux 사용 선언
     const dispatch = useDispatch();
@@ -14,7 +18,9 @@ function StudyEduPage(props) {
     const [studyMaterial, setstudyMaterial] = useState("");
     const [studyCode, setstudyCode] = useState("");
 
-    async function findStudy(study_id){
+    const [showWiki, setshowWiki] = useState(null);
+
+    async function findStudy(study_id) {
         const res = await dispatch(readStudy({ study_id: study_id })).then(res => res);
 
         const value = res.payload.value;
@@ -26,18 +32,22 @@ function StudyEduPage(props) {
 
     useEffect(() => {
         findStudy(props.SelectId);
+        setshowWiki(<WikiPage SelectId={props.SelectId} userstate={props.userstate} />)
     }, [props])
 
     return (
-        <div className='border rounded p-1 row'>
-            <span className='col-12 text-left px-5'>{studyTitle}</span>
-            <div className='col-12 text-left px-5'>
+        <div className='row mx-0 px-0'>
+            <span className='col-12 text-left px-3'>{studyTitle}</span>
+            <div className='col-12 text-left px-3'>
                 <h3>Explain</h3>
                 {studyMaterial}
             </div>
-            <div className='col-12 px-5'>
+            <div className='col-12 px-3'>
                 <h3>Code</h3>
                 <pre><code>{studyCode}</code></pre>
+            </div>
+            <div className='col-12 px-0'>
+                {showWiki}
             </div>
         </div>
     )
