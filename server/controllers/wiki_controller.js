@@ -24,21 +24,21 @@ exports.readWiki = async (req, res) => {
     res.status(200).json({ value: wikiData });
 }
 
-// exports.updateReply = (req, res) => {
+exports.updateWiki = (req, res) => {
 
-//     QandAReply.findByIdAndUpdate(req.params._id, req.body, { new: true })
-//     .then(reply => res.status(200).json({ success: true, value: reply }))
-//     .catch(err => res.json({ success: false, err }));
-// }
+    Wiki.findByIdAndUpdate(req.params._id, req.body, { new: true })
+    .then(reply => res.status(200).json({ success: true, value: reply }))
+    .catch(err => res.json({ success: false, err }));
+}
 
-// exports.deleteReply = (req, res) => {
+exports.deleteWiki = (req, res) => {
 
-//     QandAReply.findByIdAndRemove(req.params._id)
-//         .then(reply => {
-//             if (!reply) {
-//                 res.status(404).json({ success: false, msg: 'No record for delete' });
-//             }
+    Wiki.findByIdAndRemove(req.params._id)
+        .then(reply => {
+            if (!reply) {
+                res.status(404).json({ success: false, msg: 'No record for delete' });
+            }
 
-//             res.status(200).json({ success: true });
-//         }).catch(err => res.json({ success: false, err }));
-// }
+            res.status(200).json({ success: true });
+        }).catch(err => res.json({ success: false, err }));
+}

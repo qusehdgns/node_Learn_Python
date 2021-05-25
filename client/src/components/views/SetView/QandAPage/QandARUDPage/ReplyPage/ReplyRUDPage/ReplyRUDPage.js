@@ -63,6 +63,7 @@ function ReplyRUDPage(props) {
         document.getElementById(_id + "_textarea").style.resize = 'vertical';
         document.getElementById(_id + "_textarea").readOnly = false;
         document.getElementById(_id + "_sc").className = 'row';
+        document.getElementById(_id + "_textarea").focus();
     }
 
     const deleteCommend = (_id) => {
@@ -94,8 +95,8 @@ function ReplyRUDPage(props) {
                         </div>
                     </div>;
 
-                    if (userstate.hasOwnProperty('userData')) {
-                        if (userstate.userData.isAuth && userstate.userData.email === value.user_id.email) {
+                    if (userstate.userData.isAuth) {
+                        if (userstate.userData.email === value.user_id.email) {
                             reply = <div className='border rounded mt-2 p-2 row mx-1' key={index}>
                                 <div className='col-10'>
                                     {value.user_id.email}<br />
@@ -122,6 +123,21 @@ function ReplyRUDPage(props) {
                                     </div>
                                 </div>
                             </div>;
+                        } else if (userstate.userData.isAdmin) {
+                            reply = <div className='border rounded mt-2 p-2 row mx-1' key={index}>
+                                <div className='col-10'>
+                                    {value.user_id.email}<br />
+                                    <textarea className='showing form-control px-1 bg-white' defaultValue={value.reply} style={{ resize: 'none', height: 'auto' }} readOnly />
+                                    {value.date}
+                                </div>
+                                <div className='col-2 mb-4' style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+                                    <div className='row'>
+                                        <div className='col-12 text-center'>
+                                            <Button variant='outline-danger' type='button' size="sm" style={{ width: '60px' }} onClick={() => deleteCommend(value._id)}>delete</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>;
                         }
                     }
 
@@ -142,6 +158,10 @@ function ReplyRUDPage(props) {
 
     useEffect(() => {
         findReplies(props.qanda_id);
+
+        return () => {
+            setreplyLists(null);
+        }
     }, [props])
 
     return (

@@ -1,5 +1,6 @@
 const { QandA } = require("../models/QandA");
 const { Study } = require("../models/Study");
+const { QandAReply } = require('../models/QandAReply');
 
 exports.createQA = async (req, res) => {
 
@@ -124,6 +125,9 @@ exports.deleteQA = (req, res) => {
 
     QandA.findByIdAndRemove(req.params._id)
         .then(qanda => {
+
+            QandAReply.remove({ qanda_id: qanda._id }).exec();
+
             if (!qanda) {
                 res.status(404).json({ success: false, msg: 'No record for delete' });
             }

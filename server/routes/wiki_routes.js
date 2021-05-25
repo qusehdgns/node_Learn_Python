@@ -13,8 +13,8 @@ router.post('/', auth, controller.createWiki);
 
 router.get('/:study_id', controller.readWiki);
 
-// router.put('/:_id', auth, controller.updateWiki);
+router.put('/:_id', auth, controller.updateWiki);
 
-// router.delete('/:_id', auth, controller.deleteWiki);
+router.delete('/:_id', auth, controller.deleteWiki);
 
 module.exports = router;

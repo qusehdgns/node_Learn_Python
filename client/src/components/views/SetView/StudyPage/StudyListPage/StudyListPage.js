@@ -16,69 +16,71 @@ function StudyListPage(props) {
 
     const [StudyList, setStudyList] = useState(null);
 
-    async function findStudyList() {
+    function findStudyList() {
 
-        const res = await dispatch(readStudyList()).then(res => res);
+        dispatch(readStudyList()).then(res => {
+            if (res.payload.status) {
 
-        if (res.payload.status) {
+                const value = res.payload.value;
 
-            const value = res.payload.value;
-
-            let html = value.map((value, index) => {
-                if (value.index == 0) {
-                    return <li className='list-group-item list-group-item-success' key={index}>{value.chapter}.{value.title}</li>
-                } else {
-                    if (props.SelectId == value._id) {
-                        return <button id={value._id} type='button' className='list-group-item list-group-item-action active' key={index}>
-                            {value.chapter}-{value.index}.{value.title}
-                        </button>
+                let html = value.map((value, index) => {
+                    if (value.index == 0) {
+                        return <li className='list-group-item list-group-item-success' key={index}>{value.chapter}.{value.title}</li>
                     } else {
-                        return <button id={value._id} type='button' className='list-group-item list-group-item-action' key={index} onClick={() => setActivateIndex(value._id)}>
-                            {value.chapter}-{value.index}.{value.title}
-                        </button>
+                        if (props.SelectId == value._id) {
+                            return <button id={value._id} type='button' className='list-group-item list-group-item-action active' key={index}>
+                                {value.chapter}-{value.index}.{value.title}
+                            </button>
+                        } else {
+                            return <button id={value._id} type='button' className='list-group-item list-group-item-action' key={index} onClick={() => setActivateIndex(value._id)}>
+                                {value.chapter}-{value.index}.{value.title}
+                            </button>
+                        }
                     }
-                }
-            })
+                })
 
-            setStudyList(html);
+                setStudyList(html);
 
-        } else {
-            alert("Study List Error")
-        }
+            } else {
+                alert("Study List Error")
+            }
+        });
     }
 
 
-    async function moveStudyId(userData, study_id){
-        
+    function moveStudyId(userData, study_id) {
+
         let body = {
             _id: userData._id,
             study_id: study_id
         }
 
-        await dispatch(moveStudy(body)).then(res => res);
+        dispatch(moveStudy(body));
     }
 
-    async function setActivateIndex(SelectId) {
+    function setActivateIndex(SelectId) {
 
-        if (state.hasOwnProperty('userData')) {
-            if (state.userData.isAuth) {
-                await moveStudyId(state.userData, SelectId);
-            }
+        if (state.userData.isAuth) {
+            moveStudyId(state.userData, SelectId);
         }
 
         props.setSelectId(SelectId)
     }
 
-    useEffect(async () => {
-        await findStudyList();
-    }, [props])
+    useEffect(() => {
+        findStudyList();
+
+        return () => {
+            setStudyList(null);
+        }
+    }, [props, state])
 
     return (
         <div style={{ height: '100%', width: '300px', borderRight: '1px solid rgba(0,0,0,.3)', overflowY: 'auto' }}>
             <ol className="list-group">
                 {StudyList}
             </ol>
-        </div >
+        </div>
     )
 }
 

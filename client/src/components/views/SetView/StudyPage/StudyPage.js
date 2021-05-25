@@ -31,12 +31,22 @@ function StudyPage(props) {
                 setSelectId(state.userData.study_id);
             }
         }
+
+        return () => {
+            setSelectId('609b29ada6c08a3296ec0b83');
+        }
     }, [state])
 
     useEffect(() => {
         setStudyList(<StudyListPage setSelectId={setSelectId} SelectId={SelectId} />);
         setStudyEdu(<StudyEduPage SelectId={SelectId} userstate={state} />);
-        setQuiz(<QuizPage SelectId={SelectId} />);
+        setQuiz(<QuizPage SelectId={SelectId} userstate={state} />);
+        
+        return () => {
+            setStudyList(null);
+            setStudyEdu(null);
+            setQuiz(null);
+        }
     }, [SelectId])
 
     return (

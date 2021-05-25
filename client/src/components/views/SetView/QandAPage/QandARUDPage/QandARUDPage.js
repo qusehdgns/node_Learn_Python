@@ -20,6 +20,7 @@ function QTestWritePage(props) {
     const chapterandindex = useSelector(state => state.list.result);
 
     const [Title, setTitle] = useState("");
+    const [Writer, setWriter] = useState("");
     const [showChapter, setshowChapter] = useState(0);
     const [showIndex, setshowIndex] = useState(0);
     const [Contents, setContents] = useState("");
@@ -106,6 +107,7 @@ function QTestWritePage(props) {
     // Update 버튼 액션
     const cancelQA = () => {
         setTitle(props.data.title);
+        setWriter(props.data.user_id.email);
         setContents(props.data.contents);
         setChapterandIndex(props.data.study_id);
         document.getElementById('title').readOnly = true;
@@ -146,23 +148,31 @@ function QTestWritePage(props) {
 
     // 로그인 상태 확인 후 Write 버튼 생성
     if (userstate.hasOwnProperty('userData')) {
-        if (userstate.userData.isAuth && userstate.userData.email === props.data.user_id.email) {
-            UDButton = <div className={UpdateButton}>
-                <Button variant="success" type="submit" className='mr-2'>
-                    Submit
+        if (userstate.userData.isAuth) {
+            if (userstate.userData.email === props.data.user_id.email) {
+                UDButton = <div className={UpdateButton}>
+                    <Button variant="success" type="submit" className='mr-2'>
+                        Submit
                     </Button>
-                <Button variant="light" type="button" onClick={cancelQA}>
-                    Cancel
+                    <Button variant="light" type="button" onClick={cancelQA}>
+                        Cancel
                     </Button>
-            </div>;
-            SCButton = <div className={DefaultButton}>
-                <Button variant="info" type="button" className='mr-2' onClick={updateQA}>
-                    Update
+                </div>;
+                SCButton = <div className={DefaultButton}>
+                    <Button variant="info" type="button" className='mr-2' onClick={updateQA}>
+                        Update
                     </Button>
-                <Button variant="danger" type="button" onClick={deleteQA}>
-                    Delete
+                    <Button variant="danger" type="button" onClick={deleteQA}>
+                        Delete
                     </Button>
-            </div>;
+                </div>;
+            } else if (userstate.userData.isAdmin){
+                SCButton = <div className={DefaultButton}>
+                    <Button variant="danger" type="button" onClick={deleteQA}>
+                        Delete
+                    </Button>
+                </div>;
+            }
         }
     }
 
@@ -200,6 +210,11 @@ function QTestWritePage(props) {
                     <input id='title' className='form-control bg-white' type="text" placeholder="Title" value={Title} onChange={onTitleHandler} readOnly />
                 </Form.Group>
 
+                <Form.Group className='col-12 mb-0'>
+                    <Form.Label>Writer</Form.Label>
+                    <span className='form-control'>{Writer}</span>
+                </Form.Group>
+
                 <Form.Group controlId="SelectshowChapter" className='col-6 mb-0'>
                     <Form.Label>Chapter</Form.Label>
                     <Form.Control as="select" value={showChapter} onChange={selectshowChapter} disabled>
@@ -224,7 +239,7 @@ function QTestWritePage(props) {
             </Form>
 
             {ReplyList}
-            
+
         </Container>
     )
 }

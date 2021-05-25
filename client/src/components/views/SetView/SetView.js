@@ -17,9 +17,6 @@ import FindIDPage from './FindIDPage/FindIDPage';
 import ResetPWPage from './ResetPWPage/ResetPWPage';
 import QandAPage from './QandAPage/QandAPage';
 import MyPage from './Mypage/Mypage';
-import WikiPage from './WikiPage/WikiPage';
-
-import test from '../Console/brythonPage/brythonPage'
 
 import Auth from '../../../hoc/auth';
 
@@ -55,10 +52,6 @@ function SetView() {
                 <Route exact path="/qanda" component={Auth(QandAPage, null)} />
 
                 <Route exact path="/mypage" component={Auth(MyPage, true)} />
-
-                <Route exact path="/wiki" component={Auth(WikiPage, true)} />
-
-                <Route exact path='/test' component={test} />
 
             </Switch>
         </div>
