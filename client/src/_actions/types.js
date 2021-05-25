@@ -49,3 +49,4 @@ export const READ_QUIZ = "read_quiz";
 // Wiki
 export const CREATE_WIKI = "create_wiki";
 
+export const READ_WIKI = "read_wiki";

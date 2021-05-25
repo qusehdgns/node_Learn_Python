@@ -1,6 +1,7 @@
 // 액션 결과를 나타내는 타입값 선언
 import {
-    CREATE_WIKI
+    CREATE_WIKI,
+    READ_WIKI
 } from '../_actions/types';
 
 function wiki_split_action(state = {}, action) {
@@ -9,9 +10,9 @@ function wiki_split_action(state = {}, action) {
 
             return { ...state, result: action.payload };
 
-        // case READ_REPLY:
+        case READ_WIKI:
 
-        //     return { ...state, result: action.payload };
+            return { ...state, result: action.payload };
 
         // case UPDATE_REPLY:
 

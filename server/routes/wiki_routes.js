@@ -11,7 +11,7 @@ const { auth } = require("../middleware/auth");
 // API
 router.post('/', auth, controller.createWiki);
 
-// router.get('/:quiz_id', controller.readWiki);
+router.get('/:study_id', controller.readWiki);
 
 // router.put('/:_id', auth, controller.updateWiki);
 

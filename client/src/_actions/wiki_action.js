@@ -2,7 +2,8 @@
 import Axios from 'axios';
 // 액션 결과를 나타내는 타입값 선언
 import {
-    CREATE_WIKI
+    CREATE_WIKI,
+    READ_WIKI
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { WIKI_SERVER } from '../components/Config';
@@ -18,16 +19,16 @@ export function createWiki(dataTosubmit) {
     }
 }
 
-// export function readReply(quiz_id) {
+export function readWiki(study_id) {
 
-//     const req = Axios.get(`${REPLY_SERVER}/${quiz_id}`)
-//         .then(res => res.data);
+    const req = Axios.get(`${WIKI_SERVER}/${study_id}`)
+        .then(res => res.data);
 
-//     return {
-//         type: READ_REPLY,
-//         payload: req
-//     }
-// }
+    return {
+        type: READ_WIKI,
+        payload: req
+    }
+}
 
 // export function updateReply(_id, dataTosubmit) {
 //     // 백엔드 서버에게 Post 형식으로 요청을 보낸 후 결과값 리턴
