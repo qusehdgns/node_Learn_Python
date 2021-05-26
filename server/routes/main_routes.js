@@ -11,6 +11,7 @@ const listrouter = require('./list_routes');
 const studyrouter = require('./study_routes');
 const quizrouter = require('./quiz_routes');
 const wikirouter = require('./wiki_routes');
+const consolerouter = require('./console_routers');
 
 // Api
 
@@ -34,6 +35,9 @@ router.use("/api/quiz", quizrouter);
 
 // Wiki
 router.use("/api/wiki", wikirouter);
+
+// Console
+router.use("/api/console", consolerouter)
 
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;

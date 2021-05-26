@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 
 import { readQuiz } from '../../../../../_actions/quiz_action';
 
+import CompilerPage from './CompilerPage/CompilerPage';
+
 function QuizPage(props) {
     // Redux 사용 선언
     const dispatch = useDispatch();
@@ -36,6 +38,7 @@ function QuizPage(props) {
                     <h3>Output</h3>
                     {value.output}
                 </div>
+                <CompilerPage />
             </div >)
         } else {
             setReturnValue(value);

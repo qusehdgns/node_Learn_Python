@@ -7,7 +7,7 @@ const db = require("./db");
 const XLSX = require('xlsx');
 
 async function saveStudy() {
-    const studyfile = XLSX.readFile(__dirname + '/./files/study.xlsx');
+    const studyfile = XLSX.readFile(__dirname + '/./files/database/study.xlsx');
 
     const studySheet = studyfile.SheetNames[0];          // @details 첫번째 시트 정보 추출
 
@@ -28,7 +28,7 @@ async function saveStudy() {
 }
 
 async function saveQuiz() {
-    const quizfile = XLSX.readFile(__dirname + '/./files/quiz.xlsx');
+    const quizfile = XLSX.readFile(__dirname + '/./files/database/quiz.xlsx');
 
     const quizSheet = quizfile.SheetNames[0];          // @details 첫번째 시트 정보 추출
 

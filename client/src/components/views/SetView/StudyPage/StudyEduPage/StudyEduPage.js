@@ -8,8 +8,6 @@ import { readStudy } from '../../../../../_actions/study_action';
 
 import WikiPage from './WikiPage/WikiPage';
 
-import { Row } from 'react-bootstrap';
-
 function StudyEduPage(props) {
     // Redux 사용 선언
     const dispatch = useDispatch();

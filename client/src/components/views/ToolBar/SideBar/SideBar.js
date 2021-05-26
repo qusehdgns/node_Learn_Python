@@ -1,5 +1,5 @@
 // 리엑트 기본 라이브러리 호출
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 // redux 사용하기 위한 선언
@@ -61,6 +61,12 @@ function SideBar(props) {
             MypageButton = <Button variant="outline-info" size="sm" style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</Button>;
         }
     }
+
+    useEffect(() => {
+        return () => {
+            checkConsole()
+        }
+    }, [toggle])
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
