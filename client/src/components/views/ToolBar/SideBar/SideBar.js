@@ -49,8 +49,8 @@ function SideBar(props) {
             console.style.display = 'none';
         } else {
             settoggle(true);
-            console.style.display = 'flex';
-            document.getElementById('console_input').focus();
+            console.style.removeProperty('display');
+            // document.getElementById('console_input').focus();
         }
     }
 

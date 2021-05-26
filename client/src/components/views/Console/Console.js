@@ -5,58 +5,70 @@ import { withRouter } from 'react-router-dom';
 // redux 사용하기 위한 선언
 import { useSelector } from 'react-redux';
 
+import { Container, Row, Button } from 'react-bootstrap';
 
-// ajax와 유사한 통신 라이브러리 선언
-import Axios from 'axios';
+import PythonshellPage from './PythonshellPage/PythonshellPage';
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function Console(props) {
 
     const state = useSelector(state => state.user);
-    
-    const [runResult, setrunResult] = useState(null);
-    const [textcode, settextcode] = useState("def test(item):\n\tresult = item\n\n\treturn result");
 
-    const runpython = () => {
-        setrunResult(null);
+    const [showCompiler, setshowCompiler] = useState(null);
+    const [choiceCompiler, setchoiceCompiler] = useState("brython")
 
-        let body = {
-            isAuth: state.userData.isAuth,
-            user_id: "guestUser",
-            code: textcode
-        };
-
-        if(state.userData.isAuth){
-            body.user_id = state.userData._id;
+    const selectBrython = () => {
+        if (choiceCompiler === "python-shell") {
+            setchoiceCompiler("brython")
+            document.getElementById('brython_div').classList.remove('d-none');
+            setshowCompiler(null);
+            document.getElementById('brython_textarea').focus();
         }
-
-        Axios.post(`/api/console`, body).then(res => setrunResult(res.data.result));
     }
 
-    const onTextcodeTabHandler = (event) => {
+    const selectPythonShell = () => {
+        if (choiceCompiler === "brython") {
+            setchoiceCompiler("python-shell")
+            document.getElementById('brython_div').classList.add('d-none');
+            setshowCompiler(<PythonshellPage state={state} />);
+        }
+    }
+    
+    const onBrythonTabHandler = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();
-            settextcode(textcode + '\t');
+
+            document.getElementById('brython_textarea').value = document.getElementById('brython_textarea').value + '\t';
         }
     }
 
-    const onTextcodeHandler = (event) => {
-        settextcode(event.currentTarget.value);
+    const clearBrythonHandler = () => {
+        document.getElementById('brython_textarea').value = '>>> ';
+        document.getElementById('brython_textarea').focus();
     }
 
     return (
         <div id='console' style={{
             position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 90px)', height: '85vh', display: 'none', zIndex: 5, backgroundColor: 'white'
-            , flexDirection: 'row'
         }}>
-            <div style={{ width: '50%', height: '100%', backgroundColor: 'black', padding: '10px' }}>
-                <button onClick={runpython}>Test</button>
-                <div><pre style={{ width: '100%',color: 'white', overflowY: 'auto', whiteSpace: 'pre-line', wordBreak: 'break-all'}}>{runResult}</pre></div>
-            </div>
-            <div style={{ width: '50%', height: '100%', padding: '10px' }}>
-                <textarea id='console_input' style={{ width: '100%', height: '100%', border: '0 solid white', resize: 'none' }} value={textcode} onKeyDown={onTextcodeTabHandler} onChange={onTextcodeHandler}>
-                </textarea>
-            </div>
+            <Container fluid className='px-0' style={{ height: '100%' }}>
+                <Row id='selectCompilter_btn' className='mx-0'>
+                    <div className='col-12 py-1 border-bottom text-right'>
+                        <Button type='button' variant='outline-danger' className='mr-1' onClick={selectBrython}>Interpreter</Button>
+                        <Button type='button' variant='outline-dark' onClick={selectPythonShell}>Editer</Button>
+                    </div>
+                </Row>
+                <Container fluid className='px-0' style={{ height: 'calc(100% - 47px)' }}>
+                    <Container id='brython_div' fluid className='px-0' style={{ height: '100%' }}>
+                        <textarea id='brython_textarea' style={{
+                            backgroundColor: '#000', color: '#fff', fontSize: '18px', overflowY: 'auto', resize: 'none',
+                            height: '100%', width: '100%'
+                        }} onKeyDown={onBrythonTabHandler} />
+                        <Button variant='primary' style={{ position: 'fixed', bottom: 15, right: 15, zIndex: 10}} onClick={clearBrythonHandler}>clear</Button>
+                    </Container>
+                    {showCompiler}
+                </Container>
+            </Container>
         </div>
     )
 }

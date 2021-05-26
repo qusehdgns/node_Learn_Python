@@ -54,3 +54,6 @@ export const READ_WIKI = "read_wiki";
 export const UPDATE_WIKI = "update_wiki";
 
 export const DELETE_WIKI = 'delete_wiki';
+
+// Compiler
+export const CONSOLE = "console";

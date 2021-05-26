@@ -9,7 +9,7 @@ const fileLocation = 'server/files/code/';
 
 const totallocation = serverlocation + fileLocation
 
-exports.test = async (req, res) => {
+exports.test = (req, res) => {
 
     const filepath = totallocation + req.body.user_id +'.py';
 
@@ -19,8 +19,10 @@ exports.test = async (req, res) => {
 
         let resultArray = new Array();
 
-        for (let i = 0; i < 3; i++) {
-            pyshell.send(i);
+        if(req.body.hasOwnProperty("input_data")){
+            for(let temp of req.body.input_data){
+                pyshell.send(temp);
+            }
         }
 
         pyshell.on('message', message => {

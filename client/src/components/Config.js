@@ -19,5 +19,8 @@ export const QUIZ_SERVER = '/api/quiz';
 // Wiki 라우터
 export const WIKI_SERVER = '/api/wiki';
 
+// Compiler 라우터
+export const CONSOLE_SERVER = '/api/console'
+
 // 필터링 페이지
 export const FILTER_PAGES = ['/login', '/register', '/findid', '/resetpw'];

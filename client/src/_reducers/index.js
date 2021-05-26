@@ -8,6 +8,7 @@ import list from './list_reducer';
 import study from './study_reducer';
 import quiz from './quiz_reducer';
 import wiki from './wiki_reducer';
+import console from './console_reducer';
 
 // rootReducer에 사용한 reducer 추가
 const rootReducer = combineReducers({
@@ -16,7 +17,9 @@ const rootReducer = combineReducers({
     reply,
     list,
     study,
-    quiz
+    quiz,
+    wiki,
+    console
 });
 
 // rootReducer를 기본값으로 사용한다 선언
