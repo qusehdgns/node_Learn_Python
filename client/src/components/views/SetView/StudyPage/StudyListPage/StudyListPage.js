@@ -8,6 +8,8 @@ import { readStudyList } from '../../../../../_actions/list_action';
 
 import { moveStudy } from '../../../../../_actions/user_action';
 
+import { Tabs, Tab } from 'react-bootstrap'
+
 function StudyListPage(props) {
     // Redux 사용 선언
     const dispatch = useDispatch();
@@ -15,6 +17,8 @@ function StudyListPage(props) {
     const state = useSelector(state => state.user);
 
     const [StudyList, setStudyList] = useState(null);
+
+    const [selectId, setselectId] = useState(props.SelectId);
 
     function findStudyList() {
 
@@ -24,26 +28,14 @@ function StudyListPage(props) {
                 const value = res.payload.value;
 
                 let html = value.map((value, index) => {
-                    if (value.index == 0) {
-                        return <li className='list-group-item list-group-item-success' key={index}>{value.chapter}.{value.title}</li>
+                    if (value.index === 0) {
+                        return <Tab key={index} title={`${value.chapter}.${value.title}`} tabClassName='bg-light' disabled></Tab>
                     } else {
-                        if (props.SelectId == value._id) {
-                            return <button id={value._id} type='button' className='list-group-item list-group-item-action active' key={index}>
-                                {value.chapter}-{value.index}.{value.title}
-                            </button>
-                        } else {
-                            return <button id={value._id} type='button' className='list-group-item list-group-item-action' key={index} onClick={(event) => {
-                                event.preventDefault();
-                                setActivateIndex(value._id);
-                            }}>
-                                {value.chapter}-{value.index}.{value.title}
-                            </button>
-                        }
+                        return <Tab key={value._id} eventKey={value._id} title={`${value.chapter}-${value.index}.${value.title}`}></Tab>
                     }
-                })
+                });
 
                 setStudyList(html);
-
             } else {
                 alert("Study List Error")
             }
@@ -62,9 +54,12 @@ function StudyListPage(props) {
     }
 
     function setActivateIndex(SelectId) {
+        setselectId(SelectId);
 
-        if (state.userData.isAuth) {
-            moveStudyId(state.userData, SelectId);
+        if (state.hasOwnProperty('userData')) {
+            if (state.userData.isAuth) {
+                moveStudyId(state.userData, SelectId);
+            }
         }
 
         props.setSelectId(SelectId)
@@ -76,13 +71,21 @@ function StudyListPage(props) {
         return () => {
             setStudyList(null);
         }
-    }, [props, state])
+    }, [])
+
+    useEffect(() => {
+        if (state.hasOwnProperty("userData")) {
+            if (state.userData.isAuth) {
+                setselectId(state.userData.study_id);
+            }
+        }
+    }, [state])
 
     return (
         <div style={{ height: '100%', width: '300px', borderRight: '1px solid rgba(0,0,0,.3)', overflowY: 'auto' }}>
-            <ol className="list-group">
+            <Tabs transition={false} activeKey={selectId} variant="pills" className="flex-column" onSelect={(key) => setActivateIndex(key)}>
                 {StudyList}
-            </ol>
+            </Tabs>
         </div>
     )
 }

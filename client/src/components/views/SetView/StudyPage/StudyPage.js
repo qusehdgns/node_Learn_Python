@@ -21,7 +21,6 @@ function StudyPage(props) {
 
     const [SelectId, setSelectId] = useState('609b29ada6c08a3296ec0b83');
 
-    const [StudyList, setStudyList] = useState(null);
     const [StudyEdu, setStudyEdu] = useState(null);
     const [Quiz, setQuiz] = useState(null);
 
@@ -33,17 +32,15 @@ function StudyPage(props) {
         }
 
         return () => {
-            setSelectId('609b29ada6c08a3296ec0b83');
+            setSelectId();
         }
     }, [state])
 
     useEffect(() => {
-        setStudyList(<StudyListPage setSelectId={setSelectId} SelectId={SelectId} />);
         setStudyEdu(<StudyEduPage SelectId={SelectId} userstate={state} />);
         setQuiz(<QuizPage SelectId={SelectId} userstate={state} />);
         
         return () => {
-            setStudyList(null);
             setStudyEdu(null);
             setQuiz(null);
         }
@@ -51,7 +48,7 @@ function StudyPage(props) {
 
     return (
         <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row' }}>
-            {StudyList}
+            <StudyListPage setSelectId={setSelectId} SelectId={SelectId}/>
             <div style={{
                 height: '100%', width: 'calc(100% - 300px)', overflowY: 'auto'
             }}>

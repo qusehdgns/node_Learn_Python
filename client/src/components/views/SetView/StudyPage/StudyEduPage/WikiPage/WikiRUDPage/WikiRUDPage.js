@@ -94,7 +94,7 @@ function WikiRUDPage(props) {
                     Titlefuncs[i](<h3>{tagsTitle[i]}</h3>);
                     Tagfuncs[i](await value.map((val, index) => {
                         if (props.userData.isAuth) {
-                            if (props.userData.email == val.user_id.email) {
+                            if (props.userData.email === val.user_id.email) {
                                 return <div key={index} className='row mx-0'>
                                     <div className='col-12 px-0'><pre id={val._id + "_wiki"}>{val.explanation}</pre></div>
                                     <input type="hidden" id={val._id + "_tag"} value={i + 1} />

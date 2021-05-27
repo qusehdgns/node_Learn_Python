@@ -18,14 +18,16 @@ function StudyEduPage(props) {
 
     const [showWiki, setshowWiki] = useState(null);
 
-    async function findStudy(study_id) {
-        const res = await dispatch(readStudy({ study_id: study_id })).then(res => res);
+    function findStudy(study_id) {
+        dispatch(readStudy({ study_id: study_id })).then(res => {
+            const value = res.payload.value;
 
-        const value = res.payload.value;
-
-        setstudyTitle(value.title);
-        setstudyMaterial(value.material);
-        setstudyCode(value.code);
+            if (value != null) {
+                setstudyTitle(value.title);
+                setstudyMaterial(value.material);
+                setstudyCode(value.code);
+            }
+        });
     }
 
     useEffect(() => {
@@ -35,7 +37,9 @@ function StudyEduPage(props) {
 
     return (
         <div className='row mx-0 px-0'>
-            <span className='col-12 text-left px-3'>{studyTitle}</span>
+            <div className='col-12 text-left px-3'>
+                <h1>{studyTitle}</h1>
+            </div>
             <div className='col-12 text-left px-3'>
                 <h3>Explain</h3>
                 {studyMaterial}
