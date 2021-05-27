@@ -1,5 +1,5 @@
 // 리엑트 사용 선언
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 // redux 사용하기 위한 선언
@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { Container, Row, Button } from 'react-bootstrap';
 
 import PythonshellPage from './PythonshellPage/PythonshellPage';
+
+import { FILTER_PAGES } from '../../Config'
 
 // 리엑트 NavBar 페이지 값 호출 함수
 function Console(props) {
@@ -33,7 +35,7 @@ function Console(props) {
             setshowCompiler(<PythonshellPage state={state} />);
         }
     }
-    
+
     const onBrythonTabHandler = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();
@@ -46,6 +48,23 @@ function Console(props) {
         document.getElementById('brython_textarea').value = '>>> ';
         document.getElementById('brython_textarea').focus();
     }
+
+    useEffect(() => {
+        if (choiceCompiler === 'python-shell') {
+            setshowCompiler(<PythonshellPage state={state} />);
+        }
+    }, [state])
+
+    useEffect(() => {
+
+        return () => {
+            if (FILTER_PAGES.includes(window.location.pathname)) {
+                document.getElementById('brython_div').classList.remove('d-none');
+                setchoiceCompiler("brython");
+                setshowCompiler(null);
+            }
+        }
+    }, [props])
 
     return (
         <div id='console' style={{
@@ -64,7 +83,7 @@ function Console(props) {
                             backgroundColor: '#000', color: '#fff', fontSize: '18px', overflowY: 'auto', resize: 'none',
                             height: '100%', width: '100%'
                         }} onKeyDown={onBrythonTabHandler} />
-                        <Button variant='primary' style={{ position: 'fixed', bottom: 15, right: 15, zIndex: 10}} onClick={clearBrythonHandler}>clear</Button>
+                        <Button variant='outline-light' style={{ position: 'fixed', bottom: 15, right: 15, zIndex: 10 }} onClick={clearBrythonHandler}>clear</Button>
                     </Container>
                     {showCompiler}
                 </Container>

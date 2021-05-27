@@ -56,4 +56,10 @@ export const UPDATE_WIKI = "update_wiki";
 export const DELETE_WIKI = 'delete_wiki';
 
 // Compiler
-export const CONSOLE = "console";
+export const RUN_CONSOLE = "run_console";
+
+export const READ_CONSOLE = "read_console";
+
+export const SAVE_CONSOLE = "save_console";
+
+export const DELETE_CONSOLE = "delete_console";

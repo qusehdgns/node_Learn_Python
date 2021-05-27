@@ -13,9 +13,7 @@ function App() {
     return (
         <Router>
             <div>
-                <Switch>
-                    <ToolBar />
-                </Switch>
+                <ToolBar />
                 <Switch>
                     <SetView />
                 </Switch>

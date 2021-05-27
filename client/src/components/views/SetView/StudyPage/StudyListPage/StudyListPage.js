@@ -32,7 +32,10 @@ function StudyListPage(props) {
                                 {value.chapter}-{value.index}.{value.title}
                             </button>
                         } else {
-                            return <button id={value._id} type='button' className='list-group-item list-group-item-action' key={index} onClick={() => setActivateIndex(value._id)}>
+                            return <button id={value._id} type='button' className='list-group-item list-group-item-action' key={index} onClick={(event) => {
+                                event.preventDefault();
+                                setActivateIndex(value._id);
+                            }}>
                                 {value.chapter}-{value.index}.{value.title}
                             </button>
                         }

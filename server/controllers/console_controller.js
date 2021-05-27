@@ -1,15 +1,16 @@
+const { Compiler } = require('../models/Compiler');
 
 const { PythonShell } = require('python-shell');
 
 const fs = require('fs');
 
-const serverlocation = '/Users/donghunbyun/Desktop/workspace/nodejs/node_Learn_Python/'
+const { SERVER_LOCATION } = require('../config/config');
 
-const fileLocation = 'server/files/code/';
+const fileLocation = 'files/code/';
 
-const totallocation = serverlocation + fileLocation
+const totallocation = SERVER_LOCATION + fileLocation;
 
-exports.test = (req, res) => {
+exports.runConsole = (req, res) => {
 
     const filepath = totallocation + req.body.user_id +'.py';
 
@@ -41,4 +42,29 @@ exports.test = (req, res) => {
             });
         });
     });
+
+}
+
+exports.readConsole = (req, res) => {
+
+    Compiler.findOne({ user_id: req.params.user_id }, { code: 1, input: 1 }).then(result => {
+        if(!result){
+            return res.json({ success: true, value: null });
+        }
+
+        res.status(200).json({ success: true, value: result });
+    }).catch(err => res.json({ success: false, err }));
+
+}
+
+exports.saveConsole = (req, res) => {
+
+    let saveData = req.body;
+
+    saveData.user_id = req.params.user_id;
+
+    Compiler.findOneAndUpdate({ user_id: req.params.user_id }, saveData, { upsert: true, new: true })
+    .then(saveResult => res.status(200).json({ success: true, value: saveResult }))
+    .catch(err => res.json({ success: false, err }));
+
 }

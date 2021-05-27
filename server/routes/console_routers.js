@@ -8,6 +8,10 @@ const controller = require("../controllers/console_controller");
 
 // API
 
-router.post('/', controller.test);
+router.post('/', controller.runConsole);
+
+router.get('/:user_id', controller.readConsole);
+
+router.put('/:user_id', controller.saveConsole);
 
 module.exports = router;

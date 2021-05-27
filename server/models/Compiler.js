@@ -14,6 +14,9 @@ const compilerSchema = mongoose.Schema({
     },
     code : {
         type: String
+    },
+    input : {
+        type: String
     }
 });
 
