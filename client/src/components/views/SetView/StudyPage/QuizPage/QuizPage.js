@@ -22,10 +22,10 @@ function QuizPage(props) {
         let input = null;
 
         if (value) {
-            if (value.hasOwnProperty('input')) {
+            if (typeof value.input !== 'undefined') {
                 input = <div className='col-12 px-5'>
                     <h3>Input</h3>
-                    {value.input}
+                    <pre>{value.input}</pre>
                 </div>;
             }
             setReturnValue(<div className='border rounded p-1 row mx-0'>
@@ -36,9 +36,9 @@ function QuizPage(props) {
                 {input}
                 <div className='col-12 px-5'>
                     <h3>Output</h3>
-                    {value.output}
+                    <pre>{value.output}</pre>
                 </div>
-                <CompilerPage />
+                <CompilerPage quizId={value._id} />
             </div >)
         } else {
             setReturnValue(value);

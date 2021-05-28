@@ -35,13 +35,13 @@ exports.readQA = async (req, res) => {
 
     let qanda = QandA.find({}, { __v: 0 });
 
-    if (req.query.hasOwnProperty('search') && req.query.hasOwnProperty('chapter')) {
+    if (typeof req.query.search !== 'undefined' && typeof req.query.chapter !== 'undefined') {
 
         let study_data = {
             chapter: req.query.chapter
         };
 
-        if (req.query.hasOwnProperty('index')) {
+        if (typeof req.query.index !== 'undefined') {
             study_data.index = req.query.index;
         }
 
@@ -59,7 +59,7 @@ exports.readQA = async (req, res) => {
 
         qanda = QandA.find({ $and: [{ $or: searchList }, { $or: study }]}, { __v: 0 });
 
-    } else if (req.query.hasOwnProperty('search')) {
+    } else if (typeof req.query.search !== 'undefined') {
         let search = req.query.search;
 
         const searchList = search.split(/ /g).map(value => {
@@ -68,13 +68,13 @@ exports.readQA = async (req, res) => {
 
         qanda = QandA.find({ $or: searchList }, { __v: 0 });
 
-    } else if (req.query.hasOwnProperty('chapter')) {
+    } else if (typeof req.query.chapter !== 'undefined') {
 
         let study_data = {
             chapter: req.query.chapter
         };
 
-        if (req.query.hasOwnProperty('index')) {
+        if (typeof req.query.index !== 'undefined') {
             study_data.index = req.query.index;
         }
 

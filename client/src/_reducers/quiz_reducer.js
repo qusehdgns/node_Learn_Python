@@ -1,11 +1,16 @@
 // 액션 결과를 나타내는 타입값 선언
 import {
-    READ_QUIZ
+    READ_QUIZ,
+    SOLVE_QUIZ
 } from '../_actions/types';
 
 function quiz_split_action(state = {}, action) {
     switch (action.type) {
         case READ_QUIZ:
+
+            return { ...state, result: action.payload };
+
+        case SOLVE_QUIZ:
 
             return { ...state, result: action.payload };
 

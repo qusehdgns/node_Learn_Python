@@ -20,7 +20,7 @@ exports.runConsole = (req, res) => {
 
         let resultArray = new Array();
 
-        if(req.body.hasOwnProperty("input_data")){
+        if("input_data" in req){
             for(let temp of req.body.input_data){
                 pyshell.send(temp);
             }
@@ -33,7 +33,6 @@ exports.runConsole = (req, res) => {
         pyshell.end(function (err, code) {
             fs.unlink(filepath, () => {
                 if (err) {
-                    console.log(String(err))
                     return res.json({ result: String(err) });
                 }
                 const result = resultArray.join('\n');

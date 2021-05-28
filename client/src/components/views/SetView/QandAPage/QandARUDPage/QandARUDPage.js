@@ -147,7 +147,7 @@ function QTestWritePage(props) {
     let SCButton = null;
 
     // 로그인 상태 확인 후 Write 버튼 생성
-    if (userstate.hasOwnProperty('userData')) {
+    if (typeof userstate.userData !== 'undefined') {
         if (userstate.userData.isAuth) {
             if (userstate.userData.email === props.data.user_id.email) {
                 UDButton = <div className={UpdateButton}>

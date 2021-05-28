@@ -41,7 +41,7 @@ function NavBar(props) {
 
     let button = null;
 
-    if (state.hasOwnProperty('userData')) {
+    if (typeof state.userData !== 'undefined') {
         if(state.userData.isAuth){
             button = <Button variant="outline-dark" size='sm' onClick={logoutHandler}>Logout</Button>;
         } else {

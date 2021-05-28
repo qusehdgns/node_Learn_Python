@@ -25,7 +25,7 @@ function StudyPage(props) {
     const [Quiz, setQuiz] = useState(null);
 
     useEffect(() => {
-        if (state.hasOwnProperty('userData')) {
+        if (typeof state.userData !== 'undefined') {
             if (state.userData.isAuth) {
                 setSelectId(state.userData.study_id);
             }

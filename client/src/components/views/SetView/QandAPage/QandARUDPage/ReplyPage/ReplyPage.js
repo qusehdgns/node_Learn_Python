@@ -17,7 +17,7 @@ function ReplyPage(props) {
     useEffect(() => {
         setreplyList(<ReplyRUDPage qanda_id={props.qanda_id}  userData={props.userstate.userData} />);
         // 로그인 상태 확인 후 Write 버튼 생성
-        if (props.userstate.hasOwnProperty('userData')) {
+        if (typeof props.userstate.userData !== 'undefined') {
             if (props.userstate.userData.isAuth) {
                 setreplyC(<ReplyCPage qanda_id={props.qanda_id} userData={props.userstate.userData} setreplyList={setreplyList} />)
             }

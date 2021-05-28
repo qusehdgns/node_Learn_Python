@@ -18,8 +18,8 @@ function MyPage() {
 
     const state = useSelector(state => state.user);
 
-
-    if (state.hasOwnProperty('userData')) {
+    
+    if (typeof state.userData !== 'undefined') {
         userName = <h6>{state.userData.name}</h6>;
         userPhone = <h6>{state.userData.phone}</h6>;
 

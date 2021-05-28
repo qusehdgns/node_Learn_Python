@@ -13,8 +13,8 @@ function WikiPage(props) {
 
     useEffect(() => {
         const userdata = props.userstate;
-        if(userdata.hasOwnProperty('userData')){
-            if([1, 2].includes(userdata.userData.role)){
+        if (typeof userdata.userData !== 'undefined') {
+            if ([1, 2].includes(userdata.userData.role)) {
                 setCPage(<WikiCPage SelectId={props.SelectId} userData={userdata.userData} setRUDPage={setRUDPage} />);
             }
         }

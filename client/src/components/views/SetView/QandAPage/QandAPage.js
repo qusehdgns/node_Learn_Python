@@ -58,7 +58,7 @@ function QandAPage(props) {
     }
 
     // 로그인 상태 확인 후 Write 버튼 생성
-    if (userstate.hasOwnProperty('userData')) {
+    if (typeof userstate.userData !== 'undefined') {
         if (userstate.userData.isAuth) {
             QandAWrite = <Button variant='outline-success' className='m-2' onClick={showQandAWrite}>Write</Button>;
         }

@@ -56,7 +56,7 @@ function SideBar(props) {
 
     let MypageButton = null;
 
-    if (state.hasOwnProperty('userData')) {
+    if (typeof state.userData !== 'undefined') {
         if (state.userData.isAuth) {
             MypageButton = <Button variant="outline-info" size="sm" style={{ margin: '5px 0', position: 'fixed', bottom: 0 }} onClick={movetoMyPage}>MyPage</Button>;
         }

@@ -56,7 +56,7 @@ function StudyListPage(props) {
     function setActivateIndex(SelectId) {
         setselectId(SelectId);
 
-        if (state.hasOwnProperty('userData')) {
+        if (typeof state.userData !== 'undefined') {
             if (state.userData.isAuth) {
                 moveStudyId(state.userData, SelectId);
             }
@@ -74,7 +74,7 @@ function StudyListPage(props) {
     }, [])
 
     useEffect(() => {
-        if (state.hasOwnProperty("userData")) {
+        if ("userData" in state) {
             if (state.userData.isAuth) {
                 setselectId(state.userData.study_id);
             }

@@ -10,4 +10,6 @@ const controller = require("../controllers/quiz_controller");
 
 router.get('/', controller.readQuiz);
 
+router.post('/:quiz_id', controller.solveQuiz);
+
 module.exports = router;

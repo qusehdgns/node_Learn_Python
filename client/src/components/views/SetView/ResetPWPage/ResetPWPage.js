@@ -174,7 +174,7 @@ function ResetPWPage(props) {
                     alert("비밀번호 재설정 성공했습니다.");
                     props.history.push('/login');
                 } else {
-                    if (res.payload.hasOwnProperty('message')) {
+                    if (typeof res.payload.message !== 'undefined') {
                         alert(res.payload.message)
                     } else {
                         alert("비밀번호 재설정에 실패했습니다.");
