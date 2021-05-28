@@ -1,5 +1,7 @@
 const { Quiz } = require('../models/Quiz');
 
+const { Solve } = require('../models/Solve');
+
 const { PythonShell } = require('python-shell');
 
 const fs = require('fs');
@@ -11,7 +13,7 @@ const fileLocation = 'files/code/';
 const totallocation = SERVER_LOCATION + fileLocation;
 
 exports.readQuiz = (req, res) => {
-    Quiz.findOne({ study_id: req.query.study_id }, { __v: 0 })
+    Quiz.findOne({ study_id: req.params.study_id }, { __v: 0 })
         .then(result => {
             res.status(200).json({ value: result });
         }).catch(err => res.status(500).json({ status: false, err }));
@@ -22,12 +24,6 @@ exports.solveQuiz = async (req, res) => {
     const quizData = await Quiz.findOne({ _id: req.params.quiz_id }, { __v: 0 }).then(res => res);
 
     const filepath = totallocation + req.body.user_id + '_quiz.py';
-
-    if (typeof quizData.input !== 'undefined') {
-        if (!req.body.answer.includes('input(')) {
-            return res.json({ success: false });
-        }
-    }
 
     fs.writeFile(filepath, req.body.answer, () => {
 
@@ -46,17 +42,47 @@ exports.solveQuiz = async (req, res) => {
         });
 
         pyshell.end(function (err, code) {
+
             fs.unlink(filepath, () => {
-                if (err) {
-                    return res.json({ success: false });
+                let success = true;
+
+                if (typeof quizData.input !== 'undefined') {
+                    if (!req.body.answer.includes('input(')) {
+                        success = false;
+                    }
+                } else {
+                    if (err) {
+                        success = false;
+                    } else {
+                        const result = resultArray.join('\r\n');
+
+                        success = result === quizData.output ? true : false;
+                    }
                 }
 
-                const result = resultArray.join('\r\n');
+                if (req.body.user_id !== 'guest') {
 
-                res.status(200).json({ success: result === quizData.output ? true : false });
+                    let solveData = {
+                        user_id: req.body.user_id,
+                        quiz_id: req.params.quiz_id,
+                        answer: req.body.answer,
+                        success: success
+                    }
+
+                    Solve.findOneAndUpdate({ user_id: req.body.user_id, quiz_id: req.params.quiz_id }, solveData, { upsert: true, new: true })
+                    .then(solveResult => res.json({ success: solveResult.success }));
+                } else {
+                    res.json({ success: success });
+                }
             });
         });
     });
+}
 
+exports.checkQuiz = (req, res) => {
 
+    Solve.findOne(req.query, { __v: 0 })
+    .then(result => res.status(200).json({ success: true, value: result }))
+    .catch(err => res.json({ success: false, err }));
+    
 }

@@ -48,6 +48,8 @@ export const READ_QUIZ = "read_quiz";
 
 export const SOLVE_QUIZ = "solve_quiz";
 
+export const CHECK_QUIZ = "check_quiz";
+
 // Wiki
 export const CREATE_WIKI = "create_wiki";
 

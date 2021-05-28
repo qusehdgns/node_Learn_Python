@@ -20,7 +20,7 @@ exports.runConsole = (req, res) => {
 
         let resultArray = new Array();
 
-        if("input_data" in req){
+        if(typeof req.body.input_data !== 'undefined'){
             for(let temp of req.body.input_data){
                 pyshell.send(temp);
             }

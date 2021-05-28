@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from 'react-bootstrap';
 
-import { solveQuiz } from '../../../../../../_actions/quiz_action'
+import { solveQuiz, checkQuiz } from '../../../../../../_actions/quiz_action'
 
 function CompilerPage(props) {
     // redux 사용을 위한 변수 선언
@@ -29,7 +29,7 @@ function CompilerPage(props) {
         setcodeInput(event.currentTarget.value);
     }
 
-    const checkQuiz = () => {
+    const submitQuiz = () => {
         if (codeInput.replace(/\s/gi, "") === "") {
             alert("Type for Checking Code");
             setcodeInput("");
@@ -40,13 +40,12 @@ function CompilerPage(props) {
                 answer: codeInput
             }
 
-            if (userstate.userData.isAuth){
+            if (userstate.userData.isAuth) {
                 body.user_id = userstate.userData._id
             }
 
             dispatch(solveQuiz(props.quizId, body)).then(res => {
-                console.log(res.payload.success)
-                if(res.payload.success){
+                if (res.payload.success) {
                     setresultSpan(<span className='mx-3' style={{ color: 'green' }}>정답입니다!</span>);
                 } else {
                     setresultSpan(<span className='mx-3' style={{ color: 'red' }}>오답입니다!</span>);
@@ -55,8 +54,34 @@ function CompilerPage(props) {
         }
     }
 
+    function checkingCode() {
+        if (typeof userstate.userData.isAuth !== 'undefined') {
+            if (userstate.userData.isAuth) {
+                let body = {
+                    user_id: userstate.userData._id,
+                    quiz_id: props.quizId
+                }
+
+                dispatch(checkQuiz(body)).then(res => {
+                    if (res.payload.success && res.payload.value !== null) {
+                        setcodeInput(res.payload.value.answer);
+
+                        if (res.payload.value.success) {
+                            setresultSpan(<span className='mx-3' style={{ color: 'green' }}>정답입니다!</span>);
+                        } else {
+                            setresultSpan(<span className='mx-3' style={{ color: 'red' }}>오답입니다!</span>);
+                        }
+
+                        document.getElementById('quiz_textarea').focus();
+                    }
+                });
+            }
+        }
+    }
+
     useEffect(() => {
         setcodeInput("");
+        checkingCode();
     }, [props])
 
     return (
@@ -64,7 +89,7 @@ function CompilerPage(props) {
             <textarea id='quiz_textarea' className='form-control mb-2' value={codeInput} onKeyDown={codeInputTabHandler} onChange={codeInputHandler} />
             <div className='text-right'>
                 {resultSpan}
-                <Button type='button' onClick={checkQuiz}>Solve</Button>
+                <Button type='button' onClick={submitQuiz}>Solve</Button>
             </div>
         </div>
     )

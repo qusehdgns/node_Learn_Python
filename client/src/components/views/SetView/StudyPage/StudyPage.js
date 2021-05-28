@@ -30,10 +30,6 @@ function StudyPage(props) {
                 setSelectId(state.userData.study_id);
             }
         }
-
-        return () => {
-            setSelectId();
-        }
     }, [state])
 
     useEffect(() => {

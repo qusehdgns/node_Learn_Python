@@ -3,16 +3,16 @@ import Axios from 'axios';
 // 액션 결과를 나타내는 타입값 선언
 import {
     READ_QUIZ,
-    SOLVE_QUIZ
+    SOLVE_QUIZ,
+    CHECK_QUIZ
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { QUIZ_SERVER } from '../components/Config';
 
-export function readQuiz(dataTosubmit) {
+export function readQuiz(study_id) {
 
-    const req = Axios.get(`${QUIZ_SERVER}`, {
-        params: dataTosubmit
-    }).then(res => res.data);
+    const req = Axios.get(`${QUIZ_SERVER}/${study_id}`)
+    .then(res => res.data);
 
     return {
         type: READ_QUIZ,
@@ -22,11 +22,24 @@ export function readQuiz(dataTosubmit) {
 
 export function solveQuiz(quiz_id, dataTosubmit) {
 
-    const req = Axios.post(`${QUIZ_SERVER}/${quiz_id}`, dataTosubmit)
+    const req = Axios.put(`${QUIZ_SERVER}/${quiz_id}`, dataTosubmit)
         .then(res => res.data);
 
     return {
-        type: READ_QUIZ,
+        type: SOLVE_QUIZ,
+        payload: req
+    }
+}
+
+export function checkQuiz(dataTosubmit) {
+
+    const req = Axios.get(`${QUIZ_SERVER}`, {
+        params: dataTosubmit
+    })
+    .then(res => res.data);
+
+    return {
+        type: CHECK_QUIZ,
         payload: req
     }
 }

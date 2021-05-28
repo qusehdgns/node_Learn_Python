@@ -15,7 +15,7 @@ function QuizPage(props) {
     const [ReturnValue, setReturnValue] = useState(null);
 
     async function findQuiz(study_id) {
-        const res = await dispatch(readQuiz({ study_id: study_id })).then(res => res);
+        const res = await dispatch(readQuiz(study_id)).then(res => res);
 
         const value = res.payload.value;
 

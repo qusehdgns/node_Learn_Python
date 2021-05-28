@@ -74,7 +74,7 @@ function StudyListPage(props) {
     }, [])
 
     useEffect(() => {
-        if ("userData" in state) {
+        if (typeof state.userData !== 'undefined') {
             if (state.userData.isAuth) {
                 setselectId(state.userData.study_id);
             }

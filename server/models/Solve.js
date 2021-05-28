@@ -19,9 +19,8 @@ const solveSchema = mongoose.Schema({
     answer : {
         type: String
     },
-    scoring : {
-        type: Number,
-        default: 2
+    success : {
+        type: Boolean
     }
 });
 

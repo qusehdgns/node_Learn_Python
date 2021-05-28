@@ -8,8 +8,10 @@ const controller = require("../controllers/quiz_controller");
 
 // API
 
-router.get('/', controller.readQuiz);
+router.get('/:study_id', controller.readQuiz);
 
-router.post('/:quiz_id', controller.solveQuiz);
+router.put('/:quiz_id', controller.solveQuiz);
+
+router.get('/', controller.checkQuiz);
 
 module.exports = router;
