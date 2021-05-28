@@ -50,7 +50,9 @@ exports.solveQuiz = async (req, res) => {
                     if (!req.body.answer.includes('input(')) {
                         success = false;
                     }
-                } else {
+                }
+
+                if (success) {
                     if (err) {
                         success = false;
                     } else {
@@ -70,7 +72,7 @@ exports.solveQuiz = async (req, res) => {
                     }
 
                     Solve.findOneAndUpdate({ user_id: req.body.user_id, quiz_id: req.params.quiz_id }, solveData, { upsert: true, new: true })
-                    .then(solveResult => res.json({ success: solveResult.success }));
+                        .then(solveResult => res.json({ success: solveResult.success }));
                 } else {
                     res.json({ success: success });
                 }
@@ -82,7 +84,7 @@ exports.solveQuiz = async (req, res) => {
 exports.checkQuiz = (req, res) => {
 
     Solve.findOne(req.query, { __v: 0 })
-    .then(result => res.status(200).json({ success: true, value: result }))
-    .catch(err => res.json({ success: false, err }));
-    
+        .then(result => res.status(200).json({ success: true, value: result }))
+        .catch(err => res.json({ success: false, err }));
+
 }
