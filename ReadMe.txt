@@ -11,3 +11,6 @@ npm run dev
 // 꼭 1회 수행할 것
 db 1회성 값 넣기
 npm run db
+
+이메일 정보 넣을 것
+node_learn_python/server/config/email.js
