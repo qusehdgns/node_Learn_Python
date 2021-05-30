@@ -3,6 +3,12 @@ const { User } = require("../models/User");
 
 const { Study } = require('../models/Study');
 
+const { Wiki } = require('../models/Wiki');
+const { Compiler } = require('../models/Compiler');
+const { Solve } = require('../models/Solve');
+const { QandA } = require('../models/QandA');
+const { QandAReply } = require('../models/QandAReply');
+
 const { smtpTransport, Senderemail } = require('../config/email');
 
 // 유저 회원가입 함수
@@ -149,7 +155,7 @@ exports.userresetpassword = (req, res) => {
 
 exports.usermoveStudy = (req, res) => {
 
-    User.findOneAndUpdate({ _id: req.body._id }, { study_location: req.body.study_id }, {new: true}, (err, userInfo) => {
+    User.findOneAndUpdate({ _id: req.body._id }, { study_location: req.body.study_id }, { new: true }, (err, userInfo) => {
         // 유저 저장 실패 및 에러 발생 시 실패와 에러 리턴
         if (err) return res.json({ err });
 
@@ -173,4 +179,25 @@ exports.usermoveStudy = (req, res) => {
             study_id: userInfo.study_location
         });
     });
+}
+
+
+exports.userDelete = (req, res) => {
+
+    User.findByIdAndRemove(req.params.user_id)
+        .then(user => {
+
+            Wiki.remove({ user_id: user._id }).exec();
+            Compiler.remove({ user_id: user._id }).exec();
+            Solve.remove({ user_id: user._id }).exec();
+            QandA.find({ user_id: req.params.user_id })
+                .then(qandas => {
+                    qandas.map(qanda => QandA.findByIdAndRemove(qanda._id)
+                        .then(qa => QandAReply.remove({ qanda_id: qa._id }).exec()))
+                });
+            QandAReply.remove({ user_id: user._id }).exec();
+
+        });
+
+    return res.status(200).json({ success: true });
 }

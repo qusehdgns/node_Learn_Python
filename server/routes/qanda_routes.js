@@ -14,6 +14,8 @@ router.post('/', auth, controller.createQA);
 
 router.get('/', controller.readQA);
 
+router.get('/:user_id', auth, controller.readMyQA);
+
 router.put('/:_id', auth, controller.updateQA);
 
 router.delete('/:_id', auth, controller.deleteQA);

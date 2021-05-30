@@ -41,15 +41,7 @@ function QandAListPage(props) {
         } else {
             let values = res.payload.value;
 
-            html = values.map((value, index) => {
-                let quiz_id = null;
-
-                if (value.quiz_id != null) {
-                    quiz_id = <br>{value.quiz_id}</br>;
-                }
-
-                return <div className='border rounded my-2' key={index} onClick={() => props.setselectQA(value)}>{value.title}<br />{value.user_id.email}<br />{quiz_id}{value.date}<br /></div>
-            });
+            html = values.map((value, index) => <div className='border rounded my-2' style={{ cursor: 'pointer' }} key={index} onClick={() => props.setselectQA(value)}>{value.title}<br />{value.user_id.email}<br />{value.date}<br /></div>);
         }
         setqandaList(html);
     }

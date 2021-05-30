@@ -3,7 +3,8 @@ import {
     CREATE_QA,
     READ_QA,
     UPDATE_QA,
-    DELETE_QA
+    DELETE_QA,
+    READ_MYQA
 } from '../_actions/types';
 
 function qa_split_action(state = {}, action) {
@@ -21,6 +22,10 @@ function qa_split_action(state = {}, action) {
             return { ...state, result: action.payload };
 
         case DELETE_QA:
+
+            return { ...state, result: action.payload };
+
+        case READ_MYQA:
 
             return { ...state, result: action.payload };
 

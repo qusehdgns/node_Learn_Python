@@ -2,6 +2,8 @@ const { Quiz } = require('../models/Quiz');
 
 const { Solve } = require('../models/Solve');
 
+const { User } = require('../models/User');
+
 const { PythonShell } = require('python-shell');
 
 const fs = require('fs');
@@ -72,8 +74,28 @@ exports.solveQuiz = async (req, res) => {
                     }
 
                     Solve.findOneAndUpdate({ user_id: req.body.user_id, quiz_id: req.params.quiz_id }, solveData, { upsert: true, new: true })
-                        .then(solveResult => res.json({ success: solveResult.success }));
+                        .then(solveResult => {
+                            Quiz.countDocuments({}).then(async count => {
+
+                                const wikiAuth = await Solve.countDocuments({ user_id: req.body.user_id, success: true }).then(correct => correct) === count ? true : false;
+
+                                if(wikiAuth){
+                                    User.findOneAndUpdate({ _id: req.body.user_id, role: 0 }, { role: 2 }).exec();
+                                }
+
+                            }).catch(error => res.json({ success: false }));
+
+
+                            if (err) {
+                                return res.json({ success: solveResult.success, error: String(err) })
+                            }
+                            res.json({ success: solveResult.success })
+                        });
                 } else {
+                    if (err) {
+                        return res.json({ success: solveResult.success, error: String(err) })
+                    }
+
                     res.json({ success: success });
                 }
             });
@@ -87,4 +109,16 @@ exports.checkQuiz = (req, res) => {
         .then(result => res.status(200).json({ success: true, value: result }))
         .catch(err => res.json({ success: false, err }));
 
+}
+
+exports.checkQuizProgress = (req, res) => {
+
+    Quiz.countDocuments({}).then(async count => {
+
+        const correct = (await Solve.countDocuments({ user_id: req.params.user_id, success: true }).then(correct => correct) / count) * 100;
+
+        const wrong = (await Solve.countDocuments({ user_id: req.params.user_id, success: false }).then(wrong => wrong) / count) * 100;
+
+        res.status(200).json({ success: true, correct: correct.toFixed(1), wrong: wrong.toFixed(1) });
+    }).catch(err => res.json({ success: false }));
 }

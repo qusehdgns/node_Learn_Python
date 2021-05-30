@@ -4,7 +4,8 @@ import Axios from 'axios';
 import {
     READ_QUIZ,
     SOLVE_QUIZ,
-    CHECK_QUIZ
+    CHECK_QUIZ,
+    PROGRESS_QUIZ
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { QUIZ_SERVER } from '../components/Config';
@@ -12,7 +13,7 @@ import { QUIZ_SERVER } from '../components/Config';
 export function readQuiz(study_id) {
 
     const req = Axios.get(`${QUIZ_SERVER}/${study_id}`)
-    .then(res => res.data);
+        .then(res => res.data);
 
     return {
         type: READ_QUIZ,
@@ -36,10 +37,21 @@ export function checkQuiz(dataTosubmit) {
     const req = Axios.get(`${QUIZ_SERVER}`, {
         params: dataTosubmit
     })
-    .then(res => res.data);
+        .then(res => res.data);
 
     return {
         type: CHECK_QUIZ,
+        payload: req
+    }
+}
+
+export function checkQuizProgress(user_id) {
+
+    const req = Axios.get(`${QUIZ_SERVER}/check/${user_id}`)
+        .then(res => res.data);
+
+    return {
+        type: PROGRESS_QUIZ,
         payload: req
     }
 }

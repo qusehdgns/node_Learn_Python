@@ -15,6 +15,7 @@ function CompilerPage(props) {
     const userstate = useSelector(state => state.user)
 
     const [codeInput, setcodeInput] = useState("");
+    const [textareaHeight, settextareaHeight] = useState('150px');
 
     const [resultSpan, setresultSpan] = useState(null);
 
@@ -49,6 +50,9 @@ function CompilerPage(props) {
                     setresultSpan(<span className='mx-3' style={{ color: 'green' }}>정답입니다!</span>);
                 } else {
                     setresultSpan(<span className='mx-3' style={{ color: 'red' }}>오답입니다!</span>);
+                    if (typeof res.payload.error !== 'undefined') {
+                        alert(res.payload.error);
+                    }
                 }
             })
         }
@@ -82,11 +86,13 @@ function CompilerPage(props) {
     useEffect(() => {
         setcodeInput("");
         checkingCode();
+        setresultSpan(null);
+        settextareaHeight('150px');
     }, [props])
 
     return (
         <div className='col-12 px-4 my-2'>
-            <textarea id='quiz_textarea' className='form-control mb-2' value={codeInput} onKeyDown={codeInputTabHandler} onChange={codeInputHandler} />
+            <textarea id='quiz_textarea' style={{ height: textareaHeight }} className='form-control mb-2' value={codeInput} onKeyDown={codeInputTabHandler} onChange={codeInputHandler} />
             <div className='text-right'>
                 {resultSpan}
                 <Button type='button' onClick={submitQuiz}>Solve</Button>

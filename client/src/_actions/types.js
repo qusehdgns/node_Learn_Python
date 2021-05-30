@@ -15,6 +15,8 @@ export const RESET_PW = "reset_pw";
 
 export const MOVE_STUDY = "move_study";
 
+export const DELETE_USER = "delete_user";
+
 // QandA 상태 값
 export const CREATE_QA = "create_qa";
 
@@ -23,6 +25,8 @@ export const READ_QA = 'read_qa';
 export const UPDATE_QA = 'update_qa';
 
 export const DELETE_QA = 'delete_qa';
+
+export const READ_MYQA = 'read_myqa';
 
 
 // Reply 상태 값
@@ -49,6 +53,8 @@ export const READ_QUIZ = "read_quiz";
 export const SOLVE_QUIZ = "solve_quiz";
 
 export const CHECK_QUIZ = "check_quiz";
+
+export const PROGRESS_QUIZ = "progress_quiz";
 
 // Wiki
 export const CREATE_WIKI = "create_wiki";

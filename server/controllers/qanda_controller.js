@@ -57,7 +57,7 @@ exports.readQA = async (req, res) => {
             return { title: { $regex: value } }
         });
 
-        qanda = QandA.find({ $and: [{ $or: searchList }, { $or: study }]}, { __v: 0 });
+        qanda = QandA.find({ $and: [{ $or: searchList }, { $or: study }] }, { __v: 0 });
 
     } else if (typeof req.query.search !== 'undefined') {
         let search = req.query.search;
@@ -89,6 +89,17 @@ exports.readQA = async (req, res) => {
     }
 
     qanda.populate('user_id', { _id: 0, email: 1 }).populate('study_id', { _id: 0, chapter: 1, index: 1 }).sort({ date: -1 })
+        .then(result => {
+            if (result.length === 0) {
+                return res.json({ status: false });
+            }
+
+            res.status(200).json({ status: true, value: result });
+        }).catch(err => res.status(500).json({ status: false, err }));
+}
+
+exports.readMyQA = (req, res) => {
+    QandA.find({ user_id: req.params.user_id }, { __v: 0 }).populate('user_id', { _id: 0, email: 1 }).sort({ data: -1 })
         .then(result => {
             if (result.length === 0) {
                 return res.json({ status: false });

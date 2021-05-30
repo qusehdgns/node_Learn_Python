@@ -1,67 +1,176 @@
 // 리엑트 기본 라이브러리 호출
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
+import { withRouter } from 'react-router-dom';
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+//bootstrap
+import { Container, Row, Col, Button, ProgressBar } from 'react-bootstrap'
+
+import { deleteUser } from '../../../../_actions/user_action';
+
+import { checkQuizProgress } from '../../../../_actions/quiz_action';
+
+import { checkChapterandIndex } from '../../../../_actions/list_action';
+
+import MyQandAListPage from './MyQandALisgPage/MyQandAListPage';
+
+import QandARUDPage from '../QandAPage/QandARUDPage/QandARUDPage';
 
 // image
-import sampleImg from '../../../../utils/image/sample_img.png'
+import beginnerImg from '../../../../utils/image/Beginner.png'
+import juniorImg from '../../../../utils/image/Junior.png'
+import seniorImg from '../../../../utils/image/Senior.png'
+import masterImg from '../../../../utils/image/Master.png'
 
-//bootstrap
-import { Container, Row, Col } from 'react-bootstrap'
+
 
 // 기본 url 호출 시 실행되는 페이지 정보
-function MyPage() {
+function MyPage(props) {
 
-    let userName = null;
-    let userPhone = null;
-    let userRole = null;
+    const dispatch = useDispatch();
+
+    const [showImage, setshowImage] = useState(beginnerImg);
+
+    const [userName, setuserName] = useState(null);
+    const [userEmail, setuserEmail] = useState(null);
+    const [userPhone, setuserPhone] = useState(null);
+    const [userRole, setuserRole] = useState(null);
+    const [deleteBtn, setdeleteBtn] = useState(null);
+
+    const [selectMyQA, setselectMyQA] = useState(null);
+    const [showQA, setshowQA] = useState(null);
+
+    const [display, setdisplay] = useState('d-none');
+
+    const [correct, setcorrect] = useState(0);
+    const [wrong, setwrong] = useState(0);
+
+    const [MyQAList, setMyQAList] = useState(null);
 
     const state = useSelector(state => state.user);
 
-    
-    if (typeof state.userData !== 'undefined') {
-        userName = <h6>{state.userData.name}</h6>;
-        userPhone = <h6>{state.userData.phone}</h6>;
-
-        if(state.userData.role === 0){
-            userRole = <h6>Admin</h6>;
-        } else if(state.userData.role === 2){
-            userRole = <h6>WikiUser</h6>;
-        } else {
-            userRole = <h6>User</h6>;
-        }
+    const deleteUserInfo = () => {
+        dispatch(deleteUser(state.userData._id)).then(res => {
+            props.history.push('/login');
+        })
     }
+
+    function checkQuizResult(user_id) {
+        dispatch(checkQuizProgress(user_id)).then(res => {
+            if (res.payload.success) {
+                setcorrect(res.payload.correct);
+                setwrong(res.payload.wrong);
+
+                if (res.payload.correct > 99.9) {
+                    setshowImage(masterImg);
+                } else if (res.payload.correct > 66.6) {
+                    setshowImage(seniorImg);
+                } else if (res.payload.correct > 33.3) {
+                    setshowImage(juniorImg);
+                } else {
+                    setshowImage(beginnerImg);
+                }
+            }
+        });
+    }
+
+    const closeshowQA = () => {
+        setselectMyQA(null);
+    }
+
+    async function countChapterandIndex() {
+        dispatch(checkChapterandIndex());
+    }
+
+    // 페이지 로드 후 최초 1회 수행
+    useEffect(() => {
+        countChapterandIndex();
+    }, [])
+
+    useEffect(() => {
+        if (typeof state.userData !== 'undefined') {
+            if (state.userData.isAuth) {
+                setuserName(<h6>{state.userData.name}</h6>);
+                setuserEmail(<h6>{state.userData.email}</h6>);
+                setuserPhone(<h6>{state.userData.phone}</h6>);
+
+                if (state.userData.role === 1) {
+                    setuserRole(<h6>Admin</h6>);
+                } else if (state.userData.role === 2) {
+                    setuserRole(<h6>WikiUser</h6>);
+                } else {
+                    setuserRole(<h6>User</h6>);
+                }
+
+                setdeleteBtn(<Button size='sm' variant='outline-danger' onClick={deleteUserInfo}>Delete User</Button>);
+
+                checkQuizResult(state.userData._id);
+
+                setMyQAList(<MyQandAListPage user_id={state.userData._id} setselectMyQA={setselectMyQA} />);
+            }
+        }
+
+        return () => {
+            setuserName(null);
+            setuserEmail(null);
+            setuserPhone(null);
+            setuserRole(null);
+        }
+    }, [state])
+
+    useEffect(() => {
+        if (selectMyQA !== null) {
+            setdisplay('d-flex');
+            setshowQA(<QandARUDPage data={selectMyQA} />);
+        } else {
+            setdisplay('d-none');
+            setshowQA(null);
+        }
+    }, [selectMyQA])
 
     // 사용자에게 보여줄 기본 웹 형식
     return (
-        <div style={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center'
-            , width: '100%', height: '100%', flexDirection: 'column'
-        }}>
-            <div style={{ width: '80%', height: '35%', margin: '2%', border: '1px solid rgba(0,0,0,.7)', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                <Container fluid>
-                    <Row>
-                        <Col xs={12} sm={6} className="text-center">
-                            <img width={150} height={150} src={sampleImg} />
-                        </Col>
-                        <Col xs={12} sm={6} style={{display: 'flex', flexDirection: 'column', justifyContent:'center'}} className="px-5">
-                            { userName }
-                            { userPhone }
-                            { userRole }
-                        </Col>
-                    </Row>
-                </Container>
+        <Container fluid style={{ height: '100%' }} className='py-3'>
+            <div className='mt-5 mx-auto p-2 border rounded' style={{ width: '70%', height: 'auto' }}>
+                <Row className='align-items-center my-2'>
+                    <Col xs={12} sm={6} className="text-center">
+                        <img width={200} height={200} src={showImage} />
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        {userName}
+                        {userEmail}
+                        {userPhone}
+                        {userRole}
+                        {deleteBtn}
+                    </Col>
+                </Row>
             </div>
-            <div style={{ width: '100%', height: '35%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <div style={{ border: '1px solid rgba(0,0,0,.7)', width: '38%', height: '100%', margin: '0 2%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                    <h2>Classes and User Rank</h2>
-                </div>
-                <div style={{ border: '1px solid rgba(0,0,0,.7)', width: '38%', height: '100%', margin: '0 2%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                    <h2>User Rating about Quiz</h2>
+            <div className='my-3 mx-auto p-2 border rounded' style={{ width: '70%' }}>
+                <h3>Progress</h3>
+                <ProgressBar className='mt-3 mb-2'>
+                    <ProgressBar variant="success" now={correct} label={`${correct}%`} key={1} />
+                    <ProgressBar variant="danger" now={wrong} label={`${wrong}%`} key={2} />
+                </ProgressBar>
+            </div>
+            <h3 className='mx-auto' style={{ width: '70%' }}>MyQandA</h3>
+            <div className='mb-4 mx-auto p-2 border rounded' style={{ width: '70%', height: 'auto', maxHeight: '410px', overflowY: 'auto' }}>
+                {MyQAList}
+            </div>
+            <div id='showQA_div' className={display + ' align-items-center justify-content-center'} style={{
+                position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 90px)', height: '85vh', zIndex: 3, backgroundColor: 'rgba(211,211,211,.2)'
+            }}>
+                <div style={{ backgroundColor: 'white', width: '60%', height: '80%' }}>
+                    <div style={{ width: '100%', height: '5%' }} className='px-2 text-right'>
+                        <Button size='sm' variant='danger' onClick={closeshowQA}>X</Button>
+                    </div>
+                    <div style={{ width: '100%', height: '95%', overflowY: 'auto' }}>
+                        {showQA}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Container>
     )
 }
-  
-export default MyPage
+
+export default withRouter(MyPage)

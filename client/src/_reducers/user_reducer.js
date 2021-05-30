@@ -6,7 +6,8 @@ import {
     LOGOUT_USER,
     CHECK_USER,
     RESET_PW,
-    MOVE_STUDY
+    MOVE_STUDY,
+    DELETE_USER
 } from '../_actions/types';
 
 
@@ -22,30 +23,34 @@ function user_split_action(state = {}, action) {
         // 회원가입 시 발생하는 타입
         case REGISTER_USER:
             // 각각의 리턴 값 정보를 리엑트 임시 저장공간에 부여
-            return {...state, register: action.payload };
+            return { ...state, register: action.payload };
 
         // 권환 확인 시 발생하는 타입
         case AUTH_USER:
             // 각각의 리턴 값 정보를 리엑트 임시 저장공간에 부여
-            return {...state, userData: action.payload };
+            return { ...state, userData: action.payload };
 
         // 로그아웃 시 발생하는 타입
         case LOGOUT_USER:
             // 정보를 리엑트 임시 저장공간에 부여
-            return {...state, login: action.payload };
+            return { ...state, login: action.payload };
 
         case CHECK_USER:
             // 정보를 리엑트 임시 저장공간에 부여
-            return {...state, check: action.payload };
+            return { ...state, check: action.payload };
 
         case RESET_PW:
             // 정보를 리엑트 임시 저장공간에 부여
-            return {...state, reset: action.payload };
+            return { ...state, reset: action.payload };
 
         case MOVE_STUDY:
 
-            return {...state, userData: action.payload };
-        
+            return { ...state, userData: action.payload };
+
+        case DELETE_USER:
+
+            return { ...state, userData: action.payload };
+
         // 액션 타입없이 요청이 들어올 경우
         default:
             // 함께 들어오는 state값 리턴

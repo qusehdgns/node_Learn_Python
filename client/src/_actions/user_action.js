@@ -8,7 +8,8 @@ import {
     LOGOUT_USER,
     CHECK_USER,
     RESET_PW,
-    MOVE_STUDY
+    MOVE_STUDY,
+    DELETE_USER
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { USER_SERVER } from '../components/Config';
@@ -81,7 +82,7 @@ export function checkEmail(dataToSubmit) {
 // 비밀번호 재설정
 export function resetPassword(dataTosubmit) {
     const req = Axios.put(`${USER_SERVER}/resetpassword`, dataTosubmit)
-        .then(res => res.data );
+        .then(res => res.data);
 
     return {
         type: RESET_PW,
@@ -92,10 +93,20 @@ export function resetPassword(dataTosubmit) {
 // 학습 인덱스 이동
 export function moveStudy(dataTosubmit) {
     const req = Axios.put(`${USER_SERVER}/movestudy`, dataTosubmit)
-        .then(res => res.data );
+        .then(res => res.data);
 
     return {
         type: MOVE_STUDY,
+        payload: req
+    }
+}
+
+export function deleteUser(user_id) {
+    const req = Axios.delete(`${USER_SERVER}/${user_id}`)
+        .then(res => res.data);
+
+    return {
+        type: DELETE_USER,
         payload: req
     }
 }

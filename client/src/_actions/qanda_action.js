@@ -5,7 +5,8 @@ import {
     CREATE_QA,
     READ_QA,
     UPDATE_QA,
-    DELETE_QA
+    DELETE_QA,
+    READ_MYQA
 } from './types';
 // api 기본 게이트를 저장한 정보 호출
 import { QA_SERVER } from '../components/Config';
@@ -31,6 +32,17 @@ export function readQandA(dataTosubmit) {
     // 결과 값과 액션 결과를 리턴
     return {
         type: READ_QA,
+        payload: req
+    }
+}
+
+export function readMyQandA(user_id) {
+    
+    const req = Axios.get(`${QA_SERVER}/${user_id}`)
+    .then(res => res.data)
+
+    return {
+        type: READ_MYQA,
         payload: req
     }
 }

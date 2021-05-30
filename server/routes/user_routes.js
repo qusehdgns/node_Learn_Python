@@ -34,5 +34,8 @@ router.put("/resetpassword", controller.userresetpassword);
 // move Study_id
 router.put("/movestudy", controller.usermoveStudy);
 
+// user 삭제
+router.delete("/:user_id", auth, controller.userDelete);
+
 // 생성 모듈에 선언한 라우터 추가
 module.exports = router;
