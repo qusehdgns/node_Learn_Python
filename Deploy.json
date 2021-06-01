@@ -3,7 +3,9 @@
         {
             "name" : "LearnPython",
             "script": "npm",
-            "args": "deploy",
+            "args": "run deploy",
+            "instances": 0,
+            "mode": "cluster",
             "watch": true
         }
     ]

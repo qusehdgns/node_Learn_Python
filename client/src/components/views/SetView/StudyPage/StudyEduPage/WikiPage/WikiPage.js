@@ -12,6 +12,7 @@ function WikiPage(props) {
     const [CPage, setCPage] = useState(null);
 
     useEffect(() => {
+        setRUDPage(null);
         const userdata = props.userstate;
         if (typeof userdata.userData !== 'undefined') {
             if ([1, 2].includes(userdata.userData.role)) {
