@@ -7,6 +7,8 @@ import { Link, withRouter } from 'react-router-dom';
 // 로그인 액션을 지정해 놓은 파일 호출
 import { checkEmail, resetPassword } from '../../../../_actions/user_action';
 
+import { Button } from 'react-bootstrap';
+
 // 리엑트 NavBar 페이지 값 호출 함수
 function ResetPWPage(props) {
     // redux 사용을 위한 변수 선언
@@ -94,7 +96,7 @@ function ResetPWPage(props) {
         } else {
             document.getElementById('checkCertification').style.display = 'none';
 
-            document.getElementById('resetPasswor').style.display = 'flex';
+            document.getElementById('resetPassword').style.display = 'flex';
         }
     }
 
@@ -192,45 +194,44 @@ function ResetPWPage(props) {
             <form style={{ display: 'flex', flexDirection: 'column' }}
                 onSubmit={onSubmitHandler}>
                 <div style={{ textAlign: 'center' }}>
-                    <h1>Learn Python</h1>
+                    <h1 style={{ fontSize: '60px' }}>Learn Python</h1>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     <h3>Reset Password</h3>
                 </div>
                 <label>email</label>
-                <input type="email" id='email' value={Email} onChange={onEmailHandler} />
+                <input type="email" id='email' className='form-control' value={Email} onChange={onEmailHandler} />
                 <label>phone</label>
-                <input type="tel" id='phone' maxLength='13' value={Phone} onChange={onPhoneHandler} />
+                <input type="tel" id='phone' className='form-control' maxLength='13' value={Phone} onChange={onPhoneHandler} />
                 <br />
                 <div id="checkEmail" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <button type='button' onClick={checkMyEmail}>
+                    <Button type='button' onClick={checkMyEmail} variant='outline-success'>
                         Checking my Email
-                    </button>
+                    </Button>
                 </div>
                 <div id="checkCertification" style={{ display: 'none', flexDirection: 'column' }}>
                     <label>Certification Number</label>
-                    <input type="text" id="inputCertification" value={Certification} onChange={onCertificationHandler} maxLength="6" />
-                    <a onClick={resendingEmail}>Resend Certification Email</a>
-                    <button type="button" onClick={checkInputCertification}>
+                    <input type="text" id="inputCertification" className='form-control' value={Certification} onChange={onCertificationHandler} maxLength="6" />
+                    <a href='javascript:void(0);' onClick={resendingEmail} className='text-center'>Resend Certification Email</a>
+                    <Button type="button" onClick={checkInputCertification} variant='outline-secondary'>
                         Check Number
-                    </button>
+                    </Button>
                 </div>
                 <div id="resetPassword" style={{ display: 'none', flexDirection: 'column' }}>
                     <label>Password</label>
-                    <input type="password" value={Password} onChange={onPasswordHandler} />
+                    <input type="password" className='form-control' value={Password} onChange={onPasswordHandler} />
                     <span id="passwordnotice" style={{display: 'block', textAlign: 'center'}}></span>
                     <label>Confrim Password</label>
-                    <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                    <input type="password" className='form-control' value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
                     <span id="confirmpasswordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
                     <br />
 
-                    <button type="submit">
+                    <Button type="submit" variant='primary'>
                         Reset Password
-                    </button>
+                    </Button>
                 </div>
-                <br />
-                <div style={{ textAlign: 'center', margin: 'auto' }}>
+                <div style={{ textAlign: 'center', margin: 'auto' }} className='mt-1'>
                     <Link to='/login'>Go to Login</Link>
                 </div>
             </form>

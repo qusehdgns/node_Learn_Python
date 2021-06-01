@@ -22,7 +22,7 @@ function WikiPage(props) {
     }, [props])
 
     return (
-        <div className='row mx-0 mb-2'>
+        <div className='row mx-0 mb-2 border rounded p-2'>
             {RUDPage}
             {CPage}
         </div>

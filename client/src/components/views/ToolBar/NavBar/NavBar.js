@@ -56,7 +56,7 @@ function NavBar(props) {
                 height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'
                 , borderBottom: '1px solid rgba(0, 0, 0, .25)'
             }}>
-                <h1 style={{ fontSize: '2.5vw' }}>Learn Python</h1>
+                <h1 style={{ fontSize: '3.5vw' }}>Learn Python</h1>
             </div>
             <div style={{ position: 'absolute', display: 'fixed', margin: '10px', top: 0, right: 0 }}>
                 {button}

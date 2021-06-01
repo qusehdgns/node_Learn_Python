@@ -29,7 +29,7 @@ function QuizPage(props) {
                 </div>;
             }
             setReturnValue(<div className='border rounded p-1 row mx-0'>
-                <div className='col-12 text-left px-5'>
+                <div className='col-12 text-left px-5 mt-2'>
                     <h3>Quiz</h3>
                     {value.quiz}
                 </div>

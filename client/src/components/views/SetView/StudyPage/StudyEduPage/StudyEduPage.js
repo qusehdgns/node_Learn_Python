@@ -37,16 +37,18 @@ function StudyEduPage(props) {
 
     return (
         <div className='row mx-0 px-0'>
-            <div className='col-12 text-left px-3'>
-                <h1>{studyTitle}</h1>
+            <div className='col-12 text-left px-3 border-bottom text-center'>
+                <h1 style={{ color: '#61BFAD', fontSize: '50px' }}>{studyTitle}</h1>
             </div>
-            <div className='col-12 text-left px-3'>
+            <div className='col-12 text-left px-3 my-3'>
                 <h3>Explain</h3>
                 {studyMaterial}
             </div>
-            <div className='col-12 px-3'>
+            <div className='col-12 px-3 my-3'>
                 <h3>Code</h3>
-                <pre><code>{studyCode}</code></pre>
+                <div style={{ backgroundColor: '#E9E9E9'}} className='border rounded px-3 pt-3'>
+                    <pre><code>{studyCode}</code></pre>
+                </div>
             </div>
             <div className='col-12 px-0'>
                 {showWiki}

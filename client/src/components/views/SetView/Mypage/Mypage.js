@@ -91,16 +91,16 @@ function MyPage(props) {
     useEffect(() => {
         if (typeof state.userData !== 'undefined') {
             if (state.userData.isAuth) {
-                setuserName(<h6>{state.userData.name}</h6>);
-                setuserEmail(<h6>{state.userData.email}</h6>);
-                setuserPhone(<h6>{state.userData.phone}</h6>);
+                setuserName(<h5>{state.userData.name}</h5>);
+                setuserEmail(<h5>{state.userData.email}</h5>);
+                setuserPhone(<h5>{state.userData.phone}</h5>);
 
                 if (state.userData.role === 1) {
-                    setuserRole(<h6>Admin</h6>);
+                    setuserRole(<h5>Admin</h5>);
                 } else if (state.userData.role === 2) {
-                    setuserRole(<h6>WikiUser</h6>);
+                    setuserRole(<h5>WikiUser</h5>);
                 } else {
-                    setuserRole(<h6>User</h6>);
+                    setuserRole(<h5>User</h5>);
                 }
 
                 setdeleteBtn(<Button size='sm' variant='outline-danger' onClick={deleteUserInfo}>Delete User</Button>);
@@ -154,17 +154,17 @@ function MyPage(props) {
                 </ProgressBar>
             </div>
             <h3 className='mx-auto' style={{ width: '70%' }}>MyQandA</h3>
-            <div className='mb-4 mx-auto p-2 border rounded' style={{ width: '70%', height: 'auto', maxHeight: '410px', overflowY: 'auto' }}>
+            <div className='mb-4 mx-auto p-2 border rounded' style={{ width: '70%', height: 'auto', maxHeight: '350px', overflowY: 'auto' }}>
                 {MyQAList}
             </div>
             <div id='showQA_div' className={display + ' align-items-center justify-content-center'} style={{
                 position: 'fixed', bottom: 0, right: 0, width: 'calc(100vw - 90px)', height: '85vh', zIndex: 3, backgroundColor: 'rgba(211,211,211,.2)'
             }}>
-                <div style={{ backgroundColor: 'white', width: '60%', height: '80%' }}>
-                    <div style={{ width: '100%', height: '5%' }} className='px-2 text-right'>
+                <div style={{ backgroundColor: 'white', width: '60%', height: '80%' }} className='border rounded'>
+                    <div style={{ width: '100%', height: '6%' }} className='px-2 text-right border p-1'>
                         <Button size='sm' variant='danger' onClick={closeshowQA}>X</Button>
                     </div>
-                    <div style={{ width: '100%', height: '95%', overflowY: 'auto' }}>
+                    <div style={{ width: '100%', height: '94%', overflowY: 'auto' }}>
                         {showQA}
                     </div>
                 </div>

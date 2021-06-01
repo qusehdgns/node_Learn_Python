@@ -7,6 +7,8 @@ import { USER_SERVER } from '../../../Config';
 // ajax와 유사한 통신 라이브러리 선언
 import Axios from 'axios';
 
+import { Button } from 'react-bootstrap';
+
 // 리엑트 NavBar 페이지 값 호출 함수
 function FindIDPage(props) {
 
@@ -71,19 +73,19 @@ function FindIDPage(props) {
             <form style={{ display: 'flex', flexDirection: 'column' }}
                 onSubmit={onSubmitHandler}>
                 <div style={{ textAlign: 'center' }}>
-                    <h1>Learn Python</h1>
+                    <h1 style={{ fontSize: '60px'}}>Learn Python</h1>
                 </div>
                 <div style={{ textAlign: 'center' }}>
                     <h3>Find my Email</h3>
                 </div>
                 <label>name</label>
-                <input type="text" value={Name} onChange={onNameHandler} />
+                <input type="text" className='form-control' value={Name} onChange={onNameHandler} />
                 <label>phone</label>
-                <input type="tel" maxLength='13' value={Phone} onChange={onPhoneHandler} />
+                <input type="tel" maxLength='13' className='form-control' value={Phone} onChange={onPhoneHandler} />
                 <br />
-                <button type='submit'>
+                <Button type='submit' variant='outline-secondary'>
                     Find my Email
-                </button>
+                </Button>
                 <div style={{ textAlign: 'center' }}>
                     <Link to='/resetpw'>I dont know my Password</Link>
                     <br />

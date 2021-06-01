@@ -144,7 +144,7 @@ function WikiRUDPage(props) {
     }, [props])
 
     return (
-        <div className='col-12 mb-3'>
+        <div className='col-12 mb-2'>
             <div className='mb-1'>
                 {developmentTitle}
                 {developmentTag}

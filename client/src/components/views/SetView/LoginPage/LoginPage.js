@@ -7,6 +7,8 @@ import { loginUser } from '../../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { Link, withRouter } from 'react-router-dom';
 
+import { Button } from 'react-bootstrap';
+
 // 로그인 페이지 호출 시 실행되는 페이지 정보
 function LoginPage(props) {
     // redux 사용을 위한 변수 선언
@@ -71,21 +73,20 @@ function LoginPage(props) {
             <form style={{display: 'flex', flexDirection: 'column'}}
                 onSubmit={onSubmitHandler}> 
                 <div style={{textAlign:'center'}}>
-                    <h1 onClick={LogoHandler} style={{cursor: 'pointer'}}>Learn Python</h1>
+                    <h1 onClick={LogoHandler} style={{cursor: 'pointer', fontSize: '60px'}}>Learn Python</h1>
                 </div>
                 <br/>
                 <label>Email</label>
-                <input type="email" value={Email} onChange={onEmailHandler} />
+                <input type="email" className='form-control' value={Email} onChange={onEmailHandler} />
                 <label>Password</label>
-                <input type="password" value={Password} onChange={onPasswordHandler} />
+                <input type="password" className='form-control' value={Password} onChange={onPasswordHandler} />
                 <br />
-                <button type='submit'>
+                <Button type='submit' variant='outline-primary' className='mb-1'>
                     Login
-                </button>
-                <br/>
-                <button type='button' onClick={movetoRegister}>
+                </Button>
+                <Button type='button' onClick={movetoRegister} variant='outline-secondary'>
                     Register
-                </button>
+                </Button>
                 <div style={{textAlign:'center'}}>
                     <Link to='/findid'>Find your ID or Reset Password</Link>  
                 </div>

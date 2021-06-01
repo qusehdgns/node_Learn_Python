@@ -7,6 +7,8 @@ import { checkEmail, registerUser } from '../../../../_actions/user_action';
 // redux를 함께 사용하기 위해 라우터 돔에 파일을 올리기 위한 선언
 import { withRouter } from 'react-router-dom';
 
+import { Button } from 'react-bootstrap';
+
 /*
 - 비밀번호 규칙(숫자5이상, 영어5이상, 10자이상 15자미만)
 */
@@ -215,33 +217,33 @@ function RegisterPage(props) {
                 onSubmit={onSubmitHandler}>
 
                 <div style={{textAlign:'center'}}>
-                    <h1>Learn Python</h1>
+                    <h1 style={{ fontSize: '60px'}}>Learn Python</h1>
                 </div>
                 <p style={{color:'red'}} align='center'>{Message}</p>
 
                 <label>Email</label>
-                <input id="email" type="email" value={Email} onChange={onEmailHandler} />
+                <input id="email" type="email" className='form-control mb-1' value={Email} onChange={onEmailHandler} />
 
-                <button type='button' onClick={checkMyEmail}>Check my ID</button>
+                <Button type='button' variant='outline-primary' onClick={checkMyEmail}>Check my ID</Button>
 
                 <label>Name</label>
-                <input disabled id="name" type="text" value={Name} onChange={onNameHandler} />
+                <input disabled id="name" className='form-control' type="text" value={Name} onChange={onNameHandler} />
 
                 <label>Phone</label>
-                <input disabled id="phone" type="tel" maxLength="13" value={Phone} onChange={onPhoneHandler} />
+                <input disabled id="phone" className='form-control' type="tel" maxLength="13" value={Phone} onChange={onPhoneHandler} />
 
                 <label>Password</label>
-                <input disabled id="pwd" type="password" value={Password} onChange={onPasswordHandler} />
+                <input disabled id="pwd" className='form-control' type="password" value={Password} onChange={onPasswordHandler} />
                 <span id="passwordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
                 <label>Confrim Password</label>
-                <input disabled id="confirm_pwd" type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                <input disabled id="confirm_pwd" className='form-control' type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
                 <span id="confirmpasswordnotice" style={{display: 'block', textAlign: 'center'}}></span>
 
                 <br />
-                <button disabled id="register_btn" type="submit">
+                <Button variant='outline-secondary' disabled id="register_btn" type="submit">
                     Register
-                </button>
+                </Button>
             </form>
         </div>
     )
