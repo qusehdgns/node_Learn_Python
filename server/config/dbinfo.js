@@ -8,5 +8,5 @@ let db_name = "learn_python";
 
 // 실행 모듈에 mongoURI를 업로드
 module.exports ={
-    mongoURI: `mongodb://${db_id}:${db_pw}@localhost:27017/${db_name}`
+    mongoURI: `mongodb+srv://${db_id}:${db_pw}@nodelearnpython.3nlbg.mongodb.net/${db_name}?retryWrites=true&w=majority`
 }
