@@ -19,7 +19,7 @@ function StudyPage(props) {
 
     const state = useSelector(state => state.user);
 
-    const [SelectId, setSelectId] = useState('609b29ada6c08a3296ec0b83');
+    const [SelectId, setSelectId] = useState('60b627820bd2722517ba2a19');
 
     const [StudyEdu, setStudyEdu] = useState(null);
     const [Quiz, setQuiz] = useState(null);

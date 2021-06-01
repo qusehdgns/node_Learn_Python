@@ -18,7 +18,7 @@ function StudyListPage(props) {
 
     const [StudyList, setStudyList] = useState(null);
 
-    const [selectId, setselectId] = useState(props.SelectId);
+    const [selectId, setselectId] = useState(null);
 
     function findStudyList() {
 
@@ -67,6 +67,7 @@ function StudyListPage(props) {
 
     useEffect(() => {
         findStudyList();
+        setselectId(props.SelectId);
 
         return () => {
             setStudyList(null);

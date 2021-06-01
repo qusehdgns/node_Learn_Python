@@ -93,32 +93,34 @@ function WikiRUDPage(props) {
                 if (value.length) {
                     Titlefuncs[i](<h3>{tagsTitle[i]}</h3>);
                     Tagfuncs[i](await value.map((val, index) => {
-                        if (props.userData.isAuth) {
-                            if (props.userData.email === val.user_id.email) {
-                                return <div key={index} className='row mx-0'>
-                                    <div className='col-12 px-0'><pre id={val._id + "_wiki"}>{val.explanation}</pre></div>
-                                    <input type="hidden" id={val._id + "_tag"} value={i + 1} />
-                                    <textarea id={val._id + "_textarea"} className='showing form-control d-none' defaultValue={val.explanation} style={{ height: 'auto' }} />
-                                    <div id={val._id + "_ud"} className='col-12 px-0 text-right' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
-                                        <span onClick={() => updateHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>update</span>
-                                        &nbsp;/&nbsp;
-                                        <span onClick={() => deleteHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>delete</span>
-                                    </div>
-                                    <div id={val._id + "_sc"} className='col-12 px-0 text-right d-none' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
-                                        <span onClick={() => submitHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>submit</span>
-                                        &nbsp;/&nbsp;
-                                        <span onClick={() => cancelHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>cancel</span>
-                                    </div>
-                                </div>;
-                            } else if (props.userData.isAdmin) {
-                                return <div key={index} className='row mx-0'>
-                                    <div className='col-12 px-0'><pre>{val.explanation}</pre></div>
-                                    <div className='col-12 px-0 text-right' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
-                                        <span className='col-12 px-0 text-right'>{val.user_id.email}</span>
-                                        &nbsp;/&nbsp;
-                                        <span onClick={() => deleteHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>delete</span>
-                                    </div>
-                                </div>;
+                        if (typeof props.userData !== 'undefined') {
+                            if (props.userData.isAuth) {
+                                if (props.userData.email === val.user_id.email) {
+                                    return <div key={index} className='row mx-0'>
+                                        <div className='col-12 px-0'><pre id={val._id + "_wiki"}>{val.explanation}</pre></div>
+                                        <input type="hidden" id={val._id + "_tag"} value={i + 1} />
+                                        <textarea id={val._id + "_textarea"} className='showing form-control d-none' defaultValue={val.explanation} style={{ height: 'auto' }} />
+                                        <div id={val._id + "_ud"} className='col-12 px-0 text-right' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
+                                            <span onClick={() => updateHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>update</span>
+                                            &nbsp;/&nbsp;
+                                            <span onClick={() => deleteHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>delete</span>
+                                        </div>
+                                        <div id={val._id + "_sc"} className='col-12 px-0 text-right d-none' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
+                                            <span onClick={() => submitHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>submit</span>
+                                            &nbsp;/&nbsp;
+                                            <span onClick={() => cancelHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>cancel</span>
+                                        </div>
+                                    </div>;
+                                } else if (props.userData.isAdmin) {
+                                    return <div key={index} className='row mx-0'>
+                                        <div className='col-12 px-0'><pre>{val.explanation}</pre></div>
+                                        <div className='col-12 px-0 text-right' style={{ fontSize: '12px', fontWeight: 'lighter' }}>
+                                            <span className='col-12 px-0 text-right'>{val.user_id.email}</span>
+                                            &nbsp;/&nbsp;
+                                            <span onClick={() => deleteHandler(val._id)} style={{ textDecoration: 'underline', textDecorationColor: 'lightgray', cursor: 'pointer' }}>delete</span>
+                                        </div>
+                                    </div>;
+                                }
                             }
                         }
                         return <div key={index} className='row mx-0'>
